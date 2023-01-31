@@ -88,10 +88,7 @@ namespace MCraftingTree
 
         private void Add_Item(object sender, RoutedEventArgs e)
         {
-            Items cobble = new Items() { ID = Guid.NewGuid().ToString(), Name = "Cobblestone", Type = "Cobblestone"};
-            Items stone = new Items() { ID = Guid.NewGuid().ToString(), Name = "Stone", Type = "Stone" };
-            Furnace furnace = new Furnace() { ID = Guid.NewGuid().ToString(), InputSlot = cobble, OutputSlot = stone};
-            ctx.SaveChanges();
+            
         }
 
         private void Alter_Item(object sender, RoutedEventArgs e)

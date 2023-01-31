@@ -214,18 +214,25 @@
                     <ListBox Grid.Row="1"/>
                 </Grid>
             </materialDesign:Card>
-            <materialDesign:Card Grid.Column="1">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="80px" />
-                        <RowDefinition Height="80px" />
-                        <RowDefinition Height="80px" />
-                    </Grid.RowDefinitions>
-                    <Button Content="Add Item" VerticalAlignment="Top" Margin="20" Click="Add_Item"/>
-                    <Button Content="Alter Item" VerticalAlignment="Top" Margin="20" Grid.Row="1" Click="Alter_Item"/>
-                    <Button Content="Delete Item" VerticalAlignment="Top" Margin="20" Grid.Row="2" Click="Delete_Item"/>
-                </Grid>
-            </materialDesign:Card>
+            <materialDesign:DialogHost Grid.Column="1">
+                <materialDesign:DialogHost.DialogContent>
+                    <Grid>
+                        <Button Content="szarszarszar"/>
+                    </Grid>
+                </materialDesign:DialogHost.DialogContent>
+                <materialDesign:Card >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="80px" />
+                            <RowDefinition Height="80px" />
+                            <RowDefinition Height="80px" />
+                        </Grid.RowDefinitions>
+                        <Button Content="Add Item" VerticalAlignment="Top" Margin="20" Click="Add_Item" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"/>
+                        <Button Content="Alter Item" VerticalAlignment="Top" Margin="20" Grid.Row="1" Click="Alter_Item"/>
+                        <Button Content="Delete Item" VerticalAlignment="Top" Margin="20" Grid.Row="2" Click="Delete_Item"/>
+                    </Grid>
+                </materialDesign:Card>
+            </materialDesign:DialogHost>
         </Grid>
         <Grid Margin="20,0,20,10" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
