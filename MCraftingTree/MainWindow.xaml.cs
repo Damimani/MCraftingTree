@@ -20,10 +20,24 @@ namespace MCraftingTree
     /// </summary>
     public partial class MainWindow : Window
     {
-        Context ctx = new Context();
+        
         public MainWindow()
         {
             InitializeComponent();
+            Context ctx = new Context();
+            Items itm = new Items();
+            Mobs mbs = new Mobs();
+            MobDrops mds = new MobDrops();
+            Brewing bwg = new Brewing();
+            Furnace fnc = new Furnace();
+            var items = ctx.Items;
+            if (itm != null)
+            {
+                foreach (var item in items)
+                {
+                    ItemLB.Items.Add(item);
+                }
+            }
         }
 
         private void SwitchScreen(object sender, RoutedEventArgs e)
