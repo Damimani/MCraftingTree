@@ -25,6 +25,8 @@ namespace MCraftingTree
 
         [StringLength(50)]
         public string Type { get; set; }
+        [StringLength(150)]
+        public string ImagePath { get; set; }
         [Required, StringLength(150)]
         public string Name { get; set; }
     }

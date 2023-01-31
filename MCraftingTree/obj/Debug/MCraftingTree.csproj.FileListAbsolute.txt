@@ -77,3 +77,4 @@ C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTr
 C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.csproj.CopyComplete
 C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.exe
 C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.pdb
+C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migrations.ItemImagePath.resources

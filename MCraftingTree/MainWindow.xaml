@@ -209,18 +209,25 @@
                         <RowDefinition Height="10*" />
                         <RowDefinition Height="4*" />
                     </Grid.RowDefinitions>
-
+                    <!-- Tree menu -->
                     <Image Grid.Row="0"/>
                     <ListBox Grid.Row="1"/>
                 </Grid>
             </materialDesign:Card>
             <materialDesign:DialogHost Grid.Column="1">
                 <materialDesign:DialogHost.DialogContent>
+                    <!-- Popup -->
                     <Grid>
-                        <Button Content="szarszarszar"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <Button Content="Save Item" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
                     </Grid>
                 </materialDesign:DialogHost.DialogContent>
                 <materialDesign:Card >
+                    <!-- Item menu -->
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="80px" />
