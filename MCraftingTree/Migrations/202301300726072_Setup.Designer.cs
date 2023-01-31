@@ -13,7 +13,7 @@ namespace MCraftingTree.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202301100751099_Setup"; }
+            get { return "202301300726072_Setup"; }
         }
         
         string IMigrationMetadata.Source

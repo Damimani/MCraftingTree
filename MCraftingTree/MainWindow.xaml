@@ -19,7 +19,11 @@
             <ColumnDefinition Width="10*" />
             <ColumnDefinition Width="5*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="52px" />
@@ -46,7 +50,7 @@
                             <ColumnDefinition Width="25px" />
                             <ColumnDefinition Width="25px" />
                         </Grid.ColumnDefinitions>
-                        <TextBox materialDesign:HintAssist.Hint="Search Items..."/>
+                        <TextBox materialDesign:HintAssist.Hint="Search Items..." PreviewKeyDown="Search_Items"/>
                         <Button Grid.Column="1" Content="⟲" Padding="0,0,0,5px"/>
                         <Button Grid.Column="2" Content="+" Padding="0,0,0,5px"/>
                         <Button Grid.Column="3" Content="-" Padding="0,0,0,5px"/>
@@ -55,11 +59,11 @@
 
                     <Grid Grid.Row="0" Grid.Column="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="0*" />
-                            <ColumnDefinition Width="0*" />
+                            <ColumnDefinition Width="1*" x:Name="CraftingWidth"/>
+                            <ColumnDefinition Width="0*" x:Name="FurnaceWidth"/>
+                            <ColumnDefinition Width="0*" x:Name="BrewingWidth"/>
                         </Grid.ColumnDefinitions>
-
+                        <!-- Crafting Table-->
                         <Grid Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="55px" />
@@ -125,6 +129,50 @@
                             </Border>
                             <materialDesign:PackIcon Kind="ArrowRightBold" Width="50" Height="50" Foreground="#8B8B8B" Grid.Row="1" Grid.Column="3"/>
                         </Grid>
+                        <!-- Furnace-->
+                        <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="55px" />
+                                <ColumnDefinition Width="55px" />
+                                <ColumnDefinition Width="55px" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="55px" />
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                    <Rectangle Fill="#8B8B8B" />
+                                </Border>
+                            </Border>
+                            <materialDesign:PackIcon Kind="ArrowRightBold" Width="50" Height="50" Foreground="#8B8B8B" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Row="0" Grid.Column="2" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                    <Rectangle Fill="#8B8B8B" />
+                                </Border>
+                            </Border>
+                        </Grid>
+                        <!-- Brewing -->
+                        <Grid  Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="55px" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="55px" />
+                                <RowDefinition Height="55px" />
+                                <RowDefinition Height="55px" />
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                    <Rectangle Fill="#8B8B8B" />
+                                </Border>
+                            </Border>
+                            <materialDesign:PackIcon Kind="ArrowDownBold" Width="50" Height="50" Foreground="#8B8B8B" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Row="2" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                    <Rectangle Fill="#8B8B8B" />
+                                </Border>
+                            </Border>
+                        </Grid>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="1">
                         <Grid.ColumnDefinitions>
@@ -133,9 +181,9 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0" Content="Crafting"/>
-                        <Button Grid.Column="1" Content="Furnace"/>
-                        <Button Grid.Column="2" Content="Brewing"/>
+                        <Button Grid.Column="0" Content="Crafting" Click="SwitchScreen" Uid="Crafting"/>
+                        <Button Grid.Column="1" Content="Furnace" Click="SwitchScreen" Uid="Furnace"/>
+                        <Button Grid.Column="2" Content="Brewing" Click="SwitchScreen" Uid="Brewing"/>
                     </Grid>
                 </Grid>
             </materialDesign:Card>
@@ -145,21 +193,48 @@
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <Button Content="Add Recipe"/>
-                <Button Grid.Column="1" Content="Alter Recipe"/>
-                <Button Grid.Column="2" Content="Delete Recipe"/>
+                <Button Content="Add Recipe" Click="Add_Recipe"/>
+                <Button Grid.Column="1" Content="Alter Recipe" Click="Alter_Recipe"/>
+                <Button Grid.Column="2" Content="Delete Recipe" Click="Delete_Recipe"/>
             </Grid>
         </Grid>
-        <materialDesign:Card Grid.Column="1" Margin="20px">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="10*" />
-                    <RowDefinition Height="4*" />
-                </Grid.RowDefinitions>
+        <Grid Grid.Column="1" Margin="20,20,20,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" x:Name="TreeWidth"/>
+                <ColumnDefinition Width="0*" x:Name="ItemWidth"/>
+            </Grid.ColumnDefinitions>
+            <materialDesign:Card>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10*" />
+                        <RowDefinition Height="4*" />
+                    </Grid.RowDefinitions>
 
-                <Image Grid.Row="0"/>
-                <ListBox Grid.Row="1"/>
-            </Grid>
-        </materialDesign:Card>
+                    <Image Grid.Row="0"/>
+                    <ListBox Grid.Row="1"/>
+                </Grid>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80px" />
+                        <RowDefinition Height="80px" />
+                        <RowDefinition Height="80px" />
+                    </Grid.RowDefinitions>
+                    <Button Content="Add Item" VerticalAlignment="Top" Margin="20" Click="Add_Item"/>
+                    <Button Content="Alter Item" VerticalAlignment="Top" Margin="20" Grid.Row="1" Click="Alter_Item"/>
+                    <Button Content="Delete Item" VerticalAlignment="Top" Margin="20" Grid.Row="2" Click="Delete_Item"/>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+        <Grid Margin="20,0,20,10" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Button Content="Tree view" Click="SwitchItem" Uid="Tree"/>
+            <Button Grid.Column="1" Content="Item menu" Click="SwitchItem" Uid="Item"/>
+        </Grid>
+        
     </Grid>
 </Window>
