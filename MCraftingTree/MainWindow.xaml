@@ -218,9 +218,10 @@
             <materialDesign:DialogHost Grid.Column="1">
                 <materialDesign:DialogHost.DialogContent>
                     <!-- Popup -->
-                    <materialDesign:Card MinHeight="100px" MinWidth="100px">
+                    <materialDesign:Card MinHeight="200px" MinWidth="200px">
                         <Grid>
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
                                 <RowDefinition Height="1*" />
                                 <RowDefinition Height="1*" />
                                 <RowDefinition Height="1*" />
@@ -229,10 +230,10 @@
                             <TextBox materialDesign:HintAssist.Hint="Item name"/>
                             <TextBox Grid.Row="1" materialDesign:HintAssist.Hint="Item type (optional)"/>
                             <Image Grid.Row="2" Source="{Binding Path=ImageSource}"/>
-                            <Button Command="{}">
+                            <Button Grid.Row="3">
                                 <materialDesign:PackIcon Kind="Folder"/>
                             </Button>
-                            <Button Grid.Row="3" Content="Save Item" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
+                            <Button Grid.Row="4" Content="Save Item" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
                         </Grid>
                     </materialDesign:Card>
                 </materialDesign:DialogHost.DialogContent>

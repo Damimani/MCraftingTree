@@ -78,3 +78,7 @@ C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTr
 C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.exe
 C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.pdb
 C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migrations.ItemImagePath.resources
+C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migrations.ItemImagePath.resources
+C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\bin\Debug\Microsoft.Xaml.Behaviors.xml
