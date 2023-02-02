@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace MCraftingTree
 {
@@ -20,10 +23,15 @@ namespace MCraftingTree
     /// </summary>
     public partial class MainWindow : Window
     {
-        
         public MainWindow()
         {
             InitializeComponent();
+            
+        }
+
+        string ImageSource = string.Empty;
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
             Context ctx = new Context();
             Items itm = new Items();
             Mobs mbs = new Mobs();
@@ -119,5 +127,21 @@ namespace MCraftingTree
         {
 
         }
+
+        private void OpenFile(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog fileDialog= new OpenFileDialog();
+            fileDialog.Filter = "Image Files(*.png;*.jpg)|*.png;*jpg";
+            bool? res = fileDialog.ShowDialog();
+            if (res.HasValue && res.Value)
+            {
+                string path = "pack://application:,,,/ImageResources/Items/";
+                File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory().ToString(), fileDialog.FileName), true);
+            }
+
+            
+        }
+
+        
     }
 }

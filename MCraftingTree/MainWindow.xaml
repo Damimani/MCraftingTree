@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MCraftingTree" Height="500" Width="800" MinHeight="500" MinWidth="800">
+        Title="MCraftingTree" Height="500" Width="800" MinHeight="500" MinWidth="800" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*" />
@@ -201,8 +201,8 @@
         </Grid>
         <Grid Grid.Column="1" Margin="20,20,20,10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" x:Name="TreeWidth"/>
-                <ColumnDefinition Width="0*" x:Name="ItemWidth"/>
+                <ColumnDefinition Width="0*" x:Name="TreeWidth"/>
+                <ColumnDefinition Width="1*" x:Name="ItemWidth"/>
             </Grid.ColumnDefinitions>
             <materialDesign:Card>
                 <Grid>
@@ -227,10 +227,10 @@
                                 <RowDefinition Height="1*" />
                                 <RowDefinition Height="1*" />
                             </Grid.RowDefinitions>
-                            <TextBox materialDesign:HintAssist.Hint="Item name"/>
-                            <TextBox Grid.Row="1" materialDesign:HintAssist.Hint="Item type (optional)"/>
-                            <Image Grid.Row="2" Source="{Binding Path=ImageSource}"/>
-                            <Button Grid.Row="3">
+                            <TextBox materialDesign:HintAssist.Hint="Item name" x:Name="ItemName"/>
+                            <TextBox Grid.Row="1" materialDesign:HintAssist.Hint="Item type (optional)" x:Name="ItemType"/>
+                            <Image Grid.Row="2" Source="{Binding Path=ImageSource}" Stretch="None" HorizontalAlignment="Center"/>
+                            <Button Grid.Row="3" Click="OpenFile">
                                 <materialDesign:PackIcon Kind="Folder"/>
                             </Button>
                             <Button Grid.Row="4" Content="Save Item" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>

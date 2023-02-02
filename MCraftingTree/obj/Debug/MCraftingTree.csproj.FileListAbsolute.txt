@@ -82,3 +82,6 @@ C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migra
 C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\bin\Debug\Microsoft.Xaml.Behaviors.dll
 C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\bin\Debug\Microsoft.Xaml.Behaviors.pdb
 C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\bin\Debug\Microsoft.Xaml.Behaviors.xml
+C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\bin\Debug\Microsoft.Xaml.Behaviors.xml
