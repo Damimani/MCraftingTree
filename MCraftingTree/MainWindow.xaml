@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MCraftingTree" Height="500" Width="800" MinHeight="500" MinWidth="800" Loaded="Window_Loaded">
+        Title="MCraftingTree" Height="500" Width="950" MinHeight="500" MinWidth="800" Loaded="Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*" />
@@ -31,7 +31,7 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="300px" />
+                        <ColumnDefinition Width="350px" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
@@ -52,7 +52,9 @@
                             <materialDesign:PackIcon Kind="Search"/>
                         </Button>
                         <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="Search Items..." PreviewKeyDown="Search_Items"/>
-                        <ListBox Grid.Row="1" Grid.ColumnSpan="2" x:Name="ItemLB"/>
+                        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" CanUserAddRows="False" AutoGenerateColumns="False" HeadersVisibility="All">
+                            
+                        </DataGrid>
                     </Grid>
 
                     <Grid Grid.Row="0" Grid.Column="1">
@@ -64,16 +66,16 @@
                         <!-- Crafting Table-->
                         <Grid Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="55px" />
-                                <ColumnDefinition Width="55px" />
-                                <ColumnDefinition Width="55px" />
-                                <ColumnDefinition Width="55px" />
-                                <ColumnDefinition Width="55px" />
+                                <ColumnDefinition Width="64px" />
+                                <ColumnDefinition Width="64px" />
+                                <ColumnDefinition Width="64px" />
+                                <ColumnDefinition Width="64px" />
+                                <ColumnDefinition Width="64px" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="55px" />
-                                <RowDefinition Height="55px" />
-                                <RowDefinition Height="55px" />
+                                <RowDefinition Height="64px" />
+                                <RowDefinition Height="64px" />
+                                <RowDefinition Height="64px" />
                             </Grid.RowDefinitions>
                             <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
@@ -130,12 +132,12 @@
                         <!-- Furnace-->
                         <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="55px" />
-                                <ColumnDefinition Width="55px" />
-                                <ColumnDefinition Width="55px" />
+                                <ColumnDefinition Width="64px" />
+                                <ColumnDefinition Width="64px" />
+                                <ColumnDefinition Width="64px" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="55px" />
+                                <RowDefinition Height="64px" />
                             </Grid.RowDefinitions>
                             <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
@@ -152,12 +154,12 @@
                         <!-- Brewing -->
                         <Grid  Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="55px" />
+                                <ColumnDefinition Width="64px" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="55px" />
-                                <RowDefinition Height="55px" />
-                                <RowDefinition Height="55px" />
+                                <RowDefinition Height="64px" />
+                                <RowDefinition Height="64px" />
+                                <RowDefinition Height="64px" />
                             </Grid.RowDefinitions>
                             <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
@@ -218,7 +220,7 @@
             <materialDesign:DialogHost Grid.Column="1">
                 <materialDesign:DialogHost.DialogContent>
                     <!-- Popup -->
-                    <materialDesign:Card MinHeight="200px" MinWidth="200px">
+                    <materialDesign:Card MinHeight="200px" MinWidth="200px" MaxHeight="200px" MaxWidth="200px">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*" />
@@ -229,11 +231,11 @@
                             </Grid.RowDefinitions>
                             <TextBox materialDesign:HintAssist.Hint="Item name" x:Name="ItemName"/>
                             <TextBox Grid.Row="1" materialDesign:HintAssist.Hint="Item type (optional)" x:Name="ItemType"/>
-                            <Image Grid.Row="2" Source="{Binding Path=ImageSource}" Stretch="None" HorizontalAlignment="Center"/>
+                            <Image Grid.Row="2" HorizontalAlignment="Center" x:Name="Image" Width="32px" Height="32px" Source="{DynamicResource Image}"/>
                             <Button Grid.Row="3" Click="OpenFile">
                                 <materialDesign:PackIcon Kind="Folder"/>
                             </Button>
-                            <Button Grid.Row="4" Content="Save Item" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
+                            <Button Grid.Row="4" Content="Save Item" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="Add_Item"/>
                         </Grid>
                     </materialDesign:Card>
                 </materialDesign:DialogHost.DialogContent>
@@ -245,7 +247,7 @@
                             <RowDefinition Height="80px" />
                             <RowDefinition Height="80px" />
                         </Grid.RowDefinitions>
-                        <Button Content="Add Item" VerticalAlignment="Top" Margin="20" Click="Add_Item" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"/>
+                        <Button Content="Add Item" VerticalAlignment="Top" Margin="20" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"/>
                         <Button Content="Alter Item" VerticalAlignment="Top" Margin="20" Grid.Row="1" Click="Alter_Item"/>
                         <Button Content="Delete Item" VerticalAlignment="Top" Margin="20" Grid.Row="2" Click="Delete_Item"/>
                     </Grid>

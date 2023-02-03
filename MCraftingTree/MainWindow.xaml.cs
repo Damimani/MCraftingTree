@@ -30,14 +30,15 @@ namespace MCraftingTree
         }
 
         string ImageSource = string.Empty;
+        public string ImagePath = string.Empty;
+        Context ctx = new Context();
+        Items itm = new Items();
+        Mobs mbs = new Mobs();
+        MobDrops mds = new MobDrops();
+        Brewing bwg = new Brewing();
+        Furnace fnc = new Furnace();
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Context ctx = new Context();
-            Items itm = new Items();
-            Mobs mbs = new Mobs();
-            MobDrops mds = new MobDrops();
-            Brewing bwg = new Brewing();
-            Furnace fnc = new Furnace();
             var items = ctx.Items;
             if (itm != null)
             {
@@ -110,7 +111,21 @@ namespace MCraftingTree
 
         private void Add_Item(object sender, RoutedEventArgs e)
         {
-            
+            if (ItemName.Text != null)
+            {
+                Items item = new Items() { ID = Guid.NewGuid().ToString(), Name = ItemName.Text, Type = ItemType.Text, ImagePath = ImagePath};
+                try
+                {
+                    ctx.Items.Add(item);
+                    ctx.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Hiba történt a föltöltésnél", "Oopsie Woopsie", MessageBoxButton.OK, MessageBoxImage.Error);
+                    throw;
+                }
+                
+            }
         }
 
         private void Alter_Item(object sender, RoutedEventArgs e)
@@ -135,13 +150,10 @@ namespace MCraftingTree
             bool? res = fileDialog.ShowDialog();
             if (res.HasValue && res.Value)
             {
-                string path = "pack://application:,,,/ImageResources/Items/";
-                File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory().ToString(), fileDialog.FileName), true);
+                File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory(), "ImageResources\\Items", fileDialog.SafeFileName), true);
+                Resources["Image"] = new ImageSourceConverter().ConvertFromString(Directory.GetCurrentDirectory() + "/ImageResources/Items/" + fileDialog.SafeFileName) as ImageSource;
+                ImagePath = "/ImageResources/Items/"+fileDialog.SafeFileName;
             }
-
-            
         }
-
-        
     }
 }
