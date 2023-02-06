@@ -44,7 +44,7 @@ namespace MCraftingTree
             {
                 foreach (var item in items)
                 {
-                    ItemLB.Items.Add(item);
+                    
                 }
             }
         }

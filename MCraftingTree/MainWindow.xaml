@@ -52,8 +52,29 @@
                             <materialDesign:PackIcon Kind="Search"/>
                         </Button>
                         <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="Search Items..." PreviewKeyDown="Search_Items"/>
-                        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" CanUserAddRows="False" AutoGenerateColumns="False" HeadersVisibility="All">
-                            
+                        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" CanUserAddRows="False" AutoGenerateColumns="False" HeadersVisibility="All" Name="ItemDG">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="Icon" Width="94">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                    <Grid>
+                                                        <Rectangle Fill="#8B8B8B"/>
+                                                        <Image Width="64px" Height="64px"/>
+                                                    </Grid>
+                                                </Border>
+                                            </Border>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Name">
+                                    
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Type">
+                                    
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
 
