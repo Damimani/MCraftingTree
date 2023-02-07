@@ -26,28 +26,28 @@ namespace MCraftingTree
         public MainWindow()
         {
             InitializeComponent();
-            
+            LoadItems();
+        }
+
+        public void LoadItems()
+        {
+            ItemDG.Items.Clear();
+            var items = ctx.Items;
+            if (items != null)
+            {
+                foreach (var item in items)
+                {
+                    item.ImagePath = Directory.GetCurrentDirectory() + item.ImagePath;
+                }
+                ItemDG.ItemsSource = items;
+                
+            }
         }
 
         string ImageSource = string.Empty;
         public string ImagePath = string.Empty;
         Context ctx = new Context();
-        Items itm = new Items();
-        Mobs mbs = new Mobs();
-        MobDrops mds = new MobDrops();
-        Brewing bwg = new Brewing();
-        Furnace fnc = new Furnace();
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            var items = ctx.Items;
-            if (itm != null)
-            {
-                foreach (var item in items)
-                {
-                    
-                }
-            }
-        }
+        
 
         private void SwitchScreen(object sender, RoutedEventArgs e)
         {
@@ -118,10 +118,11 @@ namespace MCraftingTree
                 {
                     ctx.Items.Add(item);
                     ctx.SaveChanges();
+                    LoadItems();
                 }
                 catch (Exception)
                 {
-                    MessageBox.Show("Hiba történt a föltöltésnél", "Oopsie Woopsie", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Hiba történt a feltöltésnél", "Oopsie Woopsie", MessageBoxButton.OK, MessageBoxImage.Error);
                     throw;
                 }
                 
@@ -135,7 +136,10 @@ namespace MCraftingTree
 
         private void Delete_Item(object sender, RoutedEventArgs e)
         {
-
+            var remove = (Items)ItemDG.SelectedItem;
+            ctx.Items.Remove(remove);
+            ctx.SaveChanges();
+            LoadItems();
         }
 
         private void Search_Items(object sender, KeyEventArgs e)

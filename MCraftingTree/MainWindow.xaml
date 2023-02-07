@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MCraftingTree" Height="500" Width="950" MinHeight="500" MinWidth="800" Loaded="Window_Loaded">
+        Title="MCraftingTree" Height="500" Width="950" MinHeight="500" MinWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*" />
@@ -38,7 +38,6 @@
                         <RowDefinition Height="32px" />
                         <RowDefinition Height="32px" />
                     </Grid.RowDefinitions>
-
                     <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="25px" />
@@ -52,7 +51,7 @@
                             <materialDesign:PackIcon Kind="Search"/>
                         </Button>
                         <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="Search Items..." PreviewKeyDown="Search_Items"/>
-                        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" CanUserAddRows="False" AutoGenerateColumns="False" HeadersVisibility="All" Name="ItemDG">
+                        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" CanUserAddRows="False" AutoGenerateColumns="False" HeadersVisibility="All" Name="ItemDG" CanUserSortColumns="True" IsReadOnly="True" Background="Transparent">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="Icon" Width="94">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -61,7 +60,7 @@
                                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                                     <Grid>
                                                         <Rectangle Fill="#8B8B8B"/>
-                                                        <Image Width="64px" Height="64px"/>
+                                                        <Image Width="64px" Height="64px" Name="ItemDGImage"/>
                                                     </Grid>
                                                 </Border>
                                             </Border>
