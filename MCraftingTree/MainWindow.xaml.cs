@@ -31,15 +31,23 @@ namespace MCraftingTree
 
         public void LoadItems()
         {
-            ItemDG.Items.Clear();
+            ItemDG.ItemsSource = "";
             var items = ctx.Items;
+            string ItemDGName;
+            string ItemDGType;
+            string dir = Directory.GetCurrentDirectory();
             if (items != null)
             {
                 foreach (var item in items)
                 {
-                    item.ImagePath = Directory.GetCurrentDirectory() + item.ImagePath;
+                    string img = item.ImagePath;
+                    Resources["ItemDGImage"] = new ImageSourceConverter().ConvertFromString(dir + img) as ImageSource;
+                    faszfaszfasz.Content = img;
+                    ItemDGName = item.Name;
+                    ItemDGType = item.Type;
                 }
-                ItemDG.ItemsSource = items;
+                
+                ItemDG.ItemsSource = items.ToList();
                 
             }
         }
@@ -111,6 +119,7 @@ namespace MCraftingTree
 
         private void Add_Item(object sender, RoutedEventArgs e)
         {
+            Resources["Image"] = null;
             if (ItemName.Text != null)
             {
                 Items item = new Items() { ID = Guid.NewGuid().ToString(), Name = ItemName.Text, Type = ItemType.Text, ImagePath = ImagePath};
@@ -140,6 +149,7 @@ namespace MCraftingTree
             ctx.Items.Remove(remove);
             ctx.SaveChanges();
             LoadItems();
+            Resources["Image"] = null;
         }
 
         private void Search_Items(object sender, KeyEventArgs e)

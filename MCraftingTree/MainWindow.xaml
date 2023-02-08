@@ -23,6 +23,7 @@
             <RowDefinition Height="9*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
+        <Label x:Name="faszfaszfasz"/>
         <Grid Grid.Column="0" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
@@ -60,19 +61,15 @@
                                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                                     <Grid>
                                                         <Rectangle Fill="#8B8B8B"/>
-                                                        <Image Width="64px" Height="64px" Name="ItemDGImage"/>
+                                                        <Image Width="64px" Height="64px" Source="{DynamicResource ItemDGImage}"/>
                                                     </Grid>
                                                 </Border>
                                             </Border>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="Name">
-                                    
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Header="Type">
-                                    
-                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Name" Binding="{Binding ItemDGName}"/>
+                                <DataGridTextColumn Header="Type" Binding="{Binding XPath=@Type}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
