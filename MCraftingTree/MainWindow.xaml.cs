@@ -31,32 +31,23 @@ namespace MCraftingTree
 
         public void LoadItems()
         {
-            ItemDG.ItemsSource = "";
+            ItemDG.Items.Clear();
             var items = ctx.Items;
-            string ItemDGName;
-            string ItemDGType;
-            string dir = Directory.GetCurrentDirectory();
             if (items != null)
             {
-                foreach (var item in items)
+                List<Items> itms = null;
+                itms = items.ToList();
+                for (int i = 0; i < itms.Count; i++)
                 {
-                    string img = item.ImagePath;
-                    Resources["ItemDGImage"] = new ImageSourceConverter().ConvertFromString(dir + img) as ImageSource;
-                    faszfaszfasz.Content = img;
-                    ItemDGName = item.Name;
-                    ItemDGType = item.Type;
+                    itms[i].ImagePath = Directory.GetCurrentDirectory() + itms[i].ImagePath;
+                    ItemDG.Items.Add(itms[i]);
                 }
-                
-                ItemDG.ItemsSource = items.ToList();
-                
             }
         }
 
-        string ImageSource = string.Empty;
         public string ImagePath = string.Empty;
         Context ctx = new Context();
         
-
         private void SwitchScreen(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
@@ -125,14 +116,15 @@ namespace MCraftingTree
                 Items item = new Items() { ID = Guid.NewGuid().ToString(), Name = ItemName.Text, Type = ItemType.Text, ImagePath = ImagePath};
                 try
                 {
+                    faszfaszfasz.Content = item.ImagePath;
                     ctx.Items.Add(item);
                     ctx.SaveChanges();
+                    ImagePath = null;
                     LoadItems();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Hiba történt a feltöltésnél", "Oopsie Woopsie", MessageBoxButton.OK, MessageBoxImage.Error);
-                    throw;
+                    MessageBox.Show("Hiba történt a feltöltésnél " + ex, "Oopsie Woopsie", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 
             }
@@ -146,6 +138,7 @@ namespace MCraftingTree
         private void Delete_Item(object sender, RoutedEventArgs e)
         {
             var remove = (Items)ItemDG.SelectedItem;
+            remove.ImagePath = remove.ImagePath.Substring(Directory.GetCurrentDirectory().Length);
             ctx.Items.Remove(remove);
             ctx.SaveChanges();
             LoadItems();
