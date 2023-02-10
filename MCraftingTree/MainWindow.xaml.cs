@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -39,15 +40,19 @@ namespace MCraftingTree
                 itms = items.ToList();
                 for (int i = 0; i < itms.Count; i++)
                 {
-                    itms[i].ImagePath = Directory.GetCurrentDirectory() + itms[i].ImagePath;
+                    if (!itms[i].ImagePath.StartsWith("C:"))
+                    {
+                        itms[i].ImagePath = Directory.GetCurrentDirectory() + itms[i].ImagePath; //kept adding the current directory to ALL ImagePaths without if
+                    }
                     ItemDG.Items.Add(itms[i]);
                 }
             }
         }
 
-        public string ImagePath = string.Empty;
         Context ctx = new Context();
-        
+        public string ImagePath = string.Empty;
+        string DialogHostKey = string.Empty;
+
         private void SwitchScreen(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
@@ -108,31 +113,68 @@ namespace MCraftingTree
             }
         }
 
-        private void Add_Item(object sender, RoutedEventArgs e)
+        private void DialogHost_Button_Prep(object sender, RoutedEventArgs e)
         {
-            Resources["Image"] = null;
-            if (ItemName.Text != null)
+            Button btn = (Button)sender;
+            DialogHostKey = btn.Uid.ToString();
+            if (DialogHostKey == "Alter")
             {
-                Items item = new Items() { ID = Guid.NewGuid().ToString(), Name = ItemName.Text, Type = ItemType.Text, ImagePath = ImagePath};
-                try
+                if (ItemDG.SelectedItem != null)
                 {
-                    faszfaszfasz.Content = item.ImagePath;
-                    ctx.Items.Add(item);
-                    ctx.SaveChanges();
-                    ImagePath = null;
-                    LoadItems();
+                    var row = ItemDG.SelectedItem as Items;
+                    ItemName.Text = row.Name;
+                    ItemType.Text = row.Type;
+                    Resources["Image"] = new ImageSourceConverter().ConvertFromString(row.ImagePath) as ImageSource;
+                    ImagePath = row.ImagePath;
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Hiba történt a feltöltésnél " + ex, "Oopsie Woopsie", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                
             }
         }
 
-        private void Alter_Item(object sender, RoutedEventArgs e)
+        private void Add_Or_Alter_Item(object sender, RoutedEventArgs e)
         {
-
+            if (ItemName.Text != null)
+            {
+                switch (DialogHostKey)
+                {
+                    case "Add":
+                        Items item = new Items() { ID = Guid.NewGuid().ToString(), Name = ItemName.Text, Type = ItemType.Text, ImagePath = ImagePath };
+                        try
+                        {
+                            faszfaszfasz.Content = item.ImagePath;
+                            ctx.Items.Add(item);
+                            ctx.SaveChanges();
+                            ImagePath = null;
+                            LoadItems();
+                            ItemName.Text = null;
+                            ItemType.Text = null;
+                            Resources["Image"] = null;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Hiba történt a feltöltésnél " + ex, "Oopsie Woopsie", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        break;
+                    case "Alter":
+                        try
+                        {
+                            var update = (Items)ItemDG.SelectedItem;
+                            update.Name = ItemName.Text;
+                            update.Type = ItemType.Text;
+                            string currentImage = update.ImagePath.Substring(Directory.GetCurrentDirectory().Length);
+                            if (currentImage != ImagePath)
+                            {
+                                update.ImagePath = ImagePath;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Hiba történt a változtatásnál" + ex, "hajaj", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private void Delete_Item(object sender, RoutedEventArgs e)
@@ -142,7 +184,6 @@ namespace MCraftingTree
             ctx.Items.Remove(remove);
             ctx.SaveChanges();
             LoadItems();
-            Resources["Image"] = null;
         }
 
         private void Search_Items(object sender, KeyEventArgs e)
@@ -153,7 +194,7 @@ namespace MCraftingTree
         private void OpenFile(object sender, RoutedEventArgs e)
         {
             OpenFileDialog fileDialog= new OpenFileDialog();
-            fileDialog.Filter = "Image Files(*.png;*.jpg)|*.png;*jpg";
+            fileDialog.Filter = "Image Files(*.png;*.jpg;*.gif)|*.png;*.jpg;*.gif";
             bool? res = fileDialog.ShowDialog();
             if (res.HasValue && res.Value)
             {
@@ -162,5 +203,7 @@ namespace MCraftingTree
                 ImagePath = "/ImageResources/Items/"+fileDialog.SafeFileName;
             }
         }
+
+        
     }
 }

@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MCraftingTree" Height="500" Width="950" MinHeight="500" MinWidth="800">
+        Title="MCraftingTree" Height="800" Width="1200" MinHeight="500" MinWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*" />
@@ -52,7 +52,10 @@
                             <materialDesign:PackIcon Kind="Search"/>
                         </Button>
                         <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="Search Items..." PreviewKeyDown="Search_Items"/>
-                        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" CanUserAddRows="False" AutoGenerateColumns="False" HeadersVisibility="All" Name="ItemDG" CanUserSortColumns="True" IsReadOnly="True" Background="Transparent">
+                        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" 
+                                  CanUserAddRows="False" AutoGenerateColumns="False" SelectionMode="Single"
+                                  HeadersVisibility="All" CanUserSortColumns="True"
+                                  Name="ItemDG" IsReadOnly="True" Background="Transparent">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="Icon" Width="94">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -252,7 +255,7 @@
                             <Button Grid.Row="3" Click="OpenFile">
                                 <materialDesign:PackIcon Kind="Folder"/>
                             </Button>
-                            <Button Grid.Row="4" Content="Save Item" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="Add_Item"/>
+                            <Button Grid.Row="4" Content="Save Item" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="Add_Or_Alter_Item"/>
                         </Grid>
                     </materialDesign:Card>
                 </materialDesign:DialogHost.DialogContent>
@@ -264,8 +267,8 @@
                             <RowDefinition Height="80px" />
                             <RowDefinition Height="80px" />
                         </Grid.RowDefinitions>
-                        <Button Content="Add Item" VerticalAlignment="Top" Margin="20" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"/>
-                        <Button Content="Alter Item" VerticalAlignment="Top" Margin="20" Grid.Row="1" Click="Alter_Item"/>
+                        <Button Content="Add Item" VerticalAlignment="Top" Margin="20" Uid="Add" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Click="DialogHost_Button_Prep"/>
+                        <Button Content="Alter Item" VerticalAlignment="Top" Margin="20" Grid.Row="1" Uid="Alter" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Click="DialogHost_Button_Prep"/>
                         <Button Content="Delete Item" VerticalAlignment="Top" Margin="20" Grid.Row="2" Click="Delete_Item"/>
                     </Grid>
                 </materialDesign:Card>
