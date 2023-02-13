@@ -38,7 +38,7 @@ namespace MCraftingTree
             var items = ctx.Items;
             if (items != null)
             {
-                List<Items> itms = items.ToList();
+                itms = items.ToList();
                 
                 for (int i = 0; i < itms.Count; i++)
                 {
@@ -54,6 +54,7 @@ namespace MCraftingTree
         Context ctx = new Context();
         public string ImagePath = string.Empty;
         string DialogHostKey = string.Empty;
+        List<Items> itms;
 
         private void SwitchScreen(object sender, RoutedEventArgs e)
         {
@@ -181,7 +182,7 @@ namespace MCraftingTree
         private void Delete_Item(object sender, RoutedEventArgs e)
         {
             var remove = (Items)ItemDG.SelectedItem;
-            remove.ImagePath = remove.ImagePath.Substring(Directory.GetCurrentDirectory().Length);
+            File.Delete(remove.ImagePath);
             ctx.Items.Remove(remove);
             ctx.SaveChanges();
             LoadItems();
@@ -194,26 +195,19 @@ namespace MCraftingTree
 
         private void OpenFile(object sender, RoutedEventArgs e)
         {
+            ItemDG.Resources.Clear();
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "Image Files(*.png;*.jpg;*.gif)|*.png;*.jpg;*.gif";
             bool? res = fileDialog.ShowDialog();
             using (Stream stream = fileDialog.OpenFile())
             {
-                try
+                if (res.HasValue && res.Value)
                 {
-                    if (res.HasValue && res.Value)
-                    {
-                        File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory(), "ImageResources\\Items", fileDialog.SafeFileName), true);
-                        Resources["Image"] = new ImageSourceConverter().ConvertFromString(Directory.GetCurrentDirectory() + "/ImageResources/Items/" + fileDialog.SafeFileName) as ImageSource;
-                        ImagePath = "/ImageResources/Items/" + fileDialog.SafeFileName;
-                    }
-                    stream.Dispose();
+                    File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory(), "ImageResources\\Items", fileDialog.SafeFileName), true);
+                    Resources["Image"] = new ImageSourceConverter().ConvertFromString(Directory.GetCurrentDirectory() + "/ImageResources/Items/" + fileDialog.SafeFileName) as ImageSource;
+                    ImagePath = "/ImageResources/Items/" + fileDialog.SafeFileName;
                 }
-                catch (Exception)
-                {
-                    MessageBox.Show("Ez a kép már használva van az adatbázisban!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                
+                stream.Dispose();
             }
         }
     }
