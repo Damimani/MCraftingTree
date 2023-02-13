@@ -23,7 +23,6 @@
             <RowDefinition Height="9*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <Label x:Name="faszfaszfasz"/> <!-- ki kéne majd szedni -->
         <Grid Grid.Column="0" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
@@ -64,7 +63,7 @@
                                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                                     <Grid>
                                                         <Rectangle Fill="#8B8B8B"/>
-                                                        <Image Width="64px" Height="64px" Source="{Binding Path=ImagePath}"/>
+                                                        <Image Width="64px" Height="64px" Source="{Binding Path=ImagePath}" />
                                                     </Grid>
                                                 </Border>
                                             </Border>

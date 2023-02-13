@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,8 +38,8 @@ namespace MCraftingTree
             var items = ctx.Items;
             if (items != null)
             {
-                List<Items> itms = null;
-                itms = items.ToList();
+                List<Items> itms = items.ToList();
+                
                 for (int i = 0; i < itms.Count; i++)
                 {
                     if (!itms[i].ImagePath.StartsWith("C:"))
@@ -121,7 +123,7 @@ namespace MCraftingTree
             {
                 if (ItemDG.SelectedItem != null)
                 {
-                    var row = ItemDG.SelectedItem as Items;
+                    var row = (Items)ItemDG.SelectedItem;
                     ItemName.Text = row.Name;
                     ItemType.Text = row.Type;
                     Resources["Image"] = new ImageSourceConverter().ConvertFromString(row.ImagePath) as ImageSource;
@@ -140,7 +142,6 @@ namespace MCraftingTree
                         Items item = new Items() { ID = Guid.NewGuid().ToString(), Name = ItemName.Text, Type = ItemType.Text, ImagePath = ImagePath };
                         try
                         {
-                            faszfaszfasz.Content = item.ImagePath;
                             ctx.Items.Add(item);
                             ctx.SaveChanges();
                             ImagePath = null;
@@ -193,17 +194,27 @@ namespace MCraftingTree
 
         private void OpenFile(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog fileDialog= new OpenFileDialog();
+            OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "Image Files(*.png;*.jpg;*.gif)|*.png;*.jpg;*.gif";
             bool? res = fileDialog.ShowDialog();
-            if (res.HasValue && res.Value)
+            using (Stream stream = fileDialog.OpenFile())
             {
-                File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory(), "ImageResources\\Items", fileDialog.SafeFileName), true);
-                Resources["Image"] = new ImageSourceConverter().ConvertFromString(Directory.GetCurrentDirectory() + "/ImageResources/Items/" + fileDialog.SafeFileName) as ImageSource;
-                ImagePath = "/ImageResources/Items/"+fileDialog.SafeFileName;
+                try
+                {
+                    if (res.HasValue && res.Value)
+                    {
+                        File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory(), "ImageResources\\Items", fileDialog.SafeFileName), true);
+                        Resources["Image"] = new ImageSourceConverter().ConvertFromString(Directory.GetCurrentDirectory() + "/ImageResources/Items/" + fileDialog.SafeFileName) as ImageSource;
+                        ImagePath = "/ImageResources/Items/" + fileDialog.SafeFileName;
+                    }
+                    stream.Dispose();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Ez a kép már használva van az adatbázisban!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                
             }
         }
-
-        
     }
 }
