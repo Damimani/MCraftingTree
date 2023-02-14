@@ -56,7 +56,7 @@
                                   HeadersVisibility="All" CanUserSortColumns="True"
                                   Name="ItemDG" IsReadOnly="True" Background="Transparent">
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="Icon" Width="94">
+                                <DataGridTemplateColumn Header="Icon" Width="94" x:Name="ImageCol">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
@@ -250,7 +250,7 @@
                             </Grid.RowDefinitions>
                             <TextBox materialDesign:HintAssist.Hint="Item name" x:Name="ItemName"/>
                             <TextBox Grid.Row="1" materialDesign:HintAssist.Hint="Item type (optional)" x:Name="ItemType"/>
-                            <Image Grid.Row="2" HorizontalAlignment="Center" x:Name="Image" Width="32px" Height="32px" Source="{DynamicResource Image}"/>
+                            <Image Grid.Row="2" HorizontalAlignment="Center" Width="32px" Height="32px" x:Name="PopupImage"/>
                             <Button Grid.Row="3" Click="OpenFile">
                                 <materialDesign:PackIcon Kind="Folder"/>
                             </Button>
@@ -265,10 +265,14 @@
                             <RowDefinition Height="80px" />
                             <RowDefinition Height="80px" />
                             <RowDefinition Height="80px" />
+                            <RowDefinition Height="80px" />
+                            <RowDefinition Height="80px" />
                         </Grid.RowDefinitions>
                         <Button Content="Add Item" VerticalAlignment="Top" Margin="20" Uid="Add" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Click="DialogHost_Button_Prep"/>
                         <Button Content="Alter Item" VerticalAlignment="Top" Margin="20" Grid.Row="1" Uid="Alter" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Click="DialogHost_Button_Prep"/>
                         <Button Content="Delete Item" VerticalAlignment="Top" Margin="20" Grid.Row="2" Click="Delete_Item"/>
+                        <Button Content="hozzáad" Grid.Row="3" Click="Add_Item"/>
+                        <Button Content="töröl" Grid.Row="4" Click="Remove_Item"/>
                     </Grid>
                 </materialDesign:Card>
             </materialDesign:DialogHost>

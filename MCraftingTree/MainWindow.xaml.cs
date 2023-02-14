@@ -35,23 +35,24 @@ namespace MCraftingTree
         public void LoadItems()
         {
             ItemDG.Items.Clear();
+            ItemDG.Resources.Clear();
             var items = ctx.Items;
             if (items != null)
             {
                 itms = items.ToList();
-                
                 for (int i = 0; i < itms.Count; i++)
                 {
-                    if (!itms[i].ImagePath.StartsWith("C:"))
+                    if (itms[i].ImagePath != null && !itms[i].ImagePath.StartsWith("C:"))
                     {
                         itms[i].ImagePath = Directory.GetCurrentDirectory() + itms[i].ImagePath; //kept adding the current directory to ALL ImagePaths without if
                     }
                     ItemDG.Items.Add(itms[i]);
+
                 }
             }
         }
 
-        Context ctx = new Context();
+        readonly Context ctx = new Context();
         public string ImagePath = string.Empty;
         string DialogHostKey = string.Empty;
         List<Items> itms;
@@ -127,7 +128,7 @@ namespace MCraftingTree
                     var row = (Items)ItemDG.SelectedItem;
                     ItemName.Text = row.Name;
                     ItemType.Text = row.Type;
-                    Resources["Image"] = new ImageSourceConverter().ConvertFromString(row.ImagePath) as ImageSource;
+                    PopupImage.Source = new BitmapImage(new Uri (row.ImagePath));
                     ImagePath = row.ImagePath;
                 }
             }
@@ -146,10 +147,9 @@ namespace MCraftingTree
                             ctx.Items.Add(item);
                             ctx.SaveChanges();
                             ImagePath = null;
-                            LoadItems();
                             ItemName.Text = null;
                             ItemType.Text = null;
-                            Resources["Image"] = null;
+                            LoadItems();
                         }
                         catch (Exception ex)
                         {
@@ -195,20 +195,46 @@ namespace MCraftingTree
 
         private void OpenFile(object sender, RoutedEventArgs e)
         {
-            ItemDG.Resources.Clear();
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Filter = "Image Files(*.png;*.jpg;*.gif)|*.png;*.jpg;*.gif";
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Filter = "Image Files(*.png;*.jpg;*.gif)|*.png;*.jpg;*.gif"
+            };
             bool? res = fileDialog.ShowDialog();
             using (Stream stream = fileDialog.OpenFile())
             {
                 if (res.HasValue && res.Value)
                 {
                     File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory(), "ImageResources\\Items", fileDialog.SafeFileName), true);
-                    Resources["Image"] = new ImageSourceConverter().ConvertFromString(Directory.GetCurrentDirectory() + "/ImageResources/Items/" + fileDialog.SafeFileName) as ImageSource;
                     ImagePath = "/ImageResources/Items/" + fileDialog.SafeFileName;
                 }
                 stream.Dispose();
             }
+        }
+
+        string path = null;
+
+        private void Add_Item(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Filter = "Image Files(*.png;*.jpg;*.gif)|*.png;*.jpg;*.gif"
+            };
+            bool? res = fileDialog.ShowDialog();
+            using (Stream stream = fileDialog.OpenFile())
+            {
+                if (res.HasValue && res.Value)
+                {
+                    File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory(), "ImageResources\\Items", fileDialog.SafeFileName), true);
+                    path = "/ImageResources/Items/" + fileDialog.SafeFileName;
+                    PopupImage.Source = new BitmapImage(new Uri(Path.Combine(Directory.GetCurrentDirectory() + path)));
+                }
+                stream.Dispose();
+            }
+        }
+
+        private void Remove_Item(object sender, RoutedEventArgs e)
+        {
+            File.Delete(Path.Combine(Directory.GetCurrentDirectory() + path));
         }
     }
 }
