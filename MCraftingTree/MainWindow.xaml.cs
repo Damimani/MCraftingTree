@@ -34,7 +34,7 @@ namespace MCraftingTree
 
         public void LoadItems()
         {
-            ItemDG.Items.Clear();
+            ItemDG.ItemsSource = "";
             ItemDG.Resources.Clear();
             var items = ctx.Items;
             if (items != null)
@@ -46,9 +46,38 @@ namespace MCraftingTree
                     {
                         itms[i].ImagePath = Directory.GetCurrentDirectory() + itms[i].ImagePath; //kept adding the current directory to ALL ImagePaths without if
                     }
-                    ItemDG.Items.Add(itms[i]);
-
                 }
+                var col = new DataGridTemplateColumn
+                {
+                    Header = "Icon",
+                    Width = 94
+                };
+                var dt = new DataTemplate();
+                var border1 = new FrameworkElementFactory(typeof(Border));
+                border1.SetValue(Border.BorderBrushProperty, new SolidColorBrush(Color.FromRgb(55, 55, 55)));
+                border1.SetValue(Border.BorderThicknessProperty, new Thickness(1.5, 1.5, 0, 0));
+                border1.SetValue(Border.MarginProperty, new Thickness(-0.2));
+                var border2 = new FrameworkElementFactory(typeof(Border));
+                border2.SetValue(Border.BorderBrushProperty, new SolidColorBrush(Color.FromRgb(255, 255, 255)));
+                border2.SetValue(Border.BorderThicknessProperty, new Thickness(1.5, 1.5, 0, 0));
+                border1.AppendChild(border2);
+                var grid = new FrameworkElementFactory(typeof(Grid));
+                border2.AppendChild(grid);
+                var background = new FrameworkElementFactory(typeof(Rectangle));
+                background.SetValue(Rectangle.FillProperty, new SolidColorBrush(Color.FromRgb(139, 139, 139)));
+                grid.AppendChild(background);
+                var ItemDGImage = new FrameworkElementFactory(typeof(Image));
+                ItemDGImage.SetValue(Image.WidthProperty, (double)64);
+                ItemDGImage.SetValue(Image.HeightProperty, (double)64);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    ItemDGImage.SetValue(Image.SourceProperty, new Binding("ImagePath"));
+                }
+                grid.AppendChild(ItemDGImage);
+                dt.VisualTree = border1;
+                col.CellTemplate = dt;
+                ItemDG.Columns.Add(col);
+                ItemDG.ItemsSource = itms;
             }
         }
 
@@ -182,7 +211,10 @@ namespace MCraftingTree
         private void Delete_Item(object sender, RoutedEventArgs e)
         {
             var remove = (Items)ItemDG.SelectedItem;
-            File.Delete(remove.ImagePath);
+            if (itms[ItemDG.SelectedIndex].ImagePath != Directory.GetCurrentDirectory())
+            {
+                File.Delete(remove.ImagePath);
+            }
             ctx.Items.Remove(remove);
             ctx.SaveChanges();
             LoadItems();

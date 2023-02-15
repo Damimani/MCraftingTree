@@ -56,20 +56,7 @@
                                   HeadersVisibility="All" CanUserSortColumns="True"
                                   Name="ItemDG" IsReadOnly="True" Background="Transparent">
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="Icon" Width="94" x:Name="ImageCol">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
-                                                <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                                    <Grid>
-                                                        <Rectangle Fill="#8B8B8B"/>
-                                                        <Image Width="64px" Height="64px" Source="{Binding Path=ImagePath}" />
-                                                    </Grid>
-                                                </Border>
-                                            </Border>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
+                                
                                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                                 <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
                             </DataGrid.Columns>
