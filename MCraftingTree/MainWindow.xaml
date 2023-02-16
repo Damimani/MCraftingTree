@@ -47,10 +47,10 @@
                             <ColumnDefinition Width="25px" />
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
-                        <Button Padding="0,0,0,5px" Style="{StaticResource MaterialDesignToolButton}">
+                        <Button Padding="0,0,0,5px" Style="{StaticResource MaterialDesignToolButton}" Click="Search_Items_Click">
                             <materialDesign:PackIcon Kind="Search"/>
                         </Button>
-                        <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="Search Items..." PreviewKeyDown="Search_Items"/>
+                        <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="Search Items..." x:Name="SearchBar"/>
                         <DataGrid Grid.Row="1" Grid.ColumnSpan="2" 
                                   CanUserAddRows="False" AutoGenerateColumns="False" SelectionMode="Single"
                                   HeadersVisibility="All" CanUserSortColumns="True"

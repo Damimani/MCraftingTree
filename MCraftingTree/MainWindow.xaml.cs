@@ -33,6 +33,16 @@ namespace MCraftingTree
             InitializeComponent();
             LoadItems();
         }
+        //makes a new BitmapImage to stop Image.Load() being a problem and blocking the deletion and modification of already used files
+        public BitmapImage NewBitmapImage(string path)
+        {
+            BitmapImage BMImage = new BitmapImage();
+            BMImage.BeginInit();
+            BMImage.CacheOption = BitmapCacheOption.OnLoad;
+            BMImage.UriSource = new Uri(path);
+            BMImage.EndInit();
+            return BMImage;
+        }
 
         public void LoadItems()
         {
@@ -48,12 +58,37 @@ namespace MCraftingTree
                         {
                             itms[i].ImagePath = Directory.GetCurrentDirectory() + itms[i].ImagePath; //kept adding the current directory to ALL ImagePaths without if
                         }
-                        BitmapImage BMImage = new BitmapImage();
-                        BMImage.BeginInit();
-                        BMImage.CacheOption = BitmapCacheOption.OnLoad;
-                        BMImage.UriSource = new Uri(itms[i].ImagePath);
-                        BMImage.EndInit();
-                        itms[i].BMImage = BMImage;
+                        itms[i].BMImage = NewBitmapImage(itms[i].ImagePath);
+                    }
+                }
+                ItemDG.ItemsSource = "";
+                ItemDG.ItemsSource = itms;
+            }
+        }
+        public void LoadItems(List<string> search)
+        {
+            var items = ctx.Items;
+            if (items != null)
+            {
+                itms = new List<Items>();
+                foreach (var result in search)
+                {
+                    List<Items> item = ctx.Items.Where(b => b.Name.StartsWith(result)).ToList();
+                    for (int i = 0; i < item.Count; i++)
+                    {
+                        items.Remove(item[i]);
+                        itms.Add(item[i]);
+                    }
+                }
+                for (int i = 0; i < itms.Count; i++)
+                {
+                    if (itms[i].ImagePath != null)
+                    {
+                        if (!itms[i].ImagePath.StartsWith("C:"))
+                        {
+                            itms[i].ImagePath = Directory.GetCurrentDirectory() + itms[i].ImagePath; //kept adding the current directory to ALL ImagePaths without if
+                        }
+                        itms[i].BMImage = NewBitmapImage(itms[i].ImagePath);
                     }
                 }
                 ItemDG.ItemsSource = "";
@@ -137,7 +172,7 @@ namespace MCraftingTree
                     var row = (Items)ItemDG.SelectedItem;
                     ItemName.Text = row.Name;
                     ItemType.Text = row.Type;
-                    PopupImage.Source = new BitmapImage(new Uri (row.ImagePath));
+                    PopupImage.Source = NewBitmapImage(row.ImagePath);
                     ImagePath = row.ImagePath;
                 }
             }
@@ -161,9 +196,9 @@ namespace MCraftingTree
                             PopupImage.Source = null;
                             LoadItems();
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
-                            MessageBox.Show("Hiba történt a feltöltésnél " + ex, "Oopsie Woopsie", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show("Hiba történt a feltöltésnél ", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                         break;
                     case "Alter":
@@ -178,9 +213,9 @@ namespace MCraftingTree
                                 update.ImagePath = ImagePath;
                             }
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
-                            MessageBox.Show("Hiba történt a változtatásnál" + ex, "hajaj", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show("Hiba történt a változtatásnál", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                         break;
                     default:
@@ -204,11 +239,6 @@ namespace MCraftingTree
             LoadItems();
         }
 
-        private void Search_Items(object sender, KeyEventArgs e)
-        {
-
-        }
-
         private void OpenFile(object sender, RoutedEventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog
@@ -222,14 +252,28 @@ namespace MCraftingTree
                 {
                     File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory(), "ImageResources\\Items", fileDialog.SafeFileName), true);
                     ImagePath = "/ImageResources/Items/" + fileDialog.SafeFileName;
-                    BitmapImage BMImage = new BitmapImage();
-                    BMImage.BeginInit();
-                    BMImage.CacheOption = BitmapCacheOption.OnLoad;
-                    BMImage.UriSource = new Uri(Directory.GetCurrentDirectory() + ImagePath);
-                    BMImage.EndInit();
-                    PopupImage.Source = BMImage;
+                    PopupImage.Source = NewBitmapImage(Directory.GetCurrentDirectory() + ImagePath);
                 }
                 stream.Dispose();
+            }
+        }
+
+        private void Search_Items_Click(object sender, RoutedEventArgs e)
+        {
+            string search = SearchBar.Text;
+            if (search != String.Empty)
+            {
+                var itemSearch = ctx.Items.Where(b => b.Name == search).ToList();
+                List<string> searchResult = new List<string>();
+                for (int i = 0; i < itemSearch.Count; i++)
+                {
+                    searchResult.Add(itemSearch[i].Name);
+                }
+                LoadItems(searchResult);
+            }
+            else
+            {
+                LoadItems();
             }
         }
     }
