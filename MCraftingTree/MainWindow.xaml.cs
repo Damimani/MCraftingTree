@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -274,6 +273,24 @@ namespace MCraftingTree
             else
             {
                 LoadItems();
+            }
+        }
+
+        private void Item_Source(object sender, MouseEventArgs e)
+        {
+            Items itm = (Items)sender;
+            if (e.LeftButton == MouseButtonState.Pressed) //itm != null &&
+            {
+                DragDrop.DoDragDrop(itm.BMImage, itm, DragDropEffects.Copy);
+            }
+        }
+
+        private void Item_Destination(object sender, DragEventArgs e)
+        {
+            Items itm = (Items)sender;
+            if (itm != null && e.Data.GetDataPresent(typeof(Items)))
+            {
+                e.Effects = DragDropEffects.Copy;
             }
         }
     }

@@ -56,14 +56,14 @@
                                   HeadersVisibility="All" CanUserSortColumns="True"
                                   Name="ItemDG" IsReadOnly="True" Background="Transparent">
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="Icon" Width="94" x:Name="ImageCol">
+                                <DataGridTemplateColumn Header="Icon" Width="94" x:Name="ImageCol" >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                                     <Grid>
                                                         <Rectangle Fill="#8B8B8B"/>
-                                                        <Image Width="64px" Height="64px" Source="{Binding Path=BMImage}" />
+                                                        <Image Width="64px" Height="64px" Source="{Binding Path=BMImage}" MouseMove="Item_Source"/>
                                                     </Grid>
                                                 </Border>
                                             </Border>
@@ -98,52 +98,82 @@
                             </Grid.RowDefinitions>
                             <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                    <Rectangle Fill="#8B8B8B" />
+                                    <Grid>
+                                        <Rectangle Fill="#8B8B8B" />
+                                        <Image AllowDrop="True"></Image>
+                                    </Grid>
                                 </Border>
                             </Border>
                             <Border Grid.Row="0" Grid.Column="1" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                    <Rectangle Fill="#8B8B8B" />
+                                    <Grid>
+                                        <Rectangle Fill="#8B8B8B" />
+                                        <Image AllowDrop="True"></Image>
+                                    </Grid>
                                 </Border>
                             </Border>
                             <Border Grid.Row="0" Grid.Column="2" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                    <Rectangle Fill="#8B8B8B" />
+                                    <Grid>
+                                        <Rectangle Fill="#8B8B8B" />
+                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
+                                    </Grid>
                                 </Border>
                             </Border>
                             <Border Grid.Row="1" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                    <Rectangle Fill="#8B8B8B" />
+                                    <Grid>
+                                        <Rectangle Fill="#8B8B8B" />
+                                        <Image AllowDrop="True"></Image>
+                                    </Grid>
                                 </Border>
                             </Border>
                             <Border Grid.Row="1" Grid.Column="1" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                    <Rectangle Fill="#8B8B8B" />
+                                    <Grid>
+                                        <Rectangle Fill="#8B8B8B" />
+                                        <Image AllowDrop="True"></Image>
+                                    </Grid>
                                 </Border>
                             </Border>
                             <Border Grid.Row="1" Grid.Column="2" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                    <Rectangle Fill="#8B8B8B" />
+                                    <Grid>
+                                        <Rectangle Fill="#8B8B8B" />
+                                        <Image AllowDrop="True"></Image>
+                                    </Grid>
                                 </Border>
                             </Border>
                             <Border Grid.Row="2" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                    <Rectangle Fill="#8B8B8B" />
+                                    <Grid>
+                                        <Rectangle Fill="#8B8B8B" />
+                                        <Image AllowDrop="True"></Image>
+                                    </Grid>
                                 </Border>
                             </Border>
                             <Border Grid.Row="2" Grid.Column="1" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                    <Rectangle Fill="#8B8B8B" />
+                                    <Grid>
+                                        <Rectangle Fill="#8B8B8B" />
+                                        <Image AllowDrop="True"></Image>
+                                    </Grid>
                                 </Border>
                             </Border>
                             <Border Grid.Row="2" Grid.Column="2" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                    <Rectangle Fill="#8B8B8B" />
+                                    <Grid>
+                                        <Rectangle Fill="#8B8B8B" />
+                                        <Image AllowDrop="True"></Image>
+                                    </Grid>
                                 </Border>
                             </Border>
                             <Border Grid.Row="1" Grid.Column="4" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                    <Rectangle Fill="#8B8B8B" />
+                                    <Grid>
+                                        <Rectangle Fill="#8B8B8B" />
+                                        <Image AllowDrop="True"></Image>
+                                    </Grid>
                                 </Border>
                             </Border>
                             <materialDesign:PackIcon Kind="ArrowRightBold" Width="50" Height="50" Foreground="#8B8B8B" Grid.Row="1" Grid.Column="3"/>
@@ -160,13 +190,19 @@
                             </Grid.RowDefinitions>
                             <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                    <Rectangle Fill="#8B8B8B" />
+                                    <Grid>
+                                        <Rectangle Fill="#8B8B8B" />
+                                        <Image AllowDrop="True"></Image>
+                                    </Grid>
                                 </Border>
                             </Border>
                             <materialDesign:PackIcon Kind="ArrowRightBold" Width="50" Height="50" Foreground="#8B8B8B" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             <Border Grid.Row="0" Grid.Column="2" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                    <Rectangle Fill="#8B8B8B" />
+                                    <Grid>
+                                        <Rectangle Fill="#8B8B8B" />
+                                        <Image AllowDrop="True"></Image>
+                                    </Grid>
                                 </Border>
                             </Border>
                         </Grid>
@@ -182,13 +218,19 @@
                             </Grid.RowDefinitions>
                             <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                    <Rectangle Fill="#8B8B8B" />
+                                    <Grid>
+                                        <Rectangle Fill="#8B8B8B" />
+                                        <Image AllowDrop="True"></Image>
+                                    </Grid>
                                 </Border>
                             </Border>
                             <materialDesign:PackIcon Kind="ArrowDownBold" Width="50" Height="50" Foreground="#8B8B8B" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             <Border Grid.Row="2" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
-                                    <Rectangle Fill="#8B8B8B" />
+                                    <Grid>
+                                        <Rectangle Fill="#8B8B8B" />
+                                        <Image AllowDrop="True"></Image>
+                                    </Grid>
                                 </Border>
                             </Border>
                         </Grid>
