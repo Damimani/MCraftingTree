@@ -8,6 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("oak_sapling.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("imageresources/items/acacia_chest_boat.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("imageresources/items/acacia_door.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("imageresources/items/acacia_leaves.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("imageresources/items/acacia_log.png")]
 
 

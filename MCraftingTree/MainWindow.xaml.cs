@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -13,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -34,54 +36,32 @@ namespace MCraftingTree
 
         public void LoadItems()
         {
-            ItemDG.ItemsSource = "";
-            ItemDG.Resources.Clear();
             var items = ctx.Items;
             if (items != null)
             {
                 itms = items.ToList();
                 for (int i = 0; i < itms.Count; i++)
                 {
-                    if (itms[i].ImagePath != null && !itms[i].ImagePath.StartsWith("C:"))
+                    if (itms[i].ImagePath != null)
                     {
-                        itms[i].ImagePath = Directory.GetCurrentDirectory() + itms[i].ImagePath; //kept adding the current directory to ALL ImagePaths without if
+                        if (!itms[i].ImagePath.StartsWith("C:"))
+                        {
+                            itms[i].ImagePath = Directory.GetCurrentDirectory() + itms[i].ImagePath; //kept adding the current directory to ALL ImagePaths without if
+                        }
+                        BitmapImage BMImage = new BitmapImage();
+                        BMImage.BeginInit();
+                        BMImage.CacheOption = BitmapCacheOption.OnLoad;
+                        BMImage.UriSource = new Uri(itms[i].ImagePath);
+                        BMImage.EndInit();
+                        itms[i].BMImage = BMImage;
                     }
                 }
-                var col = new DataGridTemplateColumn
-                {
-                    Header = "Icon",
-                    Width = 94
-                };
-                var dt = new DataTemplate();
-                var border1 = new FrameworkElementFactory(typeof(Border));
-                border1.SetValue(Border.BorderBrushProperty, new SolidColorBrush(Color.FromRgb(55, 55, 55)));
-                border1.SetValue(Border.BorderThicknessProperty, new Thickness(1.5, 1.5, 0, 0));
-                border1.SetValue(Border.MarginProperty, new Thickness(-0.2));
-                var border2 = new FrameworkElementFactory(typeof(Border));
-                border2.SetValue(Border.BorderBrushProperty, new SolidColorBrush(Color.FromRgb(255, 255, 255)));
-                border2.SetValue(Border.BorderThicknessProperty, new Thickness(1.5, 1.5, 0, 0));
-                border1.AppendChild(border2);
-                var grid = new FrameworkElementFactory(typeof(Grid));
-                border2.AppendChild(grid);
-                var background = new FrameworkElementFactory(typeof(Rectangle));
-                background.SetValue(Rectangle.FillProperty, new SolidColorBrush(Color.FromRgb(139, 139, 139)));
-                grid.AppendChild(background);
-                var ItemDGImage = new FrameworkElementFactory(typeof(Image));
-                ItemDGImage.SetValue(Image.WidthProperty, (double)64);
-                ItemDGImage.SetValue(Image.HeightProperty, (double)64);
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    ItemDGImage.SetValue(Image.SourceProperty, new Binding("ImagePath"));
-                }
-                grid.AppendChild(ItemDGImage);
-                dt.VisualTree = border1;
-                col.CellTemplate = dt;
-                ItemDG.Columns.Add(col);
+                ItemDG.ItemsSource = "";
                 ItemDG.ItemsSource = itms;
             }
         }
 
-        readonly Context ctx = new Context();
+        Context ctx = new Context();
         public string ImagePath = string.Empty;
         string DialogHostKey = string.Empty;
         List<Items> itms;
@@ -177,7 +157,8 @@ namespace MCraftingTree
                             ctx.SaveChanges();
                             ImagePath = null;
                             ItemName.Text = null;
-                            ItemType.Text = null;
+                            ItemType.Text = null; 
+                            PopupImage.Source = null;
                             LoadItems();
                         }
                         catch (Exception ex)
@@ -211,7 +192,10 @@ namespace MCraftingTree
         private void Delete_Item(object sender, RoutedEventArgs e)
         {
             var remove = (Items)ItemDG.SelectedItem;
-            if (itms[ItemDG.SelectedIndex].ImagePath != Directory.GetCurrentDirectory())
+            bool hasMultipleImgs = false;
+            var itemImages = ctx.Items.Where(b => b.ImagePath.Contains(remove.ImagePath)).ToList();
+            if (itemImages.Count > 1) hasMultipleImgs = true;
+            if (itms[ItemDG.SelectedIndex].ImagePath != Directory.GetCurrentDirectory() && !hasMultipleImgs)
             {
                 File.Delete(remove.ImagePath);
             }
@@ -238,35 +222,15 @@ namespace MCraftingTree
                 {
                     File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory(), "ImageResources\\Items", fileDialog.SafeFileName), true);
                     ImagePath = "/ImageResources/Items/" + fileDialog.SafeFileName;
+                    BitmapImage BMImage = new BitmapImage();
+                    BMImage.BeginInit();
+                    BMImage.CacheOption = BitmapCacheOption.OnLoad;
+                    BMImage.UriSource = new Uri(Directory.GetCurrentDirectory() + ImagePath);
+                    BMImage.EndInit();
+                    PopupImage.Source = BMImage;
                 }
                 stream.Dispose();
             }
-        }
-
-        string path = null;
-
-        private void Add_Item(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog fileDialog = new OpenFileDialog
-            {
-                Filter = "Image Files(*.png;*.jpg;*.gif)|*.png;*.jpg;*.gif"
-            };
-            bool? res = fileDialog.ShowDialog();
-            using (Stream stream = fileDialog.OpenFile())
-            {
-                if (res.HasValue && res.Value)
-                {
-                    File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory(), "ImageResources\\Items", fileDialog.SafeFileName), true);
-                    path = "/ImageResources/Items/" + fileDialog.SafeFileName;
-                    PopupImage.Source = new BitmapImage(new Uri(Path.Combine(Directory.GetCurrentDirectory() + path)));
-                }
-                stream.Dispose();
-            }
-        }
-
-        private void Remove_Item(object sender, RoutedEventArgs e)
-        {
-            File.Delete(Path.Combine(Directory.GetCurrentDirectory() + path));
         }
     }
 }

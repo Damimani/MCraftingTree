@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\obj\Debug\
+C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\obj\Release\
 MCraftingTree
 none
 false
-DEBUG;TRACE
+TRACE
 C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\App.xaml
 1219584333
 
-14-367185802
+131714902816
 211563841866
 MainWindow.xaml;
 
-False
+True
 

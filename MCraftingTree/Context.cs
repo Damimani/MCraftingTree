@@ -33,6 +33,8 @@ namespace MCraftingTree
         public string ImagePath { get; set; }
         [Required, StringLength(150)]
         public string Name { get; set; }
+        [NotMapped]
+        public BitmapImage BMImage { get; set; }
     }
 
     class Mobs
