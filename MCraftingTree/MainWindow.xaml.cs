@@ -295,10 +295,60 @@ namespace MCraftingTree
         private void Item_Destination(object sender, DragEventArgs e)
         {
             Items data = (Items)e.Data.GetData(DataFormats.Serializable);
-            var key = (Grid)sender;
-            var img = (Image)key.Children[0];
+            Grid key = (Grid)sender;
+            Image img = (Image)key.Children[0];
             img.Source = data.BMImage;
             img.Uid = data.ID;
+        }
+
+        private void Item_Output(object sender, DragEventArgs e)
+        {
+            Items data = (Items)e.Data.GetData(DataFormats.Serializable);
+            Grid grd = (Grid)sender;
+            Image img= (Image)grd.Children[0];
+            img.Source = data.BMImage;
+            img.Uid = data.ID;
+
+            string key = img.Name;
+
+            switch (key)
+            {
+                case "CraftingOutputImg":
+                    List<CraftingTable> recipes = ctx.CraftingTable.Where(b => b.OutputSlot == data).ToList();
+                    if (recipes.Count == 1)
+                    {
+                        CraftingGridImg11.Source = recipes[0].Slot11.BMImage; //there must be a better way to do this
+                        CraftingGridImg11.Uid = recipes[0].Slot11.ID;
+                        CraftingGridImg12.Source = recipes[0].Slot12.BMImage;
+                        CraftingGridImg11.Uid = recipes[0].Slot12.ID;
+                        CraftingGridImg13.Source = recipes[0].Slot13.BMImage;
+                        CraftingGridImg13.Uid = recipes[0].Slot13.ID;
+                        CraftingGridImg21.Source = recipes[0].Slot21.BMImage;
+                        CraftingGridImg21.Uid = recipes[0].Slot21.ID;
+                        CraftingGridImg22.Source = recipes[0].Slot22.BMImage;
+                        CraftingGridImg22.Uid = recipes[0].Slot22.ID;
+                        CraftingGridImg23.Source = recipes[0].Slot23.BMImage;
+                        CraftingGridImg23.Uid = recipes[0].Slot23.ID;
+                        CraftingGridImg31.Source = recipes[0].Slot31.BMImage;
+                        CraftingGridImg31.Uid = recipes[0].Slot31.ID;
+                        CraftingGridImg32.Source = recipes[0].Slot32.BMImage;
+                        CraftingGridImg32.Uid = recipes[0].Slot32.ID;
+                        CraftingGridImg33.Source = recipes[0].Slot33.BMImage;
+                        CraftingGridImg33.Uid = recipes[0].Slot33.ID;
+                    }
+                    else if (recipes.Count > 1)
+                    {
+
+                    }
+
+                    break;
+                case "FurnaceOutputImg":
+                    break;
+                case "BrewingOutputImg":
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
