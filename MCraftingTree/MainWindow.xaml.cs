@@ -32,7 +32,8 @@ namespace MCraftingTree
             InitializeComponent();
             LoadItems();
         }
-        //makes a new BitmapImage to stop Image.Load() being a problem and blocking the deletion and modification of already used files
+
+        //makes a new BitmapImage to stop Image.Load() from being called in the Datagrid
         public BitmapImage NewBitmapImage(string path)
         {
             BitmapImage BMImage = new BitmapImage();
@@ -64,6 +65,8 @@ namespace MCraftingTree
                 ItemDG.ItemsSource = itms;
             }
         }
+
+        //Filtered search
         public void LoadItems(List<string> search)
         {
             var items = ctx.Items;
@@ -100,6 +103,7 @@ namespace MCraftingTree
         string DialogHostKey = string.Empty;
         List<Items> itms;
 
+        //Recipe functions
         private void SwitchScreen(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
@@ -141,6 +145,7 @@ namespace MCraftingTree
 
         }
 
+        //Item functions
         private void SwitchItem(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
@@ -276,6 +281,7 @@ namespace MCraftingTree
             }
         }
 
+        //Drag and Drop functions
         private void Item_Source(object sender, MouseEventArgs e)
         {
             Image key = (Image)sender;
@@ -288,9 +294,11 @@ namespace MCraftingTree
 
         private void Item_Destination(object sender, DragEventArgs e)
         {
-            var data = e.Data.GetData(DataFormats.Serializable);
+            Items data = (Items)e.Data.GetData(DataFormats.Serializable);
             var key = (Grid)sender;
-            
+            var img = (Image)key.Children[0];
+            img.Source = data.BMImage;
+            img.Uid = data.ID;
         }
     }
 }
