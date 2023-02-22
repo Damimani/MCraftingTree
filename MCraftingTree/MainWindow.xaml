@@ -63,7 +63,7 @@
                                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                                     <Grid>
                                                         <Rectangle Fill="#8B8B8B"/>
-                                                        <Image Width="64px" Height="64px" Source="{Binding Path=BMImage}" MouseMove="Item_Source"/>
+                                                        <Image Width="64px" Height="64px" Source="{Binding Path=BMImage}" MouseMove="Item_Source" Uid="{Binding Path=ID}"/>
                                                     </Grid>
                                                 </Border>
                                             </Border>
@@ -79,8 +79,8 @@
                     <Grid Grid.Row="0" Grid.Column="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" x:Name="CraftingWidth"/>
-                            <ColumnDefinition Width="0*" x:Name="FurnaceWidth"/>
-                            <ColumnDefinition Width="0*" x:Name="BrewingWidth"/>
+                            <ColumnDefinition Width="0px" x:Name="FurnaceWidth"/>
+                            <ColumnDefinition Width="0px" x:Name="BrewingWidth"/>
                         </Grid.ColumnDefinitions>
                         <!-- Crafting Table-->
                         <Grid Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -99,8 +99,10 @@
                             <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
-                                        <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
+                                        <Rectangle Fill="#8B8B8B"/>
+                                        <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
+                                            <Image x:Name="CraftingGridImg11"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -108,7 +110,9 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
+                                        <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
+                                            <Image x:Name="CraftingGridImg12"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -116,7 +120,9 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
+                                        <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
+                                            <Image x:Name="CraftingGridImg13"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -124,7 +130,9 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
+                                        <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
+                                            <Image x:Name="CraftingGridImg21"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -132,7 +140,9 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
+                                        <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
+                                            <Image x:Name="CraftingGridImg22"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -140,7 +150,9 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
+                                        <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
+                                            <Image x:Name="CraftingGridImg23"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -148,7 +160,9 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
+                                        <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
+                                            <Image x:Name="CraftingGridImg31"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -156,7 +170,9 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
+                                        <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
+                                            <Image x:Name="CraftingGridImg32"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -164,7 +180,9 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
+                                        <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
+                                            <Image x:Name="CraftingGridImg33"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -172,11 +190,13 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image x:Name="CraftingOutputImg"></Image>
+                                        <Grid Background="Transparent"> <!-- Add drag n drop as a load recipe option -->
+                                            <Image x:Name="CraftingOutputImg"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
-                            <materialDesign:PackIcon Kind="ArrowRightBold" Width="50" Height="50" Foreground="#8B8B8B" Grid.Row="1" Grid.Column="3"/>
+                            <materialDesign:PackIcon Kind="ArrowRightBold" Width="64" Height="64" Foreground="#8B8B8B" Grid.Row="1" Grid.Column="3"/>
                         </Grid>
                         <!-- Furnace-->
                         <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -192,16 +212,20 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
+                                        <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
+                                            <Image x:Name="FurnaceInputImg"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
-                            <materialDesign:PackIcon Kind="ArrowRightBold" Width="50" Height="50" Foreground="#8B8B8B" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="ArrowRightBold" Width="64" Height="64" Foreground="#8B8B8B" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             <Border Grid.Row="0" Grid.Column="2" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image x:Name="FurnaceOutputImg"></Image>
+                                        <Grid Background="Transparent">  <!-- Add drag n drop as a load recipe option -->
+                                            <Image x:Name="FurnaceOutputImg"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -220,7 +244,9 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
+                                        <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
+                                            <Image x:Name="BrewingInputImg"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -229,7 +255,9 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image x:Name="BrewingOutputImg"></Image>
+                                        <Grid Background="Transparent">  <!-- Add drag n drop as a load recipe option -->
+                                            <Image x:Name="BrewingOutputImg"/>
+                                        </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
