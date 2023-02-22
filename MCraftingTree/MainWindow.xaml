@@ -100,7 +100,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True"></Image>
+                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -108,7 +108,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True"></Image>
+                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -124,7 +124,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True"></Image>
+                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -132,7 +132,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True"></Image>
+                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -140,7 +140,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True"></Image>
+                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -148,7 +148,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True"></Image>
+                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -156,7 +156,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True"></Image>
+                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -164,7 +164,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True"></Image>
+                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -172,7 +172,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True"></Image>
+                                        <Image x:Name="CraftingOutputImg"></Image>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -192,7 +192,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True"></Image>
+                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -201,7 +201,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True"></Image>
+                                        <Image x:Name="FurnaceOutputImg"></Image>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -220,7 +220,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True"></Image>
+                                        <Image AllowDrop="True" Drop="Item_Destination"></Image>
                                     </Grid>
                                 </Border>
                             </Border>
@@ -229,7 +229,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Image AllowDrop="True"></Image>
+                                        <Image x:Name="BrewingOutputImg"></Image>
                                     </Grid>
                                 </Border>
                             </Border>

@@ -278,17 +278,18 @@ namespace MCraftingTree
 
         private void Item_Source(object sender, MouseEventArgs e)
         {
-            Items itm = (Items)sender;
+            Items itm = new Items();
+            var key = (Image)sender;
             if (e.LeftButton == MouseButtonState.Pressed) //itm != null &&
             {
-                DragDrop.DoDragDrop(itm.BMImage, itm, DragDropEffects.Copy);
+                DragDrop.DoDragDrop(key, key.Source, DragDropEffects.Copy);
             }
         }
 
         private void Item_Destination(object sender, DragEventArgs e)
         {
-            Items itm = (Items)sender;
-            if (itm != null && e.Data.GetDataPresent(typeof(Items)))
+            Items itm = new Items();
+            if (e != null && e.Data.GetDataPresent(typeof(Image)))
             {
                 e.Effects = DragDropEffects.Copy;
             }
