@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -99,9 +100,11 @@ namespace MCraftingTree
         }
 
         Context ctx = new Context();
-        public string ImagePath = string.Empty;
-        string DialogHostKey = string.Empty;
+        Items nullItem = new Items() { ID = "-1" };
         List<Items> itms;
+        string switchScreen = "Crafting"; 
+        string ImagePath = string.Empty;
+        string DialogHostKey = string.Empty;
 
         //Recipe functions
         private void SwitchScreen(object sender, RoutedEventArgs e)
@@ -114,16 +117,19 @@ namespace MCraftingTree
                     CraftingWidth.Width = new GridLength(1, GridUnitType.Star);
                     FurnaceWidth.Width = new GridLength(0, GridUnitType.Pixel);
                     BrewingWidth.Width = new GridLength(0, GridUnitType.Pixel);
+                    switchScreen = "Crafting";
                     break;
                 case "Furnace":
                     CraftingWidth.Width = new GridLength(0, GridUnitType.Pixel);
                     FurnaceWidth.Width = new GridLength(1, GridUnitType.Star);
                     BrewingWidth.Width = new GridLength(0, GridUnitType.Pixel);
+                    switchScreen = "Furnace";
                     break;
                 case "Brewing":
                     CraftingWidth.Width = new GridLength(0, GridUnitType.Pixel);
                     FurnaceWidth.Width = new GridLength(0, GridUnitType.Pixel);
                     BrewingWidth.Width = new GridLength(1, GridUnitType.Star);
+                    switchScreen = "Brewing";
                     break;
                 default:
                     break;
@@ -132,7 +138,44 @@ namespace MCraftingTree
 
         private void Add_Recipe(object sender, RoutedEventArgs e)
         {
+            switch (switchScreen)
+            {
+                case "Crafting":
+                    if (CraftingOutputImg.Uid != null)
+                    {
+                        Border border = new Border();
+                        List<Items> items = new List<Items>();
+                        for (int i = 0; i < CraftingGrid.Children.Count-2; i++)
+                        {
+                            string Uid = ImageUidSearch((Border)CraftingGrid.Children[i]);
+                            if (Uid != "" && Uid != null)
+                            {
+                                Items itm = ctx.Items.Single(b => b.ID == Uid);
+                                if (itm != null)
+                                {
+                                    items.Add(itm);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("This item does not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
 
+                            }
+                            else if (CraftingGrid.Children[i] is Border)
+                            {
+                                items.Add(nullItem);
+                            }
+                        }
+                        CraftingTable recipe = new CraftingTable() { ID = Guid.NewGuid().ToString()};
+                    }
+                    break;
+                case "Furnace":
+                    break;
+                case "Brewing":
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Alter_Recipe(object sender, RoutedEventArgs e)
@@ -143,6 +186,32 @@ namespace MCraftingTree
         private void Delete_Recipe(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void NumberOnly(object sender, TextChangedEventArgs e)
+        {
+            if (OutputAmount.Text != "")
+            {
+                try
+                {
+                    int.Parse(OutputAmount.Text);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Please write a natural number in the input.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    OutputAmount.Text = "1";
+                }
+            }
+        }
+
+        private string ImageUidSearch(Border border)
+        {
+            Border border2 = (Border)border.Child;
+            Grid grid = (Grid)border2.Child;
+            Grid grid2 = (Grid)grid.Children[1];
+            Image img = (Image)grid2.Children[0];
+            string Uid = img.Uid;
+            return Uid;
         }
 
         //Item functions
@@ -202,7 +271,7 @@ namespace MCraftingTree
                         }
                         catch (Exception)
                         {
-                            MessageBox.Show("Hiba történt a feltöltésnél ", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show("An error has occured during upload.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                         break;
                     case "Alter":
@@ -216,10 +285,12 @@ namespace MCraftingTree
                             {
                                 update.ImagePath = ImagePath;
                             }
+                            ctx.SaveChanges();
+                            LoadItems();
                         }
                         catch (Exception)
                         {
-                            MessageBox.Show("Hiba történt a változtatásnál", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show("An error has occured during modification.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                         break;
                     default:
@@ -301,7 +372,7 @@ namespace MCraftingTree
             img.Uid = data.ID;
         }
 
-        private void Item_Output(object sender, DragEventArgs e)
+        /*private void Item_Output(object sender, DragEventArgs e) //needs to be repurposed for recipe loading
         {
             Items data = (Items)e.Data.GetData(DataFormats.Serializable);
             Grid grd = (Grid)sender;
@@ -349,6 +420,6 @@ namespace MCraftingTree
                 default:
                     break;
             }
-        }
+        }*/
     }
 }

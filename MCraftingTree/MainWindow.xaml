@@ -190,12 +190,13 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Grid Background="Transparent" Drop="Item_Output" AllowDrop="True">
+                                        <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
                                             <Image x:Name="CraftingOutputImg"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
                             </Border>
+                            <TextBox Grid.Row="2" Grid.Column="5" Text="1" x:Name="OutputAmount" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="NumberOnly"/>
                             <materialDesign:PackIcon Kind="ArrowRightBold" Width="64" Height="64" Foreground="#8B8B8B" Grid.Row="1" Grid.Column="3"/>
                         </Grid>
                         <!-- Furnace-->
@@ -223,7 +224,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Grid Background="Transparent" Drop="Item_Output" AllowDrop="True">
+                                        <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
                                             <Image x:Name="FurnaceOutputImg"/>
                                         </Grid>
                                     </Grid>
@@ -255,7 +256,7 @@
                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
-                                        <Grid Background="Transparent" Drop="Item_Output" AllowDrop="True">
+                                        <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
                                             <Image x:Name="BrewingOutputImg"/>
                                         </Grid>
                                     </Grid>
