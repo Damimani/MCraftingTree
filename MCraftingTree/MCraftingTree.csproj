@@ -121,6 +121,10 @@
     <Compile Include="Migrations\202302090725458_ImagePathLenghtChange.designer.cs">
       <DependentUpon>202302090725458_ImagePathLenghtChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202302281329283_LotsOFixes.cs" />
+    <Compile Include="Migrations\202302281329283_LotsOFixes.designer.cs">
+      <DependentUpon>202302281329283_LotsOFixes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -143,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202302090725458_ImagePathLenghtChange.resx">
       <DependentUpon>202302090725458_ImagePathLenghtChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202302281329283_LotsOFixes.resx">
+      <DependentUpon>202302281329283_LotsOFixes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

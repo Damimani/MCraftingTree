@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Runtime.InteropServices.ComTypes;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -32,17 +34,38 @@ namespace MCraftingTree
         {
             InitializeComponent();
             LoadItems();
+            CreateFile();
         }
 
         //makes a new BitmapImage to stop Image.Load() from being called in the Datagrid
         public BitmapImage NewBitmapImage(string path)
         {
             BitmapImage BMImage = new BitmapImage();
+            path = Directory.GetCurrentDirectory().ToString() + path;
             BMImage.BeginInit();
             BMImage.CacheOption = BitmapCacheOption.OnLoad;
             BMImage.UriSource = new Uri(path);
             BMImage.EndInit();
             return BMImage;
+        }
+
+        public void CreateFile()
+        {
+            List<string> files = new List<string>();
+            foreach (string file in Directory.EnumerateFiles(Directory.GetCurrentDirectory() + "/ImageResources/Items", "*.png"))
+            {
+                string filename = Path.GetFileName(file);
+                string secondaryImagePath = "ImageResources/Items/" + filename;
+                string itemnamePre = filename.Remove(filename.Length-4);
+                string[] nameArray = itemnamePre.Split('_');
+                string szar = string.Empty;
+                for (int i = 0; i < nameArray.Length; i++)
+                {
+                    string fos = nameArray[i];
+                    TextInfo txtinf = new CultureInfo("en-US", false).TextInfo;
+                    szar = txtinf.ToTitleCase(fos); //folyt innen
+                }
+            }
         }
 
         public void LoadItems()
@@ -55,10 +78,6 @@ namespace MCraftingTree
                 {
                     if (itms[i].ImagePath != null)
                     {
-                        if (!itms[i].ImagePath.StartsWith("C:"))
-                        {
-                            itms[i].ImagePath = Directory.GetCurrentDirectory() + itms[i].ImagePath; //kept adding the current directory to ALL ImagePaths without if
-                        }
                         itms[i].BMImage = NewBitmapImage(itms[i].ImagePath);
                     }
                 }
@@ -87,10 +106,6 @@ namespace MCraftingTree
                 {
                     if (itms[i].ImagePath != null)
                     {
-                        if (!itms[i].ImagePath.StartsWith("C:"))
-                        {
-                            itms[i].ImagePath = Directory.GetCurrentDirectory() + itms[i].ImagePath; //kept adding the current directory to ALL ImagePaths without if
-                        }
                         itms[i].BMImage = NewBitmapImage(itms[i].ImagePath);
                     }
                 }
@@ -244,7 +259,6 @@ namespace MCraftingTree
                 {
                     var row = (Items)ItemDG.SelectedItem;
                     ItemName.Text = row.Name;
-                    ItemType.Text = row.Type;
                     PopupImage.Source = NewBitmapImage(row.ImagePath);
                     ImagePath = row.ImagePath;
                 }
@@ -258,7 +272,7 @@ namespace MCraftingTree
                 switch (DialogHostKey)
                 {
                     case "Add":
-                        Items item = new Items() { ID = Guid.NewGuid().ToString(), Name = ItemName.Text, Type = ItemType.Text, ImagePath = ImagePath };
+                        Items item = new Items() { ID = Guid.NewGuid().ToString(), Name = ItemName.Text, ImagePath = ImagePath };
                         try
                         {
                             ctx.Items.Add(item);
@@ -279,9 +293,7 @@ namespace MCraftingTree
                         {
                             var update = (Items)ItemDG.SelectedItem;
                             update.Name = ItemName.Text;
-                            update.Type = ItemType.Text;
-                            string currentImage = update.ImagePath.Substring(Directory.GetCurrentDirectory().Length);
-                            if (currentImage != ImagePath)
+                            if (update.ImagePath != ImagePath)
                             {
                                 update.ImagePath = ImagePath;
                             }
@@ -305,9 +317,9 @@ namespace MCraftingTree
             bool hasMultipleImgs = false;
             var itemImages = ctx.Items.Where(b => b.ImagePath.Contains(remove.ImagePath)).ToList();
             if (itemImages.Count > 1) hasMultipleImgs = true;
-            if (itms[ItemDG.SelectedIndex].ImagePath != Directory.GetCurrentDirectory() && !hasMultipleImgs)
+            if (!hasMultipleImgs)
             {
-                File.Delete(remove.ImagePath);
+                File.Delete(Directory.GetCurrentDirectory() + remove.ImagePath);
             }
             ctx.Items.Remove(remove);
             ctx.SaveChanges();
@@ -327,7 +339,7 @@ namespace MCraftingTree
                 {
                     File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory(), "ImageResources\\Items", fileDialog.SafeFileName), true);
                     ImagePath = "/ImageResources/Items/" + fileDialog.SafeFileName;
-                    PopupImage.Source = NewBitmapImage(Directory.GetCurrentDirectory() + ImagePath);
+                    PopupImage.Source = NewBitmapImage(ImagePath);
                 }
                 stream.Dispose();
             }
