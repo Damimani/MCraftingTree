@@ -58,20 +58,20 @@
                                   HeadersVisibility="All" CanUserSortColumns="True"
                                   Name="ItemDG" IsReadOnly="True" Background="Transparent">
                             <DataGrid.Resources>
-                                <Style TargetType="DataGridCell" x:Key="ImageResource">
-                                    <EventSetter Event="PreviewMouseDoubleClick" Handler="Load_Recipe"/>
+                                <Style TargetType="Image" x:Key="ImageResource">
+                                    <EventSetter Event="MouseLeftButtonUp"  Handler="Load_Recipe"/>
                                 </Style>
                             </DataGrid.Resources>
 
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="Icon" Width="68" x:Name="ImageCol" CellStyle="{StaticResource ResourceKey=ImageResource}">
+                                <DataGridTemplateColumn Header="Icon" Width="94" x:Name="ImageCol" >
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                                     <Grid>
                                                         <Rectangle Fill="#8B8B8B"/>
-                                                        <Image Source="{Binding Path=BMImage}" Width="64px" Height="64px" MouseMove="Item_Source" Uid="{Binding Path=ID}"/>
+                                                        <Image Source="{Binding Path=BMImage}" Width="64px" Height="64px" MouseMove="Item_Source" Uid="{Binding Path=ID}" Style="{StaticResource ResourceKey=ImageResource}"/>
                                                     </Grid>
                                                 </Border>
                                             </Border>
@@ -290,10 +290,8 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
                             <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
                         <Button Content="Add Recipe" Click="Add_Recipe" materialDesign:ButtonAssist.CornerRadius="5 0 0 5"/>
-                        <Button Grid.Column="1" Content="Alter Recipe" Click="Alter_Recipe" materialDesign:ButtonAssist.CornerRadius="0"/>
                         <Button Grid.Column="2" Content="Delete Recipe" Click="Delete_Recipe" materialDesign:ButtonAssist.CornerRadius="0 0 5 0"/>
                     </Grid>
                 </Grid>
@@ -319,7 +317,7 @@
             <materialDesign:DialogHost Grid.Column="1">
                 <materialDesign:DialogHost.DialogContent>
                     <!-- Popup -->
-                    <materialDesign:Card MinHeight="200px" MinWidth="200px" MaxHeight="200px" MaxWidth="200px">
+                    <materialDesign:Card MinHeight="250px" MinWidth="200px" MaxHeight="250px" MaxWidth="200px">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*" />
@@ -327,7 +325,9 @@
                                 <RowDefinition Height="1*" />
                                 <RowDefinition Height="1*" />
                                 <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
                             </Grid.RowDefinitions>
+                            <TextBox materialDesign:HintAssist.Hint="Item ID (modname:item_name)" x:Name="ItemID"/>
                             <TextBox materialDesign:HintAssist.Hint="Item name" x:Name="ItemName"/>
                             <TextBox Grid.Row="1" materialDesign:HintAssist.Hint="Item type (optional)" x:Name="ItemType"/>
                             <Image Grid.Row="2" HorizontalAlignment="Center" Width="32px" Height="32px" x:Name="PopupImage"/>

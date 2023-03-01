@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Remoting.Contexts;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -57,6 +59,7 @@ namespace MCraftingTree
                 if (items != null)
                 {
                     itms = items.ToList();
+                    itms.Remove(ctx.Items.Single(b => b.ID == "-1"));
                     for (int i = 0; i < itms.Count; i++)
                     {
                         if (itms[i].ImagePath != null)
@@ -89,6 +92,7 @@ namespace MCraftingTree
                     items.Remove(item[i]);
                     itms.Add(item[i]);
                 }
+                itms.Remove(ctx.Items.Single(b => b.ID == "-1"));
                 for (int i = 0; i < itms.Count; i++)
                 {
                     if (itms[i].ImagePath != null)
@@ -102,7 +106,7 @@ namespace MCraftingTree
         }
 
         Context ctx = new Context();
-        Items nullItem = new Items() { ID = "-1" };
+        Items nullItem = new Items() { ID = "-1", Name="Empty Item" };
         List<Items> itms;
         string switchScreen = "Crafting"; 
         string ImagePath = string.Empty;
@@ -246,11 +250,6 @@ namespace MCraftingTree
             }
         }
 
-        private void Alter_Recipe(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Delete_Recipe(object sender, RoutedEventArgs e)
         {
 
@@ -311,7 +310,10 @@ namespace MCraftingTree
                 if (ItemDG.SelectedItem != null)
                 {
                     var row = (Items)ItemDG.SelectedItem;
+                    var rowType = ctx.Types.Single(x => x.Item == row);
+                    ItemID.Text = row.ID;
                     ItemName.Text = row.Name;
+                    ItemType.Text = rowType.Type;
                     PopupImage.Source = NewBitmapImage(row.ImagePath);
                     ImagePath = row.ImagePath;
                 }
@@ -320,17 +322,27 @@ namespace MCraftingTree
 
         private void Add_Or_Alter_Item(object sender, RoutedEventArgs e)
         {
-            if (ItemName.Text != null)
+            if (ItemName.Text != null && ItemID.Text != null)
             {
                 switch (DialogHostKey)
                 {
                     case "Add":
-                        Items item = new Items() { ID = Guid.NewGuid().ToString(), Name = ItemName.Text, ImagePath = ImagePath };
+                        Types type = new Types();
+                        Items item = new Items() { ID = ItemType.Text, Name = ItemName.Text, ImagePath = ImagePath };
+                        if (ItemType.Text != null)
+                        {
+                            type = new Types() { ID = Guid.NewGuid().ToString(), Item = item, Type = ItemType.Text };
+                        }
                         try
                         {
                             ctx.Items.Add(item);
+                            if (type != null)
+                            {
+                                ctx.Types.Add(type);
+                            }
                             ctx.SaveChanges();
                             ImagePath = null;
+                            ItemID.Text = null;
                             ItemName.Text = null;
                             ItemType.Text = null; 
                             PopupImage.Source = null;
@@ -345,7 +357,13 @@ namespace MCraftingTree
                         try
                         {
                             var update = (Items)ItemDG.SelectedItem;
+                            var updateType = ctx.Types.Single(b => b.Item == update);
+                            update.ID = ItemID.Text;
                             update.Name = ItemName.Text;
+                            if (updateType != null)
+                            {
+                                updateType.Type = ItemType.Text;
+                            }
                             if (update.ImagePath != ImagePath)
                             {
                                 update.ImagePath = ImagePath;
@@ -362,11 +380,16 @@ namespace MCraftingTree
                         break;
                 }
             }
+            else
+            {
+                MessageBox.Show("Please define an item ID and an item name!", "Insufficent Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
         }
 
         private void Delete_Item(object sender, RoutedEventArgs e)
         {
             var remove = (Items)ItemDG.SelectedItem;
+            var removeType = ctx.Types.Single(b => b.Item == remove);
             bool hasMultipleImgs = false;
             var itemImages = ctx.Items.Where(b => b.ImagePath.Contains(remove.ImagePath)).ToList();
             if (itemImages.Count > 1) hasMultipleImgs = true;
@@ -374,6 +397,7 @@ namespace MCraftingTree
             {
                 File.Delete(Directory.GetCurrentDirectory() + remove.ImagePath);
             }
+            ctx.Types.Remove(removeType);
             ctx.Items.Remove(remove);
             ctx.SaveChanges();
             LoadItems();
@@ -440,17 +464,22 @@ namespace MCraftingTree
 
         private void Load_Recipe(object sender, MouseButtonEventArgs e)
         {
-            DataGridCell sdr = (DataGridCell)sender;
-            Items itm = (Items)sdr.Content;
+            Image srd = (Image)sender;
+            Items itm = ctx.Items.Single(b => b.ID == srd.Uid);
             switch (switchScreen)
             {
                 case "Crafting":
-                    List<CraftingTable> recipes = ctx.CraftingTable.Where(b => b.OutputSlot == itm).ToList();
-                    if (recipes.Count > 1)
+                    List<CraftingTable> recipes = ctx.CraftingTable.Where(b => b.OutputSlot.ID == itm.ID).ToList();
+                    for (int i = 0; i < ctx.CraftingTable.Count(); i++)
+                    {
+                        
+                    }
+                    
+                    if (recipes.Count() > 1)
                     {
 
                     }
-                    else if (recipes.Count == 1)
+                    else if (recipes.Count() == 1)
                     {
 
                     }

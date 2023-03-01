@@ -39,6 +39,8 @@ namespace MCraftingTree
         public string Name { get; set; }
         [NotMapped]
         public BitmapImage BMImage { get; set; }
+        [NotMapped]
+        public string Type { get; set; }
     }
 
     public class Types
