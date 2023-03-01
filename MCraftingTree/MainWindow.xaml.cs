@@ -49,22 +49,31 @@ namespace MCraftingTree
         }
 
 
-        public void LoadItems()
+        public async void LoadItems()
         {
+            loadingText.Visibility = Visibility.Visible;
             var items = ctx.Items;
-            if (items != null)
-            {
-                itms = items.ToList();
-                for (int i = 0; i < itms.Count; i++)
+            await Task.Run(() => { 
+                if (items != null)
                 {
-                    if (itms[i].ImagePath != null)
+                    itms = items.ToList();
+                    for (int i = 0; i < itms.Count; i++)
                     {
-                        itms[i].BMImage = NewBitmapImage(itms[i].ImagePath);
+                        if (itms[i].ImagePath != null)
+                        {
+                            Dispatcher.Invoke(() => {
+                                itms[i].BMImage = NewBitmapImage(itms[i].ImagePath);
+                            });
+                        }
                     }
+                    Dispatcher.Invoke(() =>
+                    {
+                        ItemDG.ItemsSource = "";
+                        ItemDG.ItemsSource = itms;
+                        loadingText.Visibility = Visibility.Visible;
+                    });
                 }
-                ItemDG.ItemsSource = "";
-                ItemDG.ItemsSource = itms;
-            }
+            });
         }
 
         //Filtered search
@@ -162,10 +171,43 @@ namespace MCraftingTree
                                 items.Add(nullItem);
                             }
                         }
-                        CraftingTable recipe = new CraftingTable() { ID = Guid.NewGuid().ToString()};
+                        CraftingTable recipe = new CraftingTable() { ID = Guid.NewGuid().ToString(), OutputAmount = uint.Parse(OutputAmount.Text), 
+                            Slot11 = items[0], Slot12 = items[1], Slot13 = items[2], 
+                            Slot21 = items[3], Slot22 = items[4], Slot23 = items[5], 
+                            Slot31 = items[6], Slot32 = items[7], Slot33 = items[8], 
+                            OutputSlot = items[9]};
+                        ctx.CraftingTable.Add(recipe);
+                        ctx.SaveChanges();
                     }
                     break;
                 case "Furnace":
+                    if (FurnaceInputImg.Uid != null)
+                    {
+                        Border border = new Border();
+                        List<Items> items = new List<Items>();
+                        for (int i = 0; i < CraftingGrid.Children.Count; i++)
+                        {
+                            string Uid = ImageUidSearch((Border)FurnaceGrid.Children[i]);
+                            if (Uid != "" && Uid != null)
+                            {
+                                Items itm = ctx.Items.Single(b => b.ID == Uid);
+                                if (itm != null)
+                                {
+                                    items.Add(itm);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("This item does not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+
+                            }
+                            else if (CraftingGrid.Children[i] is Border)
+                            {
+                                items.Add(nullItem);
+                            }
+                        }
+                        MessageBox.Show(items.Count.ToString());
+                    }
                     break;
                 case "Brewing":
                     break;

@@ -51,6 +51,7 @@
                             <materialDesign:PackIcon Kind="Search"/>
                         </Button>
                         <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="Search Items..." x:Name="SearchBar"/>
+                        <Label Content="Loading Items..." Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible" x:Name="loadingText"/>
                         <DataGrid Grid.Row="1" Grid.ColumnSpan="2" 
                                   CanUserAddRows="False" AutoGenerateColumns="False" SelectionMode="Single"
                                   HeadersVisibility="All" CanUserSortColumns="True"
