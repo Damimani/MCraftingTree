@@ -56,8 +56,13 @@
                                   CanUserAddRows="False" AutoGenerateColumns="False" SelectionMode="Single"
                                   HeadersVisibility="All" CanUserSortColumns="True"
                                   Name="ItemDG" IsReadOnly="True" Background="Transparent">
+                            <DataGrid.CellStyle>
+                                <Style TargetType="DataGridCell">
+                                    <EventSetter Event="PreviewMouseDoubleClick" Handler="Load_Recipe"/>
+                                </Style>
+                            </DataGrid.CellStyle>
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="Icon" Width="94" x:Name="ImageCol" >
+                                <DataGridTemplateColumn Header="Icon" Width="94" x:Name="ImageCol" CellStyle="{}">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
@@ -102,7 +107,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B"/>
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image x:Name="CraftingGridImg11"/>
+                                            <Image MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -112,7 +117,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image x:Name="CraftingGridImg12"/>
+                                            <Image MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -122,7 +127,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image x:Name="CraftingGridImg13"/>
+                                            <Image MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -132,7 +137,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image x:Name="CraftingGridImg21"/>
+                                            <Image MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -142,7 +147,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image x:Name="CraftingGridImg22"/>
+                                            <Image MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -152,7 +157,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image x:Name="CraftingGridImg23"/>
+                                            <Image MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -162,7 +167,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image x:Name="CraftingGridImg31"/>
+                                            <Image MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -172,7 +177,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image x:Name="CraftingGridImg32"/>
+                                            <Image MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -182,7 +187,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image x:Name="CraftingGridImg33"/>
+                                            <Image MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -192,7 +197,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image x:Name="CraftingOutputImg"/>
+                                            <Image x:Name="CraftingOutputImg" MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -215,7 +220,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image x:Name="FurnaceInputImg"/>
+                                            <Image MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -226,7 +231,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image x:Name="FurnaceOutputImg"/>
+                                            <Image x:Name="FurnaceOutputImg" MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -247,7 +252,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image x:Name="BrewingInputImg"/>
+                                            <Image MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -258,7 +263,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image x:Name="BrewingOutputImg"/>
+                                            <Image x:Name="BrewingOutputImg" MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>

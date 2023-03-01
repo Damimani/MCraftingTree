@@ -70,7 +70,7 @@ namespace MCraftingTree
                     {
                         ItemDG.ItemsSource = "";
                         ItemDG.ItemsSource = itms;
-                        loadingText.Visibility = Visibility.Visible;
+                        loadingText.Visibility = Visibility.Hidden;
                     });
                 }
             });
@@ -148,7 +148,6 @@ namespace MCraftingTree
                 case "Crafting":
                     if (CraftingOutputImg.Uid != null)
                     {
-                        Border border = new Border();
                         List<Items> items = new List<Items>();
                         for (int i = 0; i < CraftingGrid.Children.Count-2; i++)
                         {
@@ -164,7 +163,6 @@ namespace MCraftingTree
                                 {
                                     MessageBox.Show("This item does not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                 }
-
                             }
                             else if (CraftingGrid.Children[i] is Border)
                             {
@@ -181,35 +179,70 @@ namespace MCraftingTree
                     }
                     break;
                 case "Furnace":
-                    if (FurnaceInputImg.Uid != null)
+                    if (FurnaceOutputImg.Uid != null)
                     {
-                        Border border = new Border();
                         List<Items> items = new List<Items>();
-                        for (int i = 0; i < CraftingGrid.Children.Count; i++)
+                        for (int i = 0; i < FurnaceGrid.Children.Count; i++)
                         {
-                            string Uid = ImageUidSearch((Border)FurnaceGrid.Children[i]);
-                            if (Uid != "" && Uid != null)
+                            if (FurnaceGrid.Children[i] is Border)
                             {
-                                Items itm = ctx.Items.Single(b => b.ID == Uid);
-                                if (itm != null)
+                                string Uid = ImageUidSearch((Border)FurnaceGrid.Children[i]);
+                                if (Uid != "" && Uid != null)
                                 {
-                                    items.Add(itm);
+                                    Items itm = ctx.Items.Single(b => b.ID == Uid);
+                                    if (itm != null)
+                                    {
+                                        items.Add(itm);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("This item does not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    }
+
                                 }
                                 else
                                 {
-                                    MessageBox.Show("This item does not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    items.Add(nullItem);
                                 }
-
-                            }
-                            else if (CraftingGrid.Children[i] is Border)
-                            {
-                                items.Add(nullItem);
                             }
                         }
-                        MessageBox.Show(items.Count.ToString());
+                        Furnace recipe = new Furnace() { ID = Guid.NewGuid().ToString(), InputSlot = items[0], OutputSlot=items[1]};
+                        ctx.Furnace.Add(recipe);
+                        ctx.SaveChanges();
                     }
                     break;
                 case "Brewing":
+                    if (BrewingOutputImg.Uid != null)
+                    {
+                        List<Items> items = new List<Items>();
+                        for (int i = 0; i < BrewingGrid.Children.Count; i++)
+                        {
+                            if (BrewingGrid.Children[i] is Border)
+                            {
+                                string Uid = ImageUidSearch((Border)BrewingGrid.Children[i]);
+                                if (Uid != "" && Uid != null)
+                                {
+                                    Items itm = ctx.Items.Single(b => b.ID == Uid);
+                                    if (itm != null)
+                                    {
+                                        items.Add(itm);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("This item does not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    }
+
+                                }
+                                else
+                                {
+                                    items.Add(nullItem);
+                                }
+                            }
+                        }
+                        Brewing recipe = new Brewing() { ID= Guid.NewGuid().ToString(), IngredientSlot = items[0], OutputSlot = items[1] };
+                        ctx.Brewing.Add(recipe);
+                        ctx.SaveChanges();
+                    }
                     break;
                 default:
                     break;
@@ -405,6 +438,43 @@ namespace MCraftingTree
             Image img = (Image)key.Children[0];
             img.Source = data.BMImage;
             img.Uid = data.ID;
+        }
+
+        private void Remove_Image(object sender, MouseButtonEventArgs e)
+        {
+            Image key = (Image)sender;
+            key.Uid = "";
+            key.Source = null;
+        }
+
+        private void Load_Recipe(object sender, MouseButtonEventArgs e)
+        {
+            Image sdr = (Image)sender;
+            Items itm = ctx.Items.Single(b => b.ID == sdr.Uid);
+            switch (switchScreen)
+            {
+                case "Crafting":
+                    List<CraftingTable> recipes = ctx.CraftingTable.Where(b => b.OutputSlot == itm).ToList();
+                    if (recipes.Count > 1)
+                    {
+
+                    }
+                    else if (recipes.Count == 1)
+                    {
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("No recipes are associated with this item!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    break;
+                case "Furnace":
+                    break;
+                case "Brewing":
+                    break;
+                default:
+                    break;
+            }
         }
 
         /*private void Item_Output(object sender, DragEventArgs e) //needs to be repurposed for recipe loading
