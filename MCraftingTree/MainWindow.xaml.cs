@@ -34,7 +34,6 @@ namespace MCraftingTree
         {
             InitializeComponent();
             LoadItems();
-            CreateFile();
         }
 
         //makes a new BitmapImage to stop Image.Load() from being called in the Datagrid
@@ -49,24 +48,6 @@ namespace MCraftingTree
             return BMImage;
         }
 
-        public void CreateFile()
-        {
-            List<string> files = new List<string>();
-            foreach (string file in Directory.EnumerateFiles(Directory.GetCurrentDirectory() + "/ImageResources/Items", "*.png"))
-            {
-                string filename = Path.GetFileName(file);
-                string secondaryImagePath = "ImageResources/Items/" + filename;
-                string itemnamePre = filename.Remove(filename.Length-4);
-                string[] nameArray = itemnamePre.Split('_');
-                string szar = string.Empty;
-                for (int i = 0; i < nameArray.Length; i++)
-                {
-                    string fos = nameArray[i];
-                    TextInfo txtinf = new CultureInfo("en-US", false).TextInfo;
-                    szar = txtinf.ToTitleCase(fos); //folyt innen
-                }
-            }
-        }
 
         public void LoadItems()
         {
