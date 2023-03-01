@@ -77,20 +77,17 @@ namespace MCraftingTree
         }
 
         //Filtered search
-        public void LoadItems(List<string> search)
+        public void LoadItems(string search)
         {
             var items = ctx.Items;
             if (items != null)
             {
                 itms = new List<Items>();
-                foreach (var result in search)
+                List<Items> item = ctx.Items.Where(b => b.Name.Contains(search)).ToList();
+                for (int i = 0; i < item.Count; i++)
                 {
-                    List<Items> item = ctx.Items.Where(b => b.Name.StartsWith(result)).ToList();
-                    for (int i = 0; i < item.Count; i++)
-                    {
-                        items.Remove(item[i]);
-                        itms.Add(item[i]);
-                    }
+                    items.Remove(item[i]);
+                    itms.Add(item[i]);
                 }
                 for (int i = 0; i < itms.Count; i++)
                 {
@@ -406,13 +403,7 @@ namespace MCraftingTree
             string search = SearchBar.Text;
             if (search != String.Empty)
             {
-                var itemSearch = ctx.Items.Where(b => b.Name == search).ToList();
-                List<string> searchResult = new List<string>();
-                for (int i = 0; i < itemSearch.Count; i++)
-                {
-                    searchResult.Add(itemSearch[i].Name);
-                }
-                LoadItems(searchResult);
+                LoadItems(search);
             }
             else
             {
@@ -449,8 +440,8 @@ namespace MCraftingTree
 
         private void Load_Recipe(object sender, MouseButtonEventArgs e)
         {
-            Image sdr = (Image)sender;
-            Items itm = ctx.Items.Single(b => b.ID == sdr.Uid);
+            DataGridCell sdr = (DataGridCell)sender;
+            Items itm = (Items)sdr.Content;
             switch (switchScreen)
             {
                 case "Crafting":

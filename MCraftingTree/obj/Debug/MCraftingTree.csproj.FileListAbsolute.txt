@@ -88,3 +88,4 @@ C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\bin\Debug\Microsoft.X
 C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migrations.ImagePathLenghtChange.resources
 C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migrations.ImagePathLenghtChange.resources
 C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migrations.LotsOFixes.resources
+C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migrations.LotsOFixes.resources

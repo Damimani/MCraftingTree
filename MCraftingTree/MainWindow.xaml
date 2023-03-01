@@ -13,7 +13,8 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MCraftingTree" Height="800" Width="1200" MinHeight="500" MinWidth="800">
+        Title="MCraftingTree" Height="800" Width="1200" MinHeight="500" MinWidth="800"
+        RenderOptions.BitmapScalingMode="NearestNeighbor">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*" />
@@ -56,20 +57,21 @@
                                   CanUserAddRows="False" AutoGenerateColumns="False" SelectionMode="Single"
                                   HeadersVisibility="All" CanUserSortColumns="True"
                                   Name="ItemDG" IsReadOnly="True" Background="Transparent">
-                            <DataGrid.CellStyle>
-                                <Style TargetType="DataGridCell">
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridCell" x:Key="ImageResource">
                                     <EventSetter Event="PreviewMouseDoubleClick" Handler="Load_Recipe"/>
                                 </Style>
-                            </DataGrid.CellStyle>
+                            </DataGrid.Resources>
+
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="Icon" Width="94" x:Name="ImageCol" CellStyle="{}">
+                                <DataGridTemplateColumn Header="Icon" Width="68" x:Name="ImageCol" CellStyle="{StaticResource ResourceKey=ImageResource}">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
                                                 <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
                                                     <Grid>
                                                         <Rectangle Fill="#8B8B8B"/>
-                                                        <Image Width="64px" Height="64px" Source="{Binding Path=BMImage}" MouseMove="Item_Source" Uid="{Binding Path=ID}"/>
+                                                        <Image Source="{Binding Path=BMImage}" Width="64px" Height="64px" MouseMove="Item_Source" Uid="{Binding Path=ID}"/>
                                                     </Grid>
                                                 </Border>
                                             </Border>
@@ -80,6 +82,7 @@
                                 <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
                             </DataGrid.Columns>
                         </DataGrid>
+
                     </Grid>
 
                     <Grid Grid.Row="0" Grid.Column="1">
@@ -295,7 +298,7 @@
                     </Grid>
                 </Grid>
             </materialDesign:Card>
-            
+
         </Grid>
         <Grid Grid.Column="1" Margin="20,20,20,10">
             <Grid.ColumnDefinitions>
