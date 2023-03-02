@@ -1,4 +1,6 @@
-﻿using Microsoft.Win32;
+﻿using Json.Net;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,6 +25,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 using Path = System.IO.Path;
 
 namespace MCraftingTree
@@ -34,8 +37,70 @@ namespace MCraftingTree
     {
         public MainWindow()
         {
+            Create_Txt();
             InitializeComponent();
             LoadItems();
+        }
+
+
+        public class Key
+        {
+            public Item item { get; set; }
+        }
+
+        public class Result
+        {
+            [JsonProperty("count")]
+            public int count { get; set; }
+            [JsonProperty("item")]
+            public string item { get; set; }
+        }
+
+        public class Root
+        {
+            [JsonProperty("type")]
+            public string type { get; set; }
+            [JsonProperty("category")]
+            public string category { get; set; }
+            [JsonProperty("group")]
+            public string group { get; set; }
+            [JsonProperty("key")]
+            public Key key { get; set; }
+            [JsonProperty("pattern")]
+            public List<string> pattern { get; set; }
+            [JsonProperty("result")]
+            public Result result { get; set; }
+        }
+
+        public class Item
+        {
+            [JsonProperty("item")]
+            public string item { get; set; }
+        }
+
+        private void Create_Txt()
+        {
+            using (StreamWriter sw = File.CreateText("C:\\users\\danit\\fos.txt"))
+            {
+                List<string> addList = new List<string>();
+                foreach (string file in Directory.EnumerateFiles(Directory.GetCurrentDirectory() + "/recipes", "*.json"))
+                {
+                    List<Root> jsonList = new List<Root>();
+                    using (StreamReader r = File.OpenText(file))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        Root json =(Root)JsonConvert.DeserializeObject<Root>(r.ReadToEnd());
+                        jsonList.Add(json);
+                    }
+                    sw.WriteLine(jsonList[0]);
+                    string addLine = $"defaultTable.Add(new CraftingTable() {{ ID = Guid.NewGuid().ToString(), OutputAmount =, OutputSlot =, Slot11 =, Slot12 =, Slot13 =, Slot21 =, Slot22 =, Slot23 =, Slot31 =, Slot32 =, Slot33 =}});";
+                }
+
+                foreach (var item in addList)
+                {
+                    sw.WriteLine(item);
+                }
+            }
         }
 
         //makes a new BitmapImage to stop Image.Load() from being called in the Datagrid

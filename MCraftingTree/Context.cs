@@ -910,8 +910,6 @@ namespace MCraftingTree
             defaultItems.Add(new Items() { ID = "minecraft: yellow_terracotta", Name = "Yellow Terracotta", ImagePath = "/ImageResources/Items/yellow_terracotta.png" });
             defaultItems.Add(new Items() { ID = "minecraft: yellow_wool", Name = "Yellow Wool", ImagePath = "/ImageResources/Items/yellow_wool.png" });
 
-
-
             context.Items.AddRange(defaultItems);
             context.MobDrops.AddRange(defaultMobDrops);
             context.Types.AddRange(defaultTypes);

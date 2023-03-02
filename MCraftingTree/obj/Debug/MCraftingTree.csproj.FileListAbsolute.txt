@@ -89,3 +89,6 @@ C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migra
 C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migrations.ImagePathLenghtChange.resources
 C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migrations.LotsOFixes.resources
 C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migrations.LotsOFixes.resources
+C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\bin\Debug\Json.Net.dll
+C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\bin\Debug\Newtonsoft.Json.dll
+C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\bin\Debug\Newtonsoft.Json.xml
