@@ -13,6 +13,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Remoting.Contexts;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,7 +26,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using JsonSerializer = Newtonsoft.Json.JsonSerializer;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 using Path = System.IO.Path;
 
 namespace MCraftingTree
@@ -88,12 +89,32 @@ namespace MCraftingTree
                     List<Root> jsonList = new List<Root>();
                     using (StreamReader r = File.OpenText(file))
                     {
-                        JsonSerializer serializer = new JsonSerializer();
-                        Root json =(Root)JsonConvert.DeserializeObject<Root>(r.ReadToEnd());
+                        var options = new JsonSerializerOptions()
+                        {
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                        };
+                        Root json = JsonSerializer.Deserialize<Root>(r.ReadToEnd(), options);
                         jsonList.Add(json);
                     }
-                    sw.WriteLine(jsonList[0]);
-                    string addLine = $"defaultTable.Add(new CraftingTable() {{ ID = Guid.NewGuid().ToString(), OutputAmount =, OutputSlot =, Slot11 =, Slot12 =, Slot13 =, Slot21 =, Slot22 =, Slot23 =, Slot31 =, Slot32 =, Slot33 =}});";
+                    for (int i = 0; i < jsonList.Count; i++)
+                    {
+                        if (jsonList[i].result.count == 0)
+                        {
+                            jsonList[i].result.count = 1;
+                        }
+                        string addLine = $"defaultTable.Add(new CraftingTable() {{ ID = Guid.NewGuid().ToString(), OutputAmount = , " +
+                        $"OutputSlot =, " +
+                        $"Slot11 =, " +
+                        $"Slot12 =, " +
+                        $"Slot13 =, " +
+                        $"Slot21 =, " +
+                        $"Slot22 =, " +
+                        $"Slot23 =, " +
+                        $"Slot31 =, " +
+                        $"Slot32 =, " +
+                        $"Slot33 =}});";
+                    }
+                    
                 }
 
                 foreach (var item in addList)
