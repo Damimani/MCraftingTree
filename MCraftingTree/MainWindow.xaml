@@ -82,17 +82,232 @@
                                 <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
                             </DataGrid.Columns>
                         </DataGrid>
-
                     </Grid>
-
+                    
                     <Grid Grid.Row="0" Grid.Column="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" x:Name="CraftingWidth"/>
                             <ColumnDefinition Width="0px" x:Name="FurnaceWidth"/>
                             <ColumnDefinition Width="0px" x:Name="BrewingWidth"/>
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <!-- Recipe Choosing -->
+                        <DataGrid CanUserAddRows="False" AutoGenerateColumns="False" SelectionMode="Single"
+                                  HeadersVisibility="None" CanUserSortColumns="True"
+                                  Name="RecipeDG" IsReadOnly="True" Background="Transparent"
+                                  Visibility="Hidden">
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridCell">
+                                    <EventSetter Event="PreviewMouseDown" Handler="RecipeDG_Chosen"/>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Visibility="Hidden" x:Name="RecipeDGCrafting">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <!-- Crafting Table-->
+                                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="16px" />
+                                                    <ColumnDefinition Width="16px" />
+                                                    <ColumnDefinition Width="16px" />
+                                                    <ColumnDefinition Width="16px" />
+                                                    <ColumnDefinition Width="16px" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="16px" />
+                                                    <RowDefinition Height="16px" />
+                                                    <RowDefinition Height="16px" />
+                                                </Grid.RowDefinitions>
+                                                <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                    <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                        <Grid>
+                                                            <Rectangle Fill="#8B8B8B"/>
+                                                            <Grid Background="Transparent">
+                                                                <Image Source="{Binding Slot11.BMImage}" Uid="{Binding Slot11.ID}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                                <Border Grid.Row="0" Grid.Column="1" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                    <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                        <Grid>
+                                                            <Rectangle Fill="#8B8B8B" />
+                                                            <Grid Background="Transparent">
+                                                                <Image Source="{Binding Slot12.BMImage}" Uid="{Binding Slot12.ID}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                                <Border Grid.Row="0" Grid.Column="2" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                    <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                        <Grid>
+                                                            <Rectangle Fill="#8B8B8B" />
+                                                            <Grid Background="Transparent">
+                                                                <Image Source="{Binding Slot13.BMImage}" Uid="{Binding Slot13.ID}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                                <Border Grid.Row="1" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                    <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                        <Grid>
+                                                            <Rectangle Fill="#8B8B8B" />
+                                                            <Grid Background="Transparent">
+                                                                <Image Source="{Binding Slot21.BMImage}" Uid="{Binding Slot21.ID}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                                <Border Grid.Row="1" Grid.Column="1" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                    <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                        <Grid>
+                                                            <Rectangle Fill="#8B8B8B" />
+                                                            <Grid Background="Transparent">
+                                                                <Image Source="{Binding Slot22.BMImage}" Uid="{Binding Slot22.ID}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                                <Border Grid.Row="1" Grid.Column="2" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                    <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                        <Grid>
+                                                            <Rectangle Fill="#8B8B8B" />
+                                                            <Grid Background="Transparent">
+                                                                <Image Source="{Binding Slot23.BMImage}" Uid="{Binding Slot23.ID}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                                <Border Grid.Row="2" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                    <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                        <Grid>
+                                                            <Rectangle Fill="#8B8B8B" />
+                                                            <Grid Background="Transparent">
+                                                                <Image Source="{Binding Slot31.BMImage}" Uid="{Binding Slot31.ID}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                                <Border Grid.Row="2" Grid.Column="1" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                    <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                        <Grid>
+                                                            <Rectangle Fill="#8B8B8B" />
+                                                            <Grid Background="Transparent">
+                                                                <Image Source="{Binding Slot32.BMImage}" Uid="{Binding Slot32.ID}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                                <Border Grid.Row="2" Grid.Column="2" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                    <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                        <Grid>
+                                                            <Rectangle Fill="#8B8B8B" />
+                                                            <Grid Background="Transparent">
+                                                                <Image Source="{Binding Slot33.BMImage}" Uid="{Binding Slot33.ID}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                                <Border Grid.Row="1" Grid.Column="4" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                    <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                        <Grid>
+                                                            <Rectangle Fill="#8B8B8B" />
+                                                            <Grid Background="Transparent">
+                                                                <Image Source="{Binding OutputSlot.BMImage}" Uid="{Binding OutputSlot.ID}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                                <TextBox Grid.Row="2" Grid.Column="5" Text="{Binding OutputAmount}" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="NumberOnly"/>
+                                                <materialDesign:PackIcon Kind="ArrowRightBold" Width="16" Height="16" Foreground="#8B8B8B" Grid.Row="1" Grid.Column="3"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Visibility="Hidden" x:Name="RecipeDGFurnace">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <!-- Furnace-->
+                                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="16px" />
+                                                    <ColumnDefinition Width="16px" />
+                                                    <ColumnDefinition Width="16px" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="16px" />
+                                                </Grid.RowDefinitions>
+                                                <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                    <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                        <Grid>
+                                                            <Rectangle Fill="#8B8B8B" />
+                                                            <Grid Background="Transparent" >
+                                                                <Image Source="{Binding InputSlot.BMImage}" Uid="{Binding InputSlot.ID}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                                <materialDesign:PackIcon Kind="ArrowRightBold" Width="16" Height="16" Foreground="#8B8B8B" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border Grid.Row="0" Grid.Column="2" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                    <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                        <Grid>
+                                                            <Rectangle Fill="#8B8B8B" />
+                                                            <Grid Background="Transparent" >
+                                                                <Image Source="{Binding OutputSlot.BMImage}" Uid="{Binding OutputSlot.ID}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Visibility="Hidden" x:Name="RecipeDGBrewing">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="16px" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="16px" />
+                                                    <RowDefinition Height="16px" />
+                                                    <RowDefinition Height="16px" />
+                                                </Grid.RowDefinitions>
+                                                <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                    <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                        <Grid>
+                                                            <Rectangle Fill="#8B8B8B" />
+                                                            <Grid Background="Transparent">
+                                                                <Image Source="{Binding IngredientSlot.BMImage}" Uid="{Binding IngredientSlot.ID}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                                <materialDesign:PackIcon Kind="ArrowDownBold" Width="50" Height="50" Foreground="#8B8B8B" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border Grid.Row="2" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                                    <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                        <Grid>
+                                                            <Rectangle Fill="#8B8B8B" />
+                                                            <Grid Background="Transparent">
+                                                                <Image Source="{Binding OutputSlot.BMImage}" Uid="{Binding OutputSlot.ID}"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
                         <!-- Crafting Table-->
-                        <Grid Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="CraftingGrid">
+                        <Grid Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="CraftingGrid">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64px" />
                                 <ColumnDefinition Width="64px" />
@@ -110,7 +325,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B"/>
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image MouseRightButtonDown="Remove_Image"/>
+                                            <Image MouseRightButtonDown="Remove_Image" x:Name="CraftingGridImg11"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -120,7 +335,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image MouseRightButtonDown="Remove_Image"/>
+                                            <Image MouseRightButtonDown="Remove_Image" x:Name="CraftingGridImg12"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -130,7 +345,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image MouseRightButtonDown="Remove_Image"/>
+                                            <Image MouseRightButtonDown="Remove_Image" x:Name="CraftingGridImg13"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -140,7 +355,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image MouseRightButtonDown="Remove_Image"/>
+                                            <Image MouseRightButtonDown="Remove_Image" x:Name="CraftingGridImg21"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -150,7 +365,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image MouseRightButtonDown="Remove_Image"/>
+                                            <Image MouseRightButtonDown="Remove_Image" x:Name="CraftingGridImg22"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -160,7 +375,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image MouseRightButtonDown="Remove_Image"/>
+                                            <Image MouseRightButtonDown="Remove_Image" x:Name="CraftingGridImg23"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -170,7 +385,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image MouseRightButtonDown="Remove_Image"/>
+                                            <Image MouseRightButtonDown="Remove_Image" x:Name="CraftingGridImg31"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -180,7 +395,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image MouseRightButtonDown="Remove_Image"/>
+                                            <Image MouseRightButtonDown="Remove_Image" x:Name="CraftingGridImg32"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -190,7 +405,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image MouseRightButtonDown="Remove_Image"/>
+                                            <Image MouseRightButtonDown="Remove_Image" x:Name="CraftingGridImg33"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -209,7 +424,7 @@
                             <materialDesign:PackIcon Kind="ArrowRightBold" Width="64" Height="64" Foreground="#8B8B8B" Grid.Row="1" Grid.Column="3"/>
                         </Grid>
                         <!-- Furnace-->
-                        <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="FurnaceGrid">
+                        <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="FurnaceGrid">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64px" />
                                 <ColumnDefinition Width="64px" />
@@ -223,7 +438,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image MouseRightButtonDown="Remove_Image"/>
+                                            <Image x:Name="FurnaceInputImg" MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -241,7 +456,7 @@
                             </Border>
                         </Grid>
                         <!-- Brewing -->
-                        <Grid  Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="BrewingGrid">
+                        <Grid  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="BrewingGrid">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="64px" />
                             </Grid.ColumnDefinitions>
@@ -255,7 +470,7 @@
                                     <Grid>
                                         <Rectangle Fill="#8B8B8B" />
                                         <Grid Background="Transparent" Drop="Item_Destination" AllowDrop="True">
-                                            <Image MouseRightButtonDown="Remove_Image"/>
+                                            <Image x:Name="BrewingInputImg" MouseRightButtonDown="Remove_Image"/>
                                         </Grid>
                                     </Grid>
                                 </Border>
@@ -281,9 +496,9 @@
                             <ColumnDefinition Width="1*" />
                         </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="0" Content="Crafting" Click="SwitchScreen" Uid="Crafting" materialDesign:ButtonAssist.CornerRadius="5 0 0 0"/>
-                        <Button Grid.Column="1" Content="Furnace" Click="SwitchScreen" Uid="Furnace" materialDesign:ButtonAssist.CornerRadius="0"/>
-                        <Button Grid.Column="2" Content="Brewing" Click="SwitchScreen" Uid="Brewing" materialDesign:ButtonAssist.CornerRadius="0 5 0 0"/>
+                        <Button Grid.Column="0" Content="Crafting" Click="SwitchScreen" Uid="Crafting" materialDesign:ButtonAssist.CornerRadius="5 0 0 0" x:Name="CraftingButton"/>
+                        <Button Grid.Column="1" Content="Furnace" Click="SwitchScreen" Uid="Furnace" materialDesign:ButtonAssist.CornerRadius="0" x:Name="FurnaceButton"/>
+                        <Button Grid.Column="2" Content="Brewing" Click="SwitchScreen" Uid="Brewing" materialDesign:ButtonAssist.CornerRadius="0 5 0 0" x:Name="BrewingButton"/>
                     </Grid>
                     <!-- Recipe buttons -->
                     <Grid Grid.Row="2" Grid.ColumnSpan="2">

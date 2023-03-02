@@ -59,7 +59,11 @@ namespace MCraftingTree
                 if (items != null)
                 {
                     itms = items.ToList();
-                    itms.Remove(ctx.Items.Single(b => b.ID == "-1"));
+                    try
+                    {
+                        itms.Remove(ctx.Items.Single(b => b.ID == "-1"));
+                    }
+                    catch (Exception){}
                     for (int i = 0; i < itms.Count; i++)
                     {
                         if (itms[i].ImagePath != null)
@@ -111,12 +115,14 @@ namespace MCraftingTree
         string switchScreen = "Crafting"; 
         string ImagePath = string.Empty;
         string DialogHostKey = string.Empty;
+        string RecipeID = string.Empty;
 
         //Recipe functions
         private void SwitchScreen(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
             string key = button.Uid;
+            RecipeID = string.Empty;
             switch (key)
             {
                 case "Crafting":
@@ -124,18 +130,75 @@ namespace MCraftingTree
                     FurnaceWidth.Width = new GridLength(0, GridUnitType.Pixel);
                     BrewingWidth.Width = new GridLength(0, GridUnitType.Pixel);
                     switchScreen = "Crafting";
+                    FurnaceInputImg.Source = null;
+                    FurnaceInputImg.Uid = String.Empty;
+                    FurnaceOutputImg.Source = null;
+                    FurnaceOutputImg.Uid = String.Empty;
+                    BrewingInputImg.Source = null;
+                    BrewingInputImg.Uid = String.Empty;
+                    BrewingOutputImg.Source = null;
+                    BrewingOutputImg.Uid = String.Empty;
+
                     break;
                 case "Furnace":
                     CraftingWidth.Width = new GridLength(0, GridUnitType.Pixel);
                     FurnaceWidth.Width = new GridLength(1, GridUnitType.Star);
                     BrewingWidth.Width = new GridLength(0, GridUnitType.Pixel);
                     switchScreen = "Furnace";
+                    CraftingGridImg11.Source = null;
+                    CraftingGridImg11.Uid = string.Empty;
+                    CraftingGridImg12.Source = null;
+                    CraftingGridImg12.Uid = string.Empty;
+                    CraftingGridImg13.Source = null;
+                    CraftingGridImg13.Uid = string.Empty;
+                    CraftingGridImg21.Source = null;
+                    CraftingGridImg21.Uid = string.Empty;
+                    CraftingGridImg22.Source = null;
+                    CraftingGridImg22.Uid = string.Empty;
+                    CraftingGridImg23.Source = null;
+                    CraftingGridImg23.Uid = string.Empty;
+                    CraftingGridImg31.Source = null;
+                    CraftingGridImg31.Uid = string.Empty;
+                    CraftingGridImg32.Source = null;
+                    CraftingGridImg32.Uid = string.Empty;
+                    CraftingGridImg33.Source = null;
+                    CraftingGridImg33.Uid = string.Empty;
+                    CraftingOutputImg.Source = null;
+                    CraftingOutputImg.Uid = String.Empty;
+                    BrewingInputImg.Source = null;
+                    BrewingInputImg.Uid = String.Empty;
+                    BrewingOutputImg.Source = null;
+                    BrewingOutputImg.Uid = String.Empty;
                     break;
                 case "Brewing":
                     CraftingWidth.Width = new GridLength(0, GridUnitType.Pixel);
                     FurnaceWidth.Width = new GridLength(0, GridUnitType.Pixel);
                     BrewingWidth.Width = new GridLength(1, GridUnitType.Star);
                     switchScreen = "Brewing";
+                    CraftingGridImg11.Source = null;
+                    CraftingGridImg11.Uid = string.Empty;
+                    CraftingGridImg12.Source = null;
+                    CraftingGridImg12.Uid = string.Empty;
+                    CraftingGridImg13.Source = null;
+                    CraftingGridImg13.Uid = string.Empty;
+                    CraftingGridImg21.Source = null;
+                    CraftingGridImg21.Uid = string.Empty;
+                    CraftingGridImg22.Source = null;
+                    CraftingGridImg22.Uid = string.Empty;
+                    CraftingGridImg23.Source = null;
+                    CraftingGridImg23.Uid = string.Empty;
+                    CraftingGridImg31.Source = null;
+                    CraftingGridImg31.Uid = string.Empty;
+                    CraftingGridImg32.Source = null;
+                    CraftingGridImg32.Uid = string.Empty;
+                    CraftingGridImg33.Source = null;
+                    CraftingGridImg33.Uid = string.Empty;
+                    CraftingOutputImg.Source = null;
+                    CraftingOutputImg.Uid = String.Empty;
+                    FurnaceInputImg.Source = null;
+                    FurnaceInputImg.Uid = String.Empty;
+                    FurnaceOutputImg.Source = null;
+                    FurnaceOutputImg.Uid = String.Empty;
                     break;
                 default:
                     break;
@@ -252,7 +315,57 @@ namespace MCraftingTree
 
         private void Delete_Recipe(object sender, RoutedEventArgs e)
         {
-
+            switch (switchScreen)
+            {
+                case "Crafting":
+                    CraftingTable crafting = ctx.CraftingTable.Single(b => b.ID == RecipeID);
+                    ctx.CraftingTable.Remove(crafting);
+                    ctx.SaveChanges();
+                    RecipeID = string.Empty;
+                    CraftingGridImg11.Source = null;
+                    CraftingGridImg11.Uid = string.Empty;
+                    CraftingGridImg12.Source = null;
+                    CraftingGridImg12.Uid = string.Empty;
+                    CraftingGridImg13.Source = null;
+                    CraftingGridImg13.Uid = string.Empty;
+                    CraftingGridImg21.Source = null;
+                    CraftingGridImg21.Uid = string.Empty;
+                    CraftingGridImg22.Source = null;
+                    CraftingGridImg22.Uid = string.Empty;
+                    CraftingGridImg23.Source = null;
+                    CraftingGridImg23.Uid = string.Empty;
+                    CraftingGridImg31.Source = null;
+                    CraftingGridImg31.Uid = string.Empty;
+                    CraftingGridImg32.Source = null;
+                    CraftingGridImg32.Uid = string.Empty;
+                    CraftingGridImg33.Source = null;
+                    CraftingGridImg33.Uid = string.Empty;
+                    CraftingOutputImg.Source = null;
+                    CraftingOutputImg.Uid = String.Empty;
+                    break;
+                case "Furnace":
+                    Furnace furnace = ctx.Furnace.Single(b => b.ID == RecipeID);
+                    ctx.Furnace.Remove(furnace);
+                    ctx.SaveChanges();
+                    RecipeID = string.Empty;
+                    FurnaceInputImg.Source = null;
+                    FurnaceInputImg.Uid = String.Empty;
+                    FurnaceOutputImg.Source = null;
+                    FurnaceOutputImg.Uid = String.Empty;
+                    break;
+                case "Brewing":
+                    Brewing brewing = ctx.Brewing.Single(b => b.ID == RecipeID);
+                    ctx.Brewing.Remove(brewing);
+                    ctx.SaveChanges();
+                    RecipeID = string.Empty;
+                    BrewingInputImg.Source = null;
+                    BrewingInputImg.Uid = String.Empty;
+                    BrewingOutputImg.Source = null;
+                    BrewingOutputImg.Uid = String.Empty;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void NumberOnly(object sender, TextChangedEventArgs e)
@@ -470,53 +583,21 @@ namespace MCraftingTree
             {
                 case "Crafting":
                     List<CraftingTable> recipes = ctx.CraftingTable.Where(b => b.OutputSlot.ID == itm.ID).ToList();
-                    for (int i = 0; i < ctx.CraftingTable.Count(); i++)
-                    {
-                        
-                    }
-                    
                     if (recipes.Count() > 1)
                     {
-
+                        RecipeDG.Visibility = Visibility.Visible;
+                        RecipeDGCrafting.Visibility = Visibility.Visible;
+                        RecipeDG.ItemsSource = recipes;
+                        CraftingButton.IsEnabled = false;
+                        FurnaceButton.IsEnabled = false;
+                        BrewingButton.IsEnabled = false;
                     }
                     else if (recipes.Count() == 1)
-                    {
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("No recipes are associated with this item!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    break;
-                case "Furnace":
-                    break;
-                case "Brewing":
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        /*private void Item_Output(object sender, DragEventArgs e) //needs to be repurposed for recipe loading
-        {
-            Items data = (Items)e.Data.GetData(DataFormats.Serializable);
-            Grid grd = (Grid)sender;
-            Image img= (Image)grd.Children[0];
-            img.Source = data.BMImage;
-            img.Uid = data.ID;
-
-            string key = img.Name;
-
-            switch (key)
-            {
-                case "CraftingOutputImg":
-                    List<CraftingTable> recipes = ctx.CraftingTable.Where(b => b.OutputSlot == data).ToList();
-                    if (recipes.Count == 1)
                     {
                         CraftingGridImg11.Source = recipes[0].Slot11.BMImage; //there must be a better way to do this
                         CraftingGridImg11.Uid = recipes[0].Slot11.ID;
                         CraftingGridImg12.Source = recipes[0].Slot12.BMImage;
-                        CraftingGridImg11.Uid = recipes[0].Slot12.ID;
+                        CraftingGridImg12.Uid = recipes[0].Slot12.ID;
                         CraftingGridImg13.Source = recipes[0].Slot13.BMImage;
                         CraftingGridImg13.Uid = recipes[0].Slot13.ID;
                         CraftingGridImg21.Source = recipes[0].Slot21.BMImage;
@@ -531,20 +612,129 @@ namespace MCraftingTree
                         CraftingGridImg32.Uid = recipes[0].Slot32.ID;
                         CraftingGridImg33.Source = recipes[0].Slot33.BMImage;
                         CraftingGridImg33.Uid = recipes[0].Slot33.ID;
+                        CraftingOutputImg.Source = recipes[0].OutputSlot.BMImage;
+                        CraftingOutputImg.Uid = recipes[0].OutputSlot.ID;
+                        OutputAmount.Text = recipes[0].OutputAmount.ToString();
+                        RecipeID = recipes[0].ID;
                     }
-                    else if (recipes.Count > 1)
+                    else
                     {
-
+                        MessageBox.Show("No recipes are associated with this item!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-
                     break;
-                case "FurnaceOutputImg":
+                case "Furnace":
+                    List<Furnace> furnace = ctx.Furnace.Where(b => b.OutputSlot.ID == itm.ID).ToList();
+                    if (furnace.Count() > 1)
+                    {
+                        RecipeDG.Visibility = Visibility.Visible;
+                        RecipeDGFurnace.Visibility = Visibility.Visible;
+                        RecipeDG.ItemsSource = furnace;
+                        CraftingButton.IsEnabled = false;
+                        FurnaceButton.IsEnabled = false;
+                        BrewingButton.IsEnabled = false;
+                    }
+                    else if (furnace.Count == 1)
+                    {
+                        FurnaceInputImg.Source = furnace[0].InputSlot.BMImage;
+                        FurnaceInputImg.Uid = furnace[0].InputSlot.ID;
+                        FurnaceOutputImg.Source = furnace[0].OutputSlot.BMImage;
+                        FurnaceOutputImg.Uid = furnace[0].OutputSlot.ID;
+                        RecipeID = furnace[0].ID;
+                    }
+                    else
+                    {
+                        MessageBox.Show("No recipes are associated with this item!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                     break;
-                case "BrewingOutputImg":
+                case "Brewing":
+                    List<Brewing> brewing = ctx.Brewing.Where(b => b.OutputSlot.ID == itm.ID).ToList();
+                    if (brewing.Count() > 1)
+                    {
+                        RecipeDG.Visibility = Visibility.Visible;
+                        RecipeDGBrewing.Visibility = Visibility.Visible;
+                        RecipeDG.ItemsSource = brewing;
+                        CraftingButton.IsEnabled = false;
+                        FurnaceButton.IsEnabled = false;
+                        BrewingButton.IsEnabled = false;
+                    }
+                    else if (brewing.Count == 1)
+                    {
+                        BrewingInputImg.Source = brewing[0].IngredientSlot.BMImage;
+                        BrewingInputImg.Uid = brewing[0].IngredientSlot.ID;
+                        BrewingOutputImg.Source = brewing[0].OutputSlot.BMImage;
+                        BrewingOutputImg.Uid = brewing[0].OutputSlot.ID;
+                        RecipeID = brewing[0].ID;
+                    }
+                    else
+                    {
+                        MessageBox.Show("No recipes are associated with this item!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                     break;
                 default:
                     break;
             }
-        }*/
+        }
+        private void RecipeDG_Chosen(object sender, MouseButtonEventArgs e)
+        {
+            DataGridCell key = (DataGridCell)sender;
+            RecipeDG.Visibility = Visibility.Hidden;
+            RecipeDGCrafting.Visibility = Visibility.Hidden;
+            ContentPresenter cpt = (ContentPresenter)key.Content;
+            switch (switchScreen)
+            {
+                case "Crafting":
+                    CraftingTable table = (CraftingTable)cpt.Content;
+                    CraftingGridImg11.Source = table.Slot11.BMImage; 
+                    CraftingGridImg11.Uid = table.Slot11.ID;
+                    CraftingGridImg12.Source = table.Slot12.BMImage;
+                    CraftingGridImg12.Uid = table.Slot12.ID;
+                    CraftingGridImg13.Source = table.Slot13.BMImage;
+                    CraftingGridImg13.Uid = table.Slot13.ID;
+                    CraftingGridImg21.Source = table.Slot21.BMImage;
+                    CraftingGridImg21.Uid = table.Slot21.ID;
+                    CraftingGridImg22.Source = table.Slot22.BMImage;
+                    CraftingGridImg22.Uid = table.Slot22.ID;
+                    CraftingGridImg23.Source = table.Slot23.BMImage;
+                    CraftingGridImg23.Uid = table.Slot23.ID;
+                    CraftingGridImg31.Source = table.Slot31.BMImage;
+                    CraftingGridImg31.Uid = table.Slot31.ID;
+                    CraftingGridImg32.Source = table.Slot32.BMImage;
+                    CraftingGridImg32.Uid = table.Slot32.ID;
+                    CraftingGridImg33.Source = table.Slot33.BMImage;
+                    CraftingGridImg33.Uid = table.Slot33.ID;
+                    CraftingOutputImg.Source = table.OutputSlot.BMImage;
+                    CraftingOutputImg.Uid = table.OutputSlot.ID;
+                    OutputAmount.Text = table.OutputAmount.ToString();
+                    RecipeID = table.ID;
+                    CraftingButton.IsEnabled = true;
+                    FurnaceButton.IsEnabled = true;
+                    BrewingButton.IsEnabled = true;
+                    break;
+                case "Furnace":
+                    Furnace furnace = (Furnace)cpt.Content;
+                    FurnaceInputImg.Source = furnace.InputSlot.BMImage;
+                    FurnaceInputImg.Uid = furnace.InputSlot.ID;
+                    FurnaceOutputImg.Source = furnace.OutputSlot.BMImage;
+                    FurnaceOutputImg.Uid = furnace.OutputSlot.ID;
+                    RecipeID = furnace.ID;
+                    CraftingButton.IsEnabled = true;
+                    FurnaceButton.IsEnabled = true;
+                    BrewingButton.IsEnabled = true;
+                    break;
+                case "Brewing":
+                    Brewing brewing = (Brewing)cpt.Content;
+                    BrewingInputImg.Source = brewing.IngredientSlot.BMImage;
+                    BrewingInputImg.Uid = brewing.IngredientSlot.ID;
+                    BrewingOutputImg.Source = brewing.OutputSlot.BMImage;
+                    BrewingOutputImg.Uid = brewing.OutputSlot.ID;
+                    RecipeID = brewing.ID;
+                    CraftingButton.IsEnabled = true;
+                    FurnaceButton.IsEnabled = true;
+                    BrewingButton.IsEnabled = true;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
