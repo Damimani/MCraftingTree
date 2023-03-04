@@ -543,13 +543,13 @@
                                 <RowDefinition Height="1*" />
                             </Grid.RowDefinitions>
                             <TextBox materialDesign:HintAssist.Hint="Item ID (modname:item_name)" x:Name="ItemID"/>
-                            <TextBox materialDesign:HintAssist.Hint="Item name" x:Name="ItemName"/>
-                            <TextBox Grid.Row="1" materialDesign:HintAssist.Hint="Item type (optional)" x:Name="ItemType"/>
-                            <Image Grid.Row="2" HorizontalAlignment="Center" Width="32px" Height="32px" x:Name="PopupImage"/>
-                            <Button Grid.Row="3" Click="OpenFile">
+                            <TextBox Grid.Row="1" materialDesign:HintAssist.Hint="Item name" x:Name="ItemName"/>
+                            <TextBox Grid.Row="2" materialDesign:HintAssist.Hint="Item type (optional)" x:Name="ItemType"/>
+                            <Image Grid.Row="3" HorizontalAlignment="Center" Width="32px" Height="32px" x:Name="PopupImage"/>
+                            <Button Grid.Row="4" Click="OpenFile">
                                 <materialDesign:PackIcon Kind="Folder"/>
                             </Button>
-                            <Button Grid.Row="4" Content="Save Item" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="Add_Or_Alter_Item"/>
+                            <Button Grid.Row="5" Content="Save Item" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="Add_Or_Alter_Item"/>
                         </Grid>
                     </materialDesign:Card>
                 </materialDesign:DialogHost.DialogContent>

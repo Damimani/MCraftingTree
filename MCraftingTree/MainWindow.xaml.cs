@@ -1,6 +1,6 @@
-﻿using Json.Net;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -26,6 +26,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static MCraftingTree.MainWindow;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 using Path = System.IO.Path;
 
@@ -38,90 +39,9 @@ namespace MCraftingTree
     {
         public MainWindow()
         {
-            Create_Txt();
+            ctx.Database.Delete();
             InitializeComponent();
             LoadItems();
-        }
-
-
-        public class Key
-        {
-            public Item item { get; set; }
-        }
-
-        public class Result
-        {
-            [JsonProperty("count")]
-            public int count { get; set; }
-            [JsonProperty("item")]
-            public string item { get; set; }
-        }
-
-        public class Root
-        {
-            [JsonProperty("type")]
-            public string type { get; set; }
-            [JsonProperty("category")]
-            public string category { get; set; }
-            [JsonProperty("group")]
-            public string group { get; set; }
-            [JsonProperty("key")]
-            public Key key { get; set; }
-            [JsonProperty("pattern")]
-            public List<string> pattern { get; set; }
-            [JsonProperty("result")]
-            public Result result { get; set; }
-        }
-
-        public class Item
-        {
-            [JsonProperty("item")]
-            public string item { get; set; }
-        }
-
-        private void Create_Txt()
-        {
-            using (StreamWriter sw = File.CreateText("C:\\users\\danit\\fos.txt"))
-            {
-                List<string> addList = new List<string>();
-                foreach (string file in Directory.EnumerateFiles(Directory.GetCurrentDirectory() + "/recipes", "*.json"))
-                {
-                    List<Root> jsonList = new List<Root>();
-                    using (StreamReader r = File.OpenText(file))
-                    {
-                        var options = new JsonSerializerOptions()
-                        {
-                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                        };
-                        Root json = JsonSerializer.Deserialize<Root>(r.ReadToEnd(), options);
-                        jsonList.Add(json);
-                    }
-                    for (int i = 0; i < jsonList.Count; i++)
-                    {
-                        if (jsonList[i].result.count == 0)
-                        {
-                            jsonList[i].result.count = 1;
-                        }
-                        string addLine = $"defaultTable.Add(new CraftingTable() {{ ID = Guid.NewGuid().ToString(), OutputAmount = , " +
-                        $"OutputSlot =, " +
-                        $"Slot11 =, " +
-                        $"Slot12 =, " +
-                        $"Slot13 =, " +
-                        $"Slot21 =, " +
-                        $"Slot22 =, " +
-                        $"Slot23 =, " +
-                        $"Slot31 =, " +
-                        $"Slot32 =, " +
-                        $"Slot33 =}});";
-                    }
-                    
-                }
-
-                foreach (var item in addList)
-                {
-                    sw.WriteLine(item);
-                }
-            }
         }
 
         //makes a new BitmapImage to stop Image.Load() from being called in the Datagrid
@@ -195,13 +115,13 @@ namespace MCraftingTree
             }
         }
 
-        Context ctx = new Context();
-        Items nullItem = new Items() { ID = "-1", Name="Empty Item" };
-        List<Items> itms;
-        string switchScreen = "Crafting"; 
-        string ImagePath = string.Empty;
-        string DialogHostKey = string.Empty;
-        string RecipeID = string.Empty;
+        public static Context ctx = new Context();
+        public static Items nullItem = new Items() { ID = "-1", Name="Empty Item" };
+        public static List<Items> itms;
+        public static string switchScreen = "Crafting"; 
+        public static string ImagePath = string.Empty;
+        public static string DialogHostKey = string.Empty;
+        public static string RecipeID = string.Empty;
 
         //Recipe functions
         private void SwitchScreen(object sender, RoutedEventArgs e)
@@ -550,6 +470,7 @@ namespace MCraftingTree
                         catch (Exception)
                         {
                             MessageBox.Show("An error has occured during upload.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            throw;
                         }
                         break;
                     case "Alter":
