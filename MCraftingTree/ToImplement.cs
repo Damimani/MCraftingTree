@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace MCraftingTree
 {
@@ -211,6 +212,36 @@ namespace MCraftingTree
                     sw.WriteLine(item);
                 }
             }
+        }
+
+        public static void CreateFile()
+        {
+            using (StreamWriter sw = File.CreateText("C:\\users\\danit\\fos.txt"))
+            {
+                foreach (string file in Directory.EnumerateFiles(Directory.GetCurrentDirectory() + "/ImageResources/Items", "*.png"))
+                {
+                    string filename = Path.GetFileName(file);
+                    string secondaryImagePath = "ImageResources/Items/" + filename;
+                    string itemnamePre = filename.Remove(filename.Length - 4);
+                    string[] nameArray = itemnamePre.Split('_');
+                    string szar = string.Empty;
+                    for (int i = 0; i < nameArray.Length; i++)
+                    {
+                        string fos = nameArray[i];
+                        TextInfo txtinf = new CultureInfo("en-US", false).TextInfo;
+                        szar = szar + txtinf.ToTitleCase(fos);
+                        if (i != nameArray.Length - 1)
+                        {
+                            szar += " ";
+                        }
+                    }
+                    string filesAdd = $"defaultItems.Add(new Items() {{ ID=\"minecraft:{itemnamePre}\", " +
+                        $"Name=\"{ szar}\", " +
+                        $"ImagePath=\"/{secondaryImagePath}\"}});";
+                    sw.WriteLine(filesAdd);
+                }
+            }
+
         }
     }
 }

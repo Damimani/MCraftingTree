@@ -39,7 +39,6 @@ namespace MCraftingTree
     {
         public MainWindow()
         {
-            ctx.Database.Delete();
             InitializeComponent();
             LoadItems();
         }
