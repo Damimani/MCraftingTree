@@ -27,7 +27,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static MCraftingTree.MainWindow;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 using Path = System.IO.Path;
 
 namespace MCraftingTree
@@ -39,6 +38,7 @@ namespace MCraftingTree
     {
         public MainWindow()
         {
+            ToImplement.Create_CraftingTable();
             InitializeComponent();
             LoadItems();
         }
@@ -54,7 +54,6 @@ namespace MCraftingTree
             BMImage.EndInit();
             return BMImage;
         }
-
 
         public async void LoadItems()
         {
@@ -124,6 +123,8 @@ namespace MCraftingTree
         //Recipe functions
         private void SwitchScreen(object sender, RoutedEventArgs e)
         {
+
+            ToImplement.Create_Type();
             var button = (Button)sender;
             string key = button.Uid;
             RecipeID = string.Empty;

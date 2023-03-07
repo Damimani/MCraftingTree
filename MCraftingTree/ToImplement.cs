@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using static MCraftingTree.ToImplement;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace MCraftingTree
 {
@@ -67,7 +69,7 @@ namespace MCraftingTree
                 => throw new NotImplementedException();
         }
 
-        public static void Create_Txt()
+        public static void Create_CraftingTable()
         {
             using (StreamWriter sw = File.CreateText("C:\\users\\danit\\fos.txt"))
             {
@@ -111,7 +113,14 @@ namespace MCraftingTree
                             keyvalues = key[0].item.Values.ToList();
 
                             string value = keyvalues[i].First.ToString();
-                            value = value.Substring(9);
+                            if (value.StartsWith("\"tag\":"))
+                            {
+                                value = value.Substring(18);
+                            }
+                            else if (value.StartsWith("\"item\":"))
+                            {
+                                value = value.Substring(19);
+                            }
                             value = value.Remove(value.Length - 1);
                             keySymbols.Add(keyitems[i] + ";" + value);
                         }
@@ -140,6 +149,11 @@ namespace MCraftingTree
                                 patterncount++;
                             }
                             int patternLineLenght = patternLine.Length;
+                            if (patternLineLenght == 1)
+                            {
+                                itemPattern.Add("-1");
+                                patternLineLenght++;
+                            }
                             for (int j = 0; j < patternLine.Length; j++)
                             {
                                 char patternSymbol = patternLine[j];
@@ -148,11 +162,6 @@ namespace MCraftingTree
                                 {
                                     itemPattern.Add("-1");
                                 }
-                                else if (patternLineLenght == 1)
-                                {
-                                    itemPattern.Add("-1");
-                                    patternLineLenght++;
-                                }
                                 for (int k = 0; k < keySymbols.Count; k++)
                                 {
                                     string[] split = keySymbols[k].Split(';');
@@ -160,6 +169,16 @@ namespace MCraftingTree
                                     string itemID = split[1];
                                     if (patternSymbol == symbol[0])
                                     {
+                                        if (itemID.Contains("wooden"))
+                                        {
+                                            itemID = itemID.Substring(6);
+                                            itemID = "oak" + itemID;
+                                        }
+                                        if (itemID.EndsWith("s"))
+                                        {
+                                            itemID = itemID.Remove(itemID.Length - 1);
+                                        }
+
                                         var itemList = MainWindow.ctx.Items.Where(b => b.ID.Contains(itemID)).ToList();
                                         if (itemList.Count > 0)
                                         {
@@ -168,11 +187,11 @@ namespace MCraftingTree
                                         itemPattern.Add(itm);
                                     }
                                 }
-                                if (patternLineLenght < 3)
-                                {
-                                    itemPattern.Add("-1");
-                                    patternLineLenght++;
-                                }
+                            }
+                            if (patternLineLenght < 3)
+                            {
+                                itemPattern.Add("-1");
+                                patternLineLenght++;
                             }
                         }
                     }
@@ -210,6 +229,42 @@ namespace MCraftingTree
                 foreach (var item in addList)
                 {
                     sw.WriteLine(item);
+                }
+            }
+        }
+
+        public class Types
+        {
+            public List<string> values { get; set; }
+        }
+
+        public static void Create_Type()
+        {
+            using (StreamWriter sw = File.CreateText("C:\\users\\danit\\types.txt"))
+            {
+                List<string> addList = new List<string>();
+                foreach (string file in Directory.EnumerateFiles(Directory.GetCurrentDirectory() + "/tags", "*.json"))
+                {
+                    Types type = new Types();
+                    using (StreamReader r = File.OpenText(file))
+                    {
+                        Types json = JsonConvert.DeserializeObject<Types>(r.ReadToEnd());
+                        type = json;
+                    }
+
+                    List<string> values = type.values;
+                    string filename = file.Remove(file.Length - 5);
+
+                    for (int i = 0; i < values.Count; i++)
+                    {
+                        string value = values[i];
+                        Items itm = MainWindow.ctx.Items.Single(b => b.ID == value);
+                        string addLine = "defaultTypes.Add(new Types() { ID=Guid.NewGuid().ToString(), " +
+                            $"Item=defaultItems.Single(b => b.ID == \"{itm.ID}\"), " +
+                            $"Type=\"{filename}\"}});";
+                    }
+
+                    
                 }
             }
         }

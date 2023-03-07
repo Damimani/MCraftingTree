@@ -1054,7 +1054,11 @@ namespace MCraftingTree
             defaultItems.Add(new Items() { ID = "-1", Name="Empty"});
 
             context.Items.AddRange(defaultItems);
+            context.SaveChanges();
 
+
+
+            context.Types.AddRange(defaultTypes);
             context.SaveChanges();
 
             defaultTable.Add(new CraftingTable() { ID = Guid.NewGuid().ToString(), OutputAmount = 1, OutputSlot = defaultItems.Single(b => b.ID == "minecraft:acacia_boat"), Slot11 = defaultItems.Single(b => b.ID == "-1"), Slot12 = defaultItems.Single(b => b.ID == "-1"), Slot13 = defaultItems.Single(b => b.ID == "-1"), Slot21 = defaultItems.Single(b => b.ID == "minecraft:acacia_planks"), Slot22 = defaultItems.Single(b => b.ID == "-1"), Slot23 = defaultItems.Single(b => b.ID == "minecraft:acacia_planks"), Slot31 = defaultItems.Single(b => b.ID == "minecraft:acacia_planks"), Slot32 = defaultItems.Single(b => b.ID == "minecraft:acacia_planks"), Slot33 = defaultItems.Single(b => b.ID == "minecraft:acacia_planks") });
@@ -1592,7 +1596,6 @@ namespace MCraftingTree
             
 
             context.MobDrops.AddRange(defaultMobDrops);
-            context.Types.AddRange(defaultTypes);
             context.CraftingTable.AddRange(defaultTable);
             context.Brewing.AddRange(defaultBrewing);
             context.Furnace.AddRange(defaultFurnace);
