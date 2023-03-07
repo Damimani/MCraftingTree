@@ -98,7 +98,6 @@ namespace MCraftingTree
                 List<Items> item = ctx.Items.Where(b => b.Name.Contains(search)).ToList();
                 for (int i = 0; i < item.Count; i++)
                 {
-                    items.Remove(item[i]);
                     itms.Add(item[i]);
                 }
                 itms.Remove(ctx.Items.Single(b => b.ID == "-1"));

@@ -184,7 +184,7 @@ namespace MCraftingTree
                         for (int i = 0; i < ingredients.Count; i++)
                         {
                             string value = string.Empty;
-                            value = (string)ingredients[0].item.Values.ToList()[0];
+                            value = (string)ingredients[i].item.Values.ToList()[0];
                             itemPattern.Add(value);
                         }
                         for (int i = ingredients.Count; i < 10; i++)
