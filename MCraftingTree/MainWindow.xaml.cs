@@ -38,7 +38,8 @@ namespace MCraftingTree
     {
         public MainWindow()
         {
-            ToImplement.Create_CraftingTable();
+            ctx.Database.Delete();
+            //ToImplement.Create_CraftingTable();
             InitializeComponent();
             LoadItems();
         }
@@ -123,8 +124,6 @@ namespace MCraftingTree
         //Recipe functions
         private void SwitchScreen(object sender, RoutedEventArgs e)
         {
-
-            ToImplement.Create_Type();
             var button = (Button)sender;
             string key = button.Uid;
             RecipeID = string.Empty;

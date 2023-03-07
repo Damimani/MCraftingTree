@@ -243,6 +243,7 @@ namespace MCraftingTree
             using (StreamWriter sw = File.CreateText("C:\\users\\danit\\types.txt"))
             {
                 List<string> addList = new List<string>();
+                List<string> addList2 = new List<string>();
                 foreach (string file in Directory.EnumerateFiles(Directory.GetCurrentDirectory() + "/tags", "*.json"))
                 {
                     Types type = new Types();
@@ -254,17 +255,41 @@ namespace MCraftingTree
 
                     List<string> values = type.values;
                     string filename = file.Remove(file.Length - 5);
+                    filename = filename.Substring(74);
 
                     for (int i = 0; i < values.Count; i++)
                     {
                         string value = values[i];
-                        Items itm = MainWindow.ctx.Items.Single(b => b.ID == value);
-                        string addLine = "defaultTypes.Add(new Types() { ID=Guid.NewGuid().ToString(), " +
-                            $"Item=defaultItems.Single(b => b.ID == \"{itm.ID}\"), " +
-                            $"Type=\"{filename}\"}});";
+                        string addLine = string.Empty;
+                        string addLine2 = string.Empty;
+                        if (value.StartsWith("#"))
+                        {
+                            value= value.Substring(1);
+                            var types = MainWindow.ctx.Types.Where(b => b.Type.Contains(value)).ToList();
+                            for (int j = 0; j < types.Count; j++)
+                            {
+                                addLine2 = "defaultTypes.Add(new Types() { ID=Guid.NewGuid().ToString(), " +
+                                    $"Item=defaultItems.Single(b => b.ID == \"{types[i].Item.ID}\"), " +
+                                    $"Type=\"{filename}\"}});";
+                                addList2.Add(addLine2);
+                            }
+                        }
+                        else
+                        {
+                            addLine = "defaultTypes.Add(new Types() { ID=Guid.NewGuid().ToString(), " +
+                                $"Item=defaultItems.Single(b => b.ID == \"{value}\"), " +
+                                $"Type=\"{filename}\"}});";
+                            addList.Add(addLine);
+                        }
                     }
-
-                    
+                }
+                foreach (var item in addList)
+                {
+                    sw.WriteLine(item);
+                }
+                foreach (var item in addList2)
+                {
+                    sw.WriteLine(item);
                 }
             }
         }
