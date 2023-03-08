@@ -38,8 +38,6 @@ namespace MCraftingTree
     {
         public MainWindow()
         {
-            ctx.Database.Delete();
-            //ToImplement.Create_CraftingTable();
             InitializeComponent();
             LoadItems();
         }
@@ -378,7 +376,7 @@ namespace MCraftingTree
             {
                 try
                 {
-                    int.Parse(OutputAmount.Text);
+                    double.Parse(OutputAmount.Text);
                 }
                 catch (Exception)
                 {
@@ -437,6 +435,20 @@ namespace MCraftingTree
             }
         }
 
+        private void MobDropEnable(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            bool? check = checkBox.IsChecked;
+            if (check == true)
+            {
+                MobDropDisplay.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MobDropDisplay.Visibility = Visibility.Hidden;
+            }
+        }
+
         private void Add_Or_Alter_Item(object sender, RoutedEventArgs e)
         {
             if (ItemName.Text != null && ItemID.Text != null)
@@ -445,17 +457,30 @@ namespace MCraftingTree
                 {
                     case "Add":
                         Types type = new Types();
-                        Items item = new Items() { ID = ItemType.Text, Name = ItemName.Text, ImagePath = ImagePath };
-                        if (ItemType.Text != null)
+                        MobDrops drop = new MobDrops();
+                        Items item = new Items() { ID = ItemID.Text, Name = ItemName.Text };
+                        if (ItemType.Text != "")
                         {
                             type = new Types() { ID = Guid.NewGuid().ToString(), Item = item, Type = ItemType.Text };
+                        }
+                        if (MobName.Text != "" && DropChance.Text != "" && MobDropDisplay.Visibility == Visibility.Visible)
+                        {
+                            drop = new MobDrops() { ID = Guid.NewGuid().ToString(), DropChance = double.Parse(DropChance.Text), Drops = item, MobName = MobName.Text};
+                        }
+                        if (ImagePath != string.Empty)
+                        {
+                            item.ImagePath = ImagePath;
                         }
                         try
                         {
                             ctx.Items.Add(item);
-                            if (type != null)
+                            if (type.ID != null)
                             {
                                 ctx.Types.Add(type);
+                            }
+                            if (drop.ID != null)
+                            {
+                                ctx.MobDrops.Add(drop);
                             }
                             ctx.SaveChanges();
                             ImagePath = null;
@@ -463,6 +488,8 @@ namespace MCraftingTree
                             ItemName.Text = null;
                             ItemType.Text = null; 
                             PopupImage.Source = null;
+                            MobName.Text = null;
+                            DropChance.Text = null;
                             LoadItems();
                         }
                         catch (Exception)
@@ -528,16 +555,24 @@ namespace MCraftingTree
                 Filter = "Image Files(*.png;*.jpg;*.gif)|*.png;*.jpg;*.gif"
             };
             bool? res = fileDialog.ShowDialog();
-            using (Stream stream = fileDialog.OpenFile())
+            try
             {
-                if (res.HasValue && res.Value)
+                using (Stream stream = fileDialog.OpenFile())
                 {
-                    File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory(), "ImageResources\\Items", fileDialog.SafeFileName), true);
-                    ImagePath = "/ImageResources/Items/" + fileDialog.SafeFileName;
-                    PopupImage.Source = NewBitmapImage(ImagePath);
+                    if (res.HasValue && res.Value)
+                    {
+                        File.Copy(fileDialog.FileName, Path.Combine(Directory.GetCurrentDirectory(), "ImageResources\\Items", fileDialog.SafeFileName), true);
+                        ImagePath = "/ImageResources/Items/" + fileDialog.SafeFileName;
+                        PopupImage.Source = NewBitmapImage(ImagePath);
+                    }
+                    stream.Dispose();
                 }
-                stream.Dispose();
             }
+            catch (Exception)
+            {
+                
+            }
+            
         }
 
         private void Search_Items_Click(object sender, RoutedEventArgs e)

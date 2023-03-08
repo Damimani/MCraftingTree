@@ -79,7 +79,6 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                                <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
@@ -545,10 +544,27 @@
                             <TextBox materialDesign:HintAssist.Hint="Item ID (modname:item_name)" x:Name="ItemID"/>
                             <TextBox Grid.Row="1" materialDesign:HintAssist.Hint="Item name" x:Name="ItemName"/>
                             <TextBox Grid.Row="2" materialDesign:HintAssist.Hint="Item type (optional)" x:Name="ItemType"/>
-                            <Image Grid.Row="3" HorizontalAlignment="Center" Width="32px" Height="32px" x:Name="PopupImage"/>
-                            <Button Grid.Row="4" Click="OpenFile">
-                                <materialDesign:PackIcon Kind="Folder"/>
-                            </Button>
+                            <Image HorizontalAlignment="Center" Width="32px" Height="32px" x:Name="PopupImage"/>
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="4*" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox IsChecked="False" x:Name="IsMobDrop" Checked="MobDropEnable" Unchecked="MobDropEnable"/>
+                                <Label Grid.Column="1" Content="Mobdrop"/>
+                                <Button Grid.Column="2" Click="OpenFile">
+                                    <materialDesign:PackIcon Kind="Folder"/>
+                                </Button>
+                            </Grid>
+                            <Grid Grid.Row="4" x:Name="MobDropDisplay" Visibility="Hidden">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox materialDesign:HintAssist.Hint="Dropped by..." x:Name="MobName"/>
+                                <TextBox Grid.Column="1" materialDesign:HintAssist.Hint="Drop Chance" x:Name="DropChance" TextChanged="NumberOnly"/>
+                            </Grid>
                             <Button Grid.Row="5" Content="Save Item" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Click="Add_Or_Alter_Item"/>
                         </Grid>
                     </materialDesign:Card>

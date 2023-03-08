@@ -137,6 +137,22 @@
     <Compile Include="Migrations\202303040953530_ForeignKeyAdded.designer.cs">
       <DependentUpon>202303040953530_ForeignKeyAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202303081215205_Seed1.cs" />
+    <Compile Include="Migrations\202303081215205_Seed1.designer.cs">
+      <DependentUpon>202303081215205_Seed1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303081439052_fix.cs" />
+    <Compile Include="Migrations\202303081439052_fix.designer.cs">
+      <DependentUpon>202303081439052_fix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303081450210_fix1.cs" />
+    <Compile Include="Migrations\202303081450210_fix1.designer.cs">
+      <DependentUpon>202303081450210_fix1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303081452374_fix2.cs" />
+    <Compile Include="Migrations\202303081452374_fix2.designer.cs">
+      <DependentUpon>202303081452374_fix2.cs</DependentUpon>
+    </Compile>
     <Compile Include="ToImplement.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -203,6 +219,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202303040953530_ForeignKeyAdded.resx">
       <DependentUpon>202303040953530_ForeignKeyAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303081215205_Seed1.resx">
+      <DependentUpon>202303081215205_Seed1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303081439052_fix.resx">
+      <DependentUpon>202303081439052_fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303081450210_fix1.resx">
+      <DependentUpon>202303081450210_fix1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303081452374_fix2.resx">
+      <DependentUpon>202303081452374_fix2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
