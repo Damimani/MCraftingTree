@@ -215,9 +215,12 @@ namespace MCraftingTree
                     if (CraftingOutputImg.Uid != string.Empty)
                     {
                         List<Items> items = new List<Items>();
-                        for (int i = 0; i < CraftingGrid.Children.Count-2; i++)
+                        for (int i = 0; i < CraftingGrid.Children.Count; i++)
                         {
-                            string Uid = ImageUidSearch((Border)CraftingGrid.Children[i]);
+                            if (CraftingGrid.Children[i] is Border border)
+                            {
+                                string Uid = ImageUidSearch(border);
+                            }
                             if (Uid != "" && Uid != null)
                             {
                                 Items itm = ctx.Items.Single(b => b.ID == Uid);
