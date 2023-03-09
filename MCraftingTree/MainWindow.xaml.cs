@@ -212,7 +212,7 @@ namespace MCraftingTree
             switch (switchScreen)
             {
                 case "Crafting":
-                    if (CraftingOutputImg.Uid != null)
+                    if (CraftingOutputImg.Uid != string.Empty)
                     {
                         List<Items> items = new List<Items>();
                         for (int i = 0; i < CraftingGrid.Children.Count-2; i++)
@@ -245,14 +245,14 @@ namespace MCraftingTree
                     }
                     break;
                 case "Furnace":
-                    if (FurnaceOutputImg.Uid != null)
+                    if (FurnaceOutputImg.Uid != string.Empty)
                     {
                         List<Items> items = new List<Items>();
                         for (int i = 0; i < FurnaceGrid.Children.Count; i++)
                         {
-                            if (FurnaceGrid.Children[i] is Border)
+                            if (FurnaceGrid.Children[i] is Border border)
                             {
-                                string Uid = ImageUidSearch((Border)FurnaceGrid.Children[i]);
+                                string Uid = ImageUidSearch(border);
                                 if (Uid != "" && Uid != null)
                                 {
                                     Items itm = ctx.Items.Single(b => b.ID == Uid);
@@ -278,14 +278,14 @@ namespace MCraftingTree
                     }
                     break;
                 case "Brewing":
-                    if (BrewingOutputImg.Uid != null)
+                    if (BrewingOutputImg.Uid != string.Empty)
                     {
                         List<Items> items = new List<Items>();
                         for (int i = 0; i < BrewingGrid.Children.Count; i++)
                         {
-                            if (BrewingGrid.Children[i] is Border)
+                            if (BrewingGrid.Children[i] is Border border)
                             {
-                                string Uid = ImageUidSearch((Border)BrewingGrid.Children[i]);
+                                string Uid = ImageUidSearch(border);
                                 if (Uid != "" && Uid != null)
                                 {
                                     Items itm = ctx.Items.Single(b => b.ID == Uid);
@@ -320,50 +320,59 @@ namespace MCraftingTree
             switch (switchScreen)
             {
                 case "Crafting":
-                    CraftingTable crafting = ctx.CraftingTable.Single(b => b.ID == RecipeID);
-                    ctx.CraftingTable.Remove(crafting);
-                    ctx.SaveChanges();
-                    RecipeID = string.Empty;
-                    CraftingGridImg11.Source = null;
-                    CraftingGridImg11.Uid = string.Empty;
-                    CraftingGridImg12.Source = null;
-                    CraftingGridImg12.Uid = string.Empty;
-                    CraftingGridImg13.Source = null;
-                    CraftingGridImg13.Uid = string.Empty;
-                    CraftingGridImg21.Source = null;
-                    CraftingGridImg21.Uid = string.Empty;
-                    CraftingGridImg22.Source = null;
-                    CraftingGridImg22.Uid = string.Empty;
-                    CraftingGridImg23.Source = null;
-                    CraftingGridImg23.Uid = string.Empty;
-                    CraftingGridImg31.Source = null;
-                    CraftingGridImg31.Uid = string.Empty;
-                    CraftingGridImg32.Source = null;
-                    CraftingGridImg32.Uid = string.Empty;
-                    CraftingGridImg33.Source = null;
-                    CraftingGridImg33.Uid = string.Empty;
-                    CraftingOutputImg.Source = null;
-                    CraftingOutputImg.Uid = String.Empty;
+                    if (CraftingOutputImg.Uid != string.Empty)
+                    {
+                        CraftingTable crafting = ctx.CraftingTable.Single(b => b.ID == RecipeID);
+                        ctx.CraftingTable.Remove(crafting);
+                        ctx.SaveChanges();
+                        RecipeID = string.Empty;
+                        CraftingGridImg11.Source = null;
+                        CraftingGridImg11.Uid = string.Empty;
+                        CraftingGridImg12.Source = null;
+                        CraftingGridImg12.Uid = string.Empty;
+                        CraftingGridImg13.Source = null;
+                        CraftingGridImg13.Uid = string.Empty;
+                        CraftingGridImg21.Source = null;
+                        CraftingGridImg21.Uid = string.Empty;
+                        CraftingGridImg22.Source = null;
+                        CraftingGridImg22.Uid = string.Empty;
+                        CraftingGridImg23.Source = null;
+                        CraftingGridImg23.Uid = string.Empty;
+                        CraftingGridImg31.Source = null;
+                        CraftingGridImg31.Uid = string.Empty;
+                        CraftingGridImg32.Source = null;
+                        CraftingGridImg32.Uid = string.Empty;
+                        CraftingGridImg33.Source = null;
+                        CraftingGridImg33.Uid = string.Empty;
+                        CraftingOutputImg.Source = null;
+                        CraftingOutputImg.Uid = String.Empty;
+                    }
                     break;
                 case "Furnace":
-                    Furnace furnace = ctx.Furnace.Single(b => b.ID == RecipeID);
-                    ctx.Furnace.Remove(furnace);
-                    ctx.SaveChanges();
-                    RecipeID = string.Empty;
-                    FurnaceInputImg.Source = null;
-                    FurnaceInputImg.Uid = String.Empty;
-                    FurnaceOutputImg.Source = null;
-                    FurnaceOutputImg.Uid = String.Empty;
+                    if (FurnaceOutputImg.Uid != string.Empty)
+                    {
+                        Furnace furnace = ctx.Furnace.Single(b => b.ID == RecipeID);
+                        ctx.Furnace.Remove(furnace);
+                        ctx.SaveChanges();
+                        RecipeID = string.Empty;
+                        FurnaceInputImg.Source = null;
+                        FurnaceInputImg.Uid = String.Empty;
+                        FurnaceOutputImg.Source = null;
+                        FurnaceOutputImg.Uid = String.Empty;
+                    }
                     break;
                 case "Brewing":
-                    Brewing brewing = ctx.Brewing.Single(b => b.ID == RecipeID);
-                    ctx.Brewing.Remove(brewing);
-                    ctx.SaveChanges();
-                    RecipeID = string.Empty;
-                    BrewingInputImg.Source = null;
-                    BrewingInputImg.Uid = String.Empty;
-                    BrewingOutputImg.Source = null;
-                    BrewingOutputImg.Uid = String.Empty;
+                    if (BrewingOutputImg.Uid != string.Empty)
+                    {
+                        Brewing brewing = ctx.Brewing.Single(b => b.ID == RecipeID);
+                        ctx.Brewing.Remove(brewing);
+                        ctx.SaveChanges();
+                        RecipeID = string.Empty;
+                        BrewingInputImg.Source = null;
+                        BrewingInputImg.Uid = String.Empty;
+                        BrewingOutputImg.Source = null;
+                        BrewingOutputImg.Uid = String.Empty;
+                    }
                     break;
                 default:
                     break;
@@ -451,7 +460,7 @@ namespace MCraftingTree
 
         private void Add_Or_Alter_Item(object sender, RoutedEventArgs e)
         {
-            if (ItemName.Text != null && ItemID.Text != null)
+            if (ItemName.Text != "" && ItemID.Text != "")
             {
                 switch (DialogHostKey)
                 {
@@ -534,18 +543,25 @@ namespace MCraftingTree
         private void Delete_Item(object sender, RoutedEventArgs e)
         {
             var remove = (Items)ItemDG.SelectedItem;
-            var removeType = ctx.Types.Single(b => b.Item == remove);
-            bool hasMultipleImgs = false;
-            var itemImages = ctx.Items.Where(b => b.ImagePath.Contains(remove.ImagePath)).ToList();
-            if (itemImages.Count > 1) hasMultipleImgs = true;
-            if (!hasMultipleImgs)
+            if (remove != null)
             {
-                File.Delete(Directory.GetCurrentDirectory() + remove.ImagePath);
+                var removeType = ctx.Types.Single(b => b.Item == remove);
+                bool hasMultipleImgs = false;
+                var itemImages = ctx.Items.Where(b => b.ImagePath.Contains(remove.ImagePath)).ToList();
+                if (itemImages.Count > 1) hasMultipleImgs = true;
+                if (!hasMultipleImgs)
+                {
+                    File.Delete(Directory.GetCurrentDirectory() + remove.ImagePath);
+                }
+                ctx.Types.Remove(removeType);
+                ctx.Items.Remove(remove);
+                ctx.SaveChanges();
+                LoadItems();
             }
-            ctx.Types.Remove(removeType);
-            ctx.Items.Remove(remove);
-            ctx.SaveChanges();
-            LoadItems();
+            else
+            {
+                MessageBox.Show("Please select an item from the item menu to delete!", "Incorrect Selection", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
 
         private void OpenFile(object sender, RoutedEventArgs e)
@@ -570,7 +586,7 @@ namespace MCraftingTree
             }
             catch (Exception)
             {
-                
+                MessageBox.Show("You did not select an image!", "Image Selection Cancelled", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             
         }
@@ -774,6 +790,70 @@ namespace MCraftingTree
                     break;
                 default:
                     break;
+            }
+        }
+
+        //Crafting Tree
+
+        public class CraftingTree
+        {
+            public BitmapImage BMImage { get; set; }
+            public string ID { get; set; }
+            public string Name { get; set; }
+            public uint OutputAmount { get; set; }
+        }
+
+        private void Add_To_Tree(object sender, RoutedEventArgs e)
+        {
+            //lekérni egy receptet, annak az itemeit addolni a listához, ha annak vannak receptjei akkor azt is addolni és removeolni a másik listából, lecsekkolni hogy nem ismétlődik-e
+            List<CraftingTree> craftingTrees = new List<CraftingTree>(); //CraftingTreeDG, contains all base materials
+            List<Items> items = new List<Items>(); //contains crafting outputs for the image
+            CraftingTree addElement = new CraftingTree();
+            if (CraftingOutputImg.Uid != string.Empty)
+            {
+                List<Items> item = ctx.Items.Where(b => b.ID == CraftingOutputImg.Uid).ToList();
+                items.Add(item[0]);
+                List<CraftingTable> recipes = ctx.CraftingTable.Where(b => b.OutputSlot == item[0]).ToList();
+                List<Items> craftingComponents = new List<Items>();
+                if (recipes != null)
+                {
+                    if (recipes[0].Slot11.ID != "-1")
+                    {
+                        craftingComponents.Add(recipes[0].Slot11);
+                    }
+                    if (recipes[0].Slot12.ID != "-1")
+                    {
+                        craftingComponents.Add(recipes[0].Slot11);
+                    }
+                    if (recipes[0].Slot13.ID != "-1")
+                    {
+                        craftingComponents.Add(recipes[0].Slot11);
+                    }
+                    if (recipes[0].Slot21.ID != "-1")
+                    {
+                        craftingComponents.Add(recipes[0].Slot11);
+                    }
+                    if (recipes[0].Slot22.ID != "-1")
+                    {
+                        craftingComponents.Add(recipes[0].Slot11);
+                    }
+                    if (recipes[0].Slot23.ID != "-1")
+                    {
+                        craftingComponents.Add(recipes[0].Slot11);
+                    }
+                    if (recipes[0].Slot31.ID != "-1")
+                    {
+                        craftingComponents.Add(recipes[0].Slot11);
+                    }
+                    if (recipes[0].Slot32.ID != "-1")
+                    {
+                        craftingComponents.Add(recipes[0].Slot11);
+                    }
+                    if (recipes[0].Slot33.ID != "-1")
+                    {
+                        craftingComponents.Add(recipes[0].Slot11);
+                    }
+                }
             }
         }
     }

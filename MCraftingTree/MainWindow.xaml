@@ -421,6 +421,9 @@
                             </Border>
                             <TextBox Grid.Row="2" Grid.Column="5" Text="1" x:Name="OutputAmount" HorizontalAlignment="Left" VerticalAlignment="Center" TextChanged="NumberOnly"/>
                             <materialDesign:PackIcon Kind="ArrowRightBold" Width="64" Height="64" Foreground="#8B8B8B" Grid.Row="1" Grid.Column="3"/>
+                            <Button Grid.Column="5" Height="64px" Width="64px" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Add_To_Tree" Background="Transparent" BorderBrush="Transparent">
+                                <materialDesign:PackIcon Kind="Plus" Width="16px" Height="16px" Foreground="#8B8B8B" BorderBrush="#8B8B8B" BorderThickness="1px"/>
+                            </Button>
                         </Grid>
                         <!-- Furnace-->
                         <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="FurnaceGrid">
@@ -524,8 +527,27 @@
                         <RowDefinition Height="4*" />
                     </Grid.RowDefinitions>
                     <!-- Tree menu -->
-                    <Image Grid.Row="0"/>
-                    <ListBox Grid.Row="1"/>
+                    <Image Grid.Row="0" x:Name="CraftingTreeImg"/>
+                    <DataGrid Grid.Row="1" x:Name="CraftingTreeDG">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Icon" Width="94">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border Grid.Row="0" Grid.Column="0" BorderBrush="#373737" BorderThickness="1.5px, 1.5px, 0px, 0px" Margin="-0.2">
+                                            <Border BorderBrush="#FFFFFF" BorderThickness="0, 0, 1.5px, 1.5px">
+                                                <Grid>
+                                                    <Rectangle Fill="#8B8B8B"/>
+                                                    <Image Source="{Binding Path=BMImage}" Width="64px" Height="64px" MouseMove="Item_Source" Uid="{Binding Path=ID}"/>
+                                                </Grid>
+                                            </Border>
+                                        </Border>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Amount" Binding="{Binding OutputAmount}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </materialDesign:Card>
             <materialDesign:DialogHost Grid.Column="1">
