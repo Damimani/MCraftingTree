@@ -215,24 +215,27 @@ namespace MCraftingTree
                     if (CraftingOutputImg.Uid != string.Empty)
                     {
                         List<Items> items = new List<Items>();
-                        for (int i = 0; i < CraftingGrid.Children.Count-2; i++)
+                        for (int i = 0; i < CraftingGrid.Children.Count; i++)
                         {
-                            string Uid = ImageUidSearch((Border)CraftingGrid.Children[i]);
-                            if (Uid != "" && Uid != null)
+                            if (CraftingGrid.Children[i] is Border border)
                             {
-                                Items itm = ctx.Items.Single(b => b.ID == Uid);
-                                if (itm != null)
+                                string Uid = ImageUidSearch(border);
+                                if (Uid != "" && Uid != null)
                                 {
-                                    items.Add(itm);
+                                    Items itm = ctx.Items.Single(b => b.ID == Uid);
+                                    if (itm != null)
+                                    {
+                                        items.Add(itm);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("This item does not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    }
                                 }
                                 else
                                 {
-                                    MessageBox.Show("This item does not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    items.Add(nullItem);
                                 }
-                            }
-                            else if (CraftingGrid.Children[i] is Border)
-                            {
-                                items.Add(nullItem);
                             }
                         }
                         CraftingTable recipe = new CraftingTable() { ID = Guid.NewGuid().ToString(), OutputAmount = uint.Parse(OutputAmount.Text), 
@@ -803,57 +806,102 @@ namespace MCraftingTree
             public uint OutputAmount { get; set; }
         }
 
+        public List<Items> CheckForRecipes(Items item)
+        {
+            List<CraftingTable> recipes = ctx.CraftingTable.Where(b => b.OutputSlot.ID == item.ID).ToList();
+            List<Items> craftingComponents = new List<Items>();
+            if (recipes != null)
+            {
+                if (recipes[0].Slot11.ID != "-1")
+                {
+                    craftingComponents.Add(recipes[0].Slot11);
+                }
+                if (recipes[0].Slot12.ID != "-1")
+                {
+                    craftingComponents.Add(recipes[0].Slot12);
+                }
+                if (recipes[0].Slot13.ID != "-1")
+                {
+                    craftingComponents.Add(recipes[0].Slot13);
+                }
+                if (recipes[0].Slot21.ID != "-1")
+                {
+                    craftingComponents.Add(recipes[0].Slot21);
+                }
+                if (recipes[0].Slot22.ID != "-1")
+                {
+                    craftingComponents.Add(recipes[0].Slot22);
+                }
+                if (recipes[0].Slot23.ID != "-1")
+                {
+                    craftingComponents.Add(recipes[0].Slot23);
+                }
+                if (recipes[0].Slot31.ID != "-1")
+                {
+                    craftingComponents.Add(recipes[0].Slot31);
+                }
+                if (recipes[0].Slot32.ID != "-1")
+                {
+                    craftingComponents.Add(recipes[0].Slot32);
+                }
+                if (recipes[0].Slot33.ID != "-1")
+                {
+                    craftingComponents.Add(recipes[0].Slot33);
+                }
+            }
+            return craftingComponents;
+        }
+
         private void Add_To_Tree(object sender, RoutedEventArgs e)
         {
-            //lekérni egy receptet, annak az itemeit addolni a listához, ha annak vannak receptjei akkor azt is addolni és removeolni a másik listából, lecsekkolni hogy nem ismétlődik-e
-            List<CraftingTree> craftingTrees = new List<CraftingTree>(); //CraftingTreeDG, contains all base materials
-            List<Items> items = new List<Items>(); //contains crafting outputs for the image
+            List<CraftingTree> craftingTrees= new List<CraftingTree>();
+            List<Items> baseMaterials = new List<Items>(); //contains all base materials, to be converted to CraftingTree class
+            List<Items> craftingOutputs = new List<Items>(); //contains crafting outputs for the image
+            List<Items> tempStorage = new List<Items>(); //stores items that are yet to be processed
+            IDictionary<Items, int> counter = new Dictionary<Items, int>(); //counts how many times recipes occur 
             CraftingTree addElement = new CraftingTree();
             if (CraftingOutputImg.Uid != string.Empty)
             {
                 List<Items> item = ctx.Items.Where(b => b.ID == CraftingOutputImg.Uid).ToList();
-                items.Add(item[0]);
-                List<CraftingTable> recipes = ctx.CraftingTable.Where(b => b.OutputSlot == item[0]).ToList();
-                List<Items> craftingComponents = new List<Items>();
-                if (recipes != null)
+                craftingOutputs.Add(item[0]);
+
+                tempStorage = CheckForRecipes(item[0]);
+                for (int i = 0; i < tempStorage.Count; i++)
                 {
-                    if (recipes[0].Slot11.ID != "-1")
+                    List<Items> addItems = CheckForRecipes(tempStorage[i]);
+                    for (int j = 0; j < addItems.Count; j++)
                     {
-                        craftingComponents.Add(recipes[0].Slot11);
-                    }
-                    if (recipes[0].Slot12.ID != "-1")
-                    {
-                        craftingComponents.Add(recipes[0].Slot11);
-                    }
-                    if (recipes[0].Slot13.ID != "-1")
-                    {
-                        craftingComponents.Add(recipes[0].Slot11);
-                    }
-                    if (recipes[0].Slot21.ID != "-1")
-                    {
-                        craftingComponents.Add(recipes[0].Slot11);
-                    }
-                    if (recipes[0].Slot22.ID != "-1")
-                    {
-                        craftingComponents.Add(recipes[0].Slot11);
-                    }
-                    if (recipes[0].Slot23.ID != "-1")
-                    {
-                        craftingComponents.Add(recipes[0].Slot11);
-                    }
-                    if (recipes[0].Slot31.ID != "-1")
-                    {
-                        craftingComponents.Add(recipes[0].Slot11);
-                    }
-                    if (recipes[0].Slot32.ID != "-1")
-                    {
-                        craftingComponents.Add(recipes[0].Slot11);
-                    }
-                    if (recipes[0].Slot33.ID != "-1")
-                    {
-                        craftingComponents.Add(recipes[0].Slot11);
+                        if (CheckForRecipes(addItems[j]) == null)
+                        {
+                            baseMaterials.Add(addItems[j]);
+                        }
+                        else if (tempStorage.Contains(addItems[j]))
+                        {
+                            if (counter.Keys.Contains(addItems[j]))
+                            {
+                                counter[addItems[j]]++;
+                            }
+                            else
+                            {
+                                counter.Add(addItems[j], 1);
+                            }
+                            if (!baseMaterials.Contains(addItems[j]))
+                            {
+                                baseMaterials.Add(addItems[j]);
+                            }
+                            
+                        }
+                        else
+                        {
+                            tempStorage.Add(addItems[j]);
+                            craftingOutputs.Add(addItems[j]);
+                        }
                     }
                 }
+                Items search = ctx.Items.Where(x => x.ID == "minecraft:iron_ingot").ToList()[0];
+                int count = counter.Count;
+                MessageBox.Show(tempStorage.Count().ToString());
+                
             }
         }
     }
