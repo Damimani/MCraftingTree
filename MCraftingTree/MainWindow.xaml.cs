@@ -810,7 +810,7 @@ namespace MCraftingTree
         {
             List<CraftingTable> recipes = ctx.CraftingTable.Where(b => b.OutputSlot.ID == item.ID).ToList();
             List<Items> craftingComponents = new List<Items>();
-            if (recipes != null)
+            if (recipes.Count != 0 && recipes != null)
             {
                 if (recipes[0].Slot11.ID != "-1")
                 {
@@ -852,6 +852,17 @@ namespace MCraftingTree
             return craftingComponents;
         }
 
+        public Items CheckForSmelting(Items item)
+        {
+            List<Furnace> recipes = ctx.Furnace.Where(b => b.OutputSlot.ID == item.ID).ToList();
+            Items input = new Items();
+            if (recipes != null && recipes.Count != 0 && recipes[0].InputSlot.ID != "-1")
+            {
+                input = recipes[0].InputSlot;
+            }
+            return input;
+        }
+
         private void Add_To_Tree(object sender, RoutedEventArgs e)
         {
             List<CraftingTree> craftingTrees= new List<CraftingTree>();
@@ -864,44 +875,75 @@ namespace MCraftingTree
             {
                 List<Items> item = ctx.Items.Where(b => b.ID == CraftingOutputImg.Uid).ToList();
                 craftingOutputs.Add(item[0]);
+                counter.Add(item[0], 1);
 
-                tempStorage = CheckForRecipes(item[0]);
+                List<Items> validate = CheckForRecipes(item[0]);
+                for (int i = validate.Count-1; i > 0; i--)
+                {
+                    if (tempStorage.Contains(validate[i]))
+                    {
+                        counter[validate[i]]++;
+                    }
+                    else
+                    {
+                        counter.Add(validate[i], 1);
+                        tempStorage.Add(validate[i]);
+                    }
+                }
                 for (int i = 0; i < tempStorage.Count; i++)
                 {
-                    List<Items> addItems = CheckForRecipes(tempStorage[i]);
-                    for (int j = 0; j < addItems.Count; j++)
+                    Items furnace = CheckForSmelting(tempStorage[i]);
+                    List<Items> recipes = CheckForRecipes(tempStorage[i]);
+                    if (furnace.ID != null)
                     {
-                        if (CheckForRecipes(addItems[j]) == null)
+                        baseMaterials.Add(furnace);
+                        if (tempStorage.Contains(furnace))
                         {
-                            baseMaterials.Add(addItems[j]);
-                        }
-                        else if (tempStorage.Contains(addItems[j]))
-                        {
-                            if (counter.Keys.Contains(addItems[j]))
+                            baseMaterials.Add(furnace);
+                            if (counter.Keys.Contains(furnace))
                             {
-                                counter[addItems[j]]++;
+                                counter[furnace]++;
                             }
                             else
                             {
-                                counter.Add(addItems[j], 1);
+                                counter.Add(furnace, 1);
                             }
-                            if (!baseMaterials.Contains(addItems[j]))
-                            {
-                                baseMaterials.Add(addItems[j]);
-                            }
-                            
-                        }
-                        else
-                        {
-                            tempStorage.Add(addItems[j]);
-                            craftingOutputs.Add(addItems[j]);
                         }
                     }
+                    else if (recipes != null)
+                    {
+                        for (int j = 0; j < recipes.Count; j++)
+                        {
+                            if (counter.Keys.Contains(recipes[j]))
+                            {
+                                if (!baseMaterials.Contains(tempStorage[i]))
+                                {
+                                    if (!craftingOutputs.Contains(tempStorage[i]))
+                                    {
+                                        baseMaterials.Add(tempStorage[i]);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (tempStorage.Contains(recipes[j]))
+                                {
+                                    counter[recipes[i]]++;
+                                }
+                                else
+                                {
+                                    tempStorage.Add(recipes[j]);
+                                    counter.Add(recipes[j], 1);
+                                    craftingOutputs.Add(tempStorage[i]);
+                                }
+                            }
+                        }
+                    }
+                    if (CheckForRecipes(tempStorage[i]).Count == 0)
+                    {
+                        baseMaterials.Add(tempStorage[i]);
+                    }
                 }
-                Items search = ctx.Items.Where(x => x.ID == "minecraft:iron_ingot").ToList()[0];
-                int count = counter.Count;
-                MessageBox.Show(tempStorage.Count().ToString());
-                
             }
         }
     }
