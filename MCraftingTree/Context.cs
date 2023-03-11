@@ -112,7 +112,7 @@ namespace MCraftingTree
         public Items OutputSlot { get; set; }
         [ForeignKey("OutputSlot")]
         public string OutputSlotID { get; set; }
-        public uint OutputAmount { get; set; }
+        public int OutputAmount { get; set; }
     }
 
     public class ContextInitializer : CreateDatabaseIfNotExists<Context>

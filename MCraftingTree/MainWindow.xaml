@@ -517,8 +517,8 @@
         </Grid>
         <Grid Grid.Column="1" Margin="20,20,20,10">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0*" x:Name="TreeWidth"/>
-                <ColumnDefinition Width="1*" x:Name="ItemWidth"/>
+                <ColumnDefinition Width="1*" x:Name="TreeWidth"/>
+                <ColumnDefinition Width="0*" x:Name="ItemWidth"/>
             </Grid.ColumnDefinitions>
             <materialDesign:Card>
                 <Grid>
@@ -528,7 +528,10 @@
                     </Grid.RowDefinitions>
                     <!-- Tree menu -->
                     <Image Grid.Row="0" x:Name="CraftingTreeImg"/>
-                    <DataGrid Grid.Row="1" x:Name="CraftingTreeDG">
+                    <DataGrid Grid.Row="1" x:Name="CraftingTreeDG"
+                              CanUserAddRows="False" AutoGenerateColumns="False" SelectionMode="Single"
+                              HeadersVisibility="All" CanUserSortColumns="True"
+                              IsReadOnly="True" Background="Transparent">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Icon" Width="94">
                                 <DataGridTemplateColumn.CellTemplate>

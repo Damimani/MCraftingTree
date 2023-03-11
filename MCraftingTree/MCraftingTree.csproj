@@ -153,6 +153,10 @@
     <Compile Include="Migrations\202303081452374_fix2.designer.cs">
       <DependentUpon>202303081452374_fix2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202303110922442_fix3.cs" />
+    <Compile Include="Migrations\202303110922442_fix3.designer.cs">
+      <DependentUpon>202303110922442_fix3.cs</DependentUpon>
+    </Compile>
     <Compile Include="ToImplement.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -231,6 +235,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202303081452374_fix2.resx">
       <DependentUpon>202303081452374_fix2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303110922442_fix3.resx">
+      <DependentUpon>202303110922442_fix3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

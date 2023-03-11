@@ -38,6 +38,7 @@ namespace MCraftingTree
     {
         public MainWindow()
         {
+            ctx.Database.Delete();
             InitializeComponent();
             LoadItems();
         }
@@ -238,7 +239,7 @@ namespace MCraftingTree
                                 }
                             }
                         }
-                        CraftingTable recipe = new CraftingTable() { ID = Guid.NewGuid().ToString(), OutputAmount = uint.Parse(OutputAmount.Text), 
+                        CraftingTable recipe = new CraftingTable() { ID = Guid.NewGuid().ToString(), OutputAmount = int.Parse(OutputAmount.Text), 
                             Slot11 = items[0], Slot12 = items[1], Slot13 = items[2], 
                             Slot21 = items[3], Slot22 = items[4], Slot23 = items[5], 
                             Slot31 = items[6], Slot32 = items[7], Slot33 = items[8], 
@@ -673,7 +674,12 @@ namespace MCraftingTree
                         CraftingGridImg33.Uid = recipes[0].Slot33.ID;
                         CraftingOutputImg.Source = recipes[0].OutputSlot.BMImage;
                         CraftingOutputImg.Uid = recipes[0].OutputSlot.ID;
+                        CraftingTable xd = recipes[0];
                         OutputAmount.Text = recipes[0].OutputAmount.ToString();
+                        if (OutputAmount.Text == "0")
+                        {
+                            OutputAmount.Text = "1";
+                        }
                         RecipeID = recipes[0].ID;
                     }
                     else
@@ -803,7 +809,7 @@ namespace MCraftingTree
             public BitmapImage BMImage { get; set; }
             public string ID { get; set; }
             public string Name { get; set; }
-            public uint OutputAmount { get; set; }
+            public int OutputAmount { get; set; }
         }
 
         public List<Items> CheckForRecipes(Items item)
@@ -870,6 +876,7 @@ namespace MCraftingTree
             List<Items> craftingOutputs = new List<Items>(); //contains crafting outputs for the image
             List<Items> tempStorage = new List<Items>(); //stores items that are yet to be processed
             IDictionary<Items, int> counter = new Dictionary<Items, int>(); //counts how many times recipes occur 
+            IDictionary<Items, Items> craftingConnection = new Dictionary<Items, Items>(); //connection between recipe output and input, Value is output, Key is input
             CraftingTree addElement = new CraftingTree();
             if (CraftingOutputImg.Uid != string.Empty)
             {
@@ -878,7 +885,7 @@ namespace MCraftingTree
                 counter.Add(item[0], 1);
 
                 List<Items> validate = CheckForRecipes(item[0]);
-                for (int i = validate.Count-1; i > 0; i--)
+                for (int i = 0; i < validate.Count; i++)
                 {
                     if (tempStorage.Contains(validate[i]))
                     {
@@ -888,12 +895,15 @@ namespace MCraftingTree
                     {
                         counter.Add(validate[i], 1);
                         tempStorage.Add(validate[i]);
+                        craftingConnection.Add(validate[i], item[0]);
                     }
                 }
                 for (int i = 0; i < tempStorage.Count; i++)
                 {
                     Items furnace = CheckForSmelting(tempStorage[i]);
-                    List<Items> recipes = CheckForRecipes(tempStorage[i]);
+                    List<Items> check = CheckForRecipes(tempStorage[i]);
+                    List<Items> recipes = new List<Items>();
+
                     if (furnace.ID != null)
                     {
                         baseMaterials.Add(furnace);
@@ -907,24 +917,37 @@ namespace MCraftingTree
                             else
                             {
                                 counter.Add(furnace, 1);
+                                craftingConnection.Add(furnace, tempStorage[i]);
                             }
                         }
                     }
-                    else if (recipes != null)
+                    else if (check != null)
                     {
-                        for (int j = 0; j < recipes.Count; j++)
+                        for (int j = 0; j < check.Count; j++)
                         {
-                            if (counter.Keys.Contains(recipes[j]))
+                            if (recipes.Contains(check[j]))
                             {
-                                if (!baseMaterials.Contains(tempStorage[i]))
-                                {
-                                    if (!craftingOutputs.Contains(tempStorage[i]))
-                                    {
-                                        baseMaterials.Add(tempStorage[i]);
-                                    }
-                                }
+                                counter[check[j]]++;
                             }
                             else
+                            {
+                                recipes.Add(check[j]);
+                                if (counter.Keys.Contains(check[j]))
+                                {
+                                    counter[check[j]]++;
+                                }
+                                else
+                                {
+                                    counter.Add(check[j], 1);
+                                    baseMaterials.Add(check[j]);
+                                    craftingConnection.Add(check[j], tempStorage[i]);
+                                }
+                            }
+                        }
+
+                        for (int j = 0; j < recipes.Count; j++)
+                        {
+                            if (!counter.Keys.Contains(recipes[j]))
                             {
                                 if (tempStorage.Contains(recipes[j]))
                                 {
@@ -941,9 +964,46 @@ namespace MCraftingTree
                     }
                     if (CheckForRecipes(tempStorage[i]).Count == 0)
                     {
-                        baseMaterials.Add(tempStorage[i]);
+                        
+                        if (baseMaterials.Contains(tempStorage[i]))
+                        {
+                            counter[tempStorage[i]]++;
+                        }
+                        else
+                        {
+                            baseMaterials.Add(tempStorage[i]);
+                            if (counter.Keys.Contains(tempStorage[i]))
+                            {
+                                counter[tempStorage[i]]++;
+                            }
+                            else
+                            {
+                                counter.Add(tempStorage[i], 1);
+                            }
+                        }
                     }
                 }
+
+                for (int i = 0; i < baseMaterials.Count; i++)
+                {
+                    Items value = craftingConnection.Single(b => b.Key.ID == baseMaterials[i].ID).Value;
+                    string valueID = value.ID;
+                    int recipeAmount = ctx.CraftingTable.Where(b => b.OutputSlot.ID == valueID).ToList()[0].OutputAmount; //receptben mennyi az output
+                    int outputAmount = counter[baseMaterials[i]]; //mennyi van a basematerialból
+                    int inputAmount = counter[value]; //mennyi kell a basematerialból következõ cucchoz
+                    if (inputAmount%recipeAmount != 0)
+                    {
+                        int temp = recipeAmount-(inputAmount % recipeAmount);
+                        inputAmount += temp;
+                    }
+                    inputAmount = (inputAmount / recipeAmount)*outputAmount;
+
+                    CraftingTree addSource = new CraftingTree() { ID = baseMaterials[i].ID, BMImage = NewBitmapImage(baseMaterials[i].ImagePath), Name = baseMaterials[i].Name, OutputAmount = inputAmount };
+                    craftingTrees.Add(addSource);
+                }
+
+                CraftingTreeDG.ItemsSource = null;
+                CraftingTreeDG.ItemsSource = craftingTrees;
             }
         }
     }
