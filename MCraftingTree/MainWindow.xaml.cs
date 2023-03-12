@@ -38,7 +38,6 @@ namespace MCraftingTree
     {
         public MainWindow()
         {
-            ctx.Database.Delete();
             InitializeComponent();
             LoadItems();
         }
@@ -877,6 +876,7 @@ namespace MCraftingTree
             List<Items> tempStorage = new List<Items>(); //stores items that are yet to be processed
             IDictionary<Items, int> counter = new Dictionary<Items, int>(); //counts how many times recipes occur 
             IDictionary<Items, Items> craftingConnection = new Dictionary<Items, Items>(); //connection between recipe output and input, Value is output, Key is input
+            WriteableBitmap imageSource;
             CraftingTree addElement = new CraftingTree();
             if (CraftingOutputImg.Uid != string.Empty)
             {
@@ -910,6 +910,7 @@ namespace MCraftingTree
                         if (tempStorage.Contains(furnace))
                         {
                             baseMaterials.Add(furnace);
+                            craftingOutputs.Add(tempStorage[i]);
                             if (counter.Keys.Contains(furnace))
                             {
                                 counter[furnace]++;
@@ -923,6 +924,7 @@ namespace MCraftingTree
                     }
                     else if (check != null)
                     {
+                        craftingOutputs.Add(tempStorage[i]);
                         for (int j = 0; j < check.Count; j++)
                         {
                             if (recipes.Contains(check[j]))
@@ -941,22 +943,6 @@ namespace MCraftingTree
                                     counter.Add(check[j], 1);
                                     baseMaterials.Add(check[j]);
                                     craftingConnection.Add(check[j], tempStorage[i]);
-                                }
-                            }
-                        }
-
-                        for (int j = 0; j < recipes.Count; j++)
-                        {
-                            if (!counter.Keys.Contains(recipes[j]))
-                            {
-                                if (tempStorage.Contains(recipes[j]))
-                                {
-                                    counter[recipes[i]]++;
-                                }
-                                else
-                                {
-                                    tempStorage.Add(recipes[j]);
-                                    counter.Add(recipes[j], 1);
                                     craftingOutputs.Add(tempStorage[i]);
                                 }
                             }
@@ -972,6 +958,7 @@ namespace MCraftingTree
                         else
                         {
                             baseMaterials.Add(tempStorage[i]);
+                            craftingOutputs.Add(tempStorage[i]);
                             if (counter.Keys.Contains(tempStorage[i]))
                             {
                                 counter[tempStorage[i]]++;
@@ -1004,6 +991,11 @@ namespace MCraftingTree
 
                 CraftingTreeDG.ItemsSource = null;
                 CraftingTreeDG.ItemsSource = craftingTrees;
+
+                imageSource = new WriteableBitmap((int)CraftingTreeImg.Width, (int)CraftingTreeImg.Height, 50, 50, PixelFormats.Rgb24, null);
+                CraftingTreeImg.Source = imageSource;
+
+
             }
         }
     }
