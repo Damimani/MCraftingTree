@@ -415,7 +415,7 @@ namespace MCraftingTree
             string key = button.Uid;
             switch (key)
             {
-                case "Tree":
+                case "BaseMaterials":
                     TreeWidth.Width = new GridLength(1, GridUnitType.Star);
                     ItemWidth.Width = new GridLength(0, GridUnitType.Pixel);
                     break;
@@ -875,8 +875,7 @@ namespace MCraftingTree
             List<Items> craftingOutputs = new List<Items>(); //contains crafting outputs for the image
             List<Items> tempStorage = new List<Items>(); //stores items that are yet to be processed
             IDictionary<Items, int> counter = new Dictionary<Items, int>(); //counts how many times recipes occur 
-            IDictionary<Items, Items> craftingConnection = new Dictionary<Items, Items>(); //connection between recipe output and input, Value is output, Key is input
-            WriteableBitmap imageSource;
+            IDictionary<Items, Items> craftingConnection = new Dictionary<Items, Items>(); //connection between recipe output and input, Value is output, Key is output
             CraftingTree addElement = new CraftingTree();
             if (CraftingOutputImg.Uid != string.Empty)
             {
@@ -976,6 +975,10 @@ namespace MCraftingTree
                     Items value = craftingConnection.Single(b => b.Key.ID == baseMaterials[i].ID).Value;
                     string valueID = value.ID;
                     int recipeAmount = ctx.CraftingTable.Where(b => b.OutputSlot.ID == valueID).ToList()[0].OutputAmount; //receptben mennyi az output
+                    if (recipeAmount == 0)
+                    {
+                        recipeAmount = 1;
+                    }
                     int outputAmount = counter[baseMaterials[i]]; //mennyi van a basematerialb�l
                     int inputAmount = counter[value]; //mennyi kell a basematerialb�l k�vetkez� cucchoz
                     if (inputAmount%recipeAmount != 0)
@@ -991,11 +994,6 @@ namespace MCraftingTree
 
                 CraftingTreeDG.ItemsSource = null;
                 CraftingTreeDG.ItemsSource = craftingTrees;
-
-                imageSource = new WriteableBitmap((int)CraftingTreeImg.Width, (int)CraftingTreeImg.Height, 50, 50, PixelFormats.Rgb24, null);
-                CraftingTreeImg.Source = imageSource;
-
-
             }
         }
     }
