@@ -43,7 +43,7 @@ namespace MCraftingTree
         }
 
         //makes a new BitmapImage to stop Image.Load() from being called in the Datagrid
-        public BitmapImage NewBitmapImage(string path)
+        public static BitmapImage NewBitmapImage(string path)
         {
             BitmapImage BMImage = new BitmapImage();
             path = Directory.GetCurrentDirectory().ToString() + path;
@@ -811,7 +811,7 @@ namespace MCraftingTree
             public int OutputAmount { get; set; }
         }
 
-        public List<Items> CheckForRecipes(Items item)
+        public static List<Items> CheckForRecipes(Items item)
         {
             List<CraftingTable> recipes = ctx.CraftingTable.Where(b => b.OutputSlot.ID == item.ID).ToList();
             List<Items> craftingComponents = new List<Items>();
@@ -976,8 +976,8 @@ namespace MCraftingTree
                     Items value = craftingConnection.Single(b => b.Key.ID == baseMaterials[i].ID).Value;
                     string valueID = value.ID;
                     int recipeAmount = ctx.CraftingTable.Where(b => b.OutputSlot.ID == valueID).ToList()[0].OutputAmount; //receptben mennyi az output
-                    int outputAmount = counter[baseMaterials[i]]; //mennyi van a basematerialból
-                    int inputAmount = counter[value]; //mennyi kell a basematerialból következõ cucchoz
+                    int outputAmount = counter[baseMaterials[i]]; //mennyi van a basematerialbï¿½l
+                    int inputAmount = counter[value]; //mennyi kell a basematerialbï¿½l kï¿½vetkezï¿½ cucchoz
                     if (inputAmount%recipeAmount != 0)
                     {
                         int temp = recipeAmount-(inputAmount % recipeAmount);
