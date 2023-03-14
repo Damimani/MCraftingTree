@@ -20,7 +20,7 @@ namespace MCraftingTree
         public DbSet<MobDrops> MobDrops { get; set; }
         public DbSet<Brewing> Brewing { get; set; }
         public DbSet<CraftingTable> CraftingTable { get; set; }
-
+        
         public Context()
         {
             Database.SetInitializer<Context>(new CreateDatabaseIfNotExists<Context>());
@@ -114,7 +114,7 @@ namespace MCraftingTree
         public string OutputSlotID { get; set; }
         public int OutputAmount { get; set; }
     }
-
+    
     public class ContextInitializer : CreateDatabaseIfNotExists<Context>
     {
         protected override void Seed(Context context)

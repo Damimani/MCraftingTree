@@ -17,6 +17,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -29,7 +30,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -157,7 +157,16 @@
     <Compile Include="Migrations\202303110922442_fix3.designer.cs">
       <DependentUpon>202303110922442_fix3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202303132039183_itiswhatitis.cs" />
+    <Compile Include="Migrations\202303132039183_itiswhatitis.designer.cs">
+      <DependentUpon>202303132039183_itiswhatitis.cs</DependentUpon>
+    </Compile>
     <Compile Include="ToImplement.cs" />
+    <Compile Include="_MCraftingTree_ContextDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_MCraftingTree_ContextDataSet.xsd</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -239,6 +248,9 @@
     <EmbeddedResource Include="Migrations\202303110922442_fix3.resx">
       <DependentUpon>202303110922442_fix3.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303132039183_itiswhatitis.resx">
+      <DependentUpon>202303132039183_itiswhatitis.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -247,6 +259,17 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="_MCraftingTree_ContextDataSet.xsc">
+      <DependentUpon>_MCraftingTree_ContextDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="_MCraftingTree_ContextDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>_MCraftingTree_ContextDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="_MCraftingTree_ContextDataSet.xss">
+      <DependentUpon>_MCraftingTree_ContextDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -266,6 +289,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="oak_sapling.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MCraftingTree.Context.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MCraftingTree.Context_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>MCraftingTree.Context.mdf</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

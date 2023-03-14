@@ -145,3 +145,7 @@ C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migra
 C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migrations.fix2.resources
 C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migrations.fix3.resources
 C:\Users\danit\Desktop\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migrations.fix3.resources
+C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\bin\Debug\MCraftingTree.Context.mdf
+C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\bin\Debug\MCraftingTree.Context_log.ldf
+C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree_Content.g.cs
+C:\Users\danit\Desktop\Projekt\MCraftingTree\MCraftingTree\obj\Debug\MCraftingTree.Migrations.itiswhatitis.resources

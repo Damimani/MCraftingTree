@@ -38,6 +38,8 @@ namespace MCraftingTree
     {
         public MainWindow()
         {
+            ctx.Database.CreateIfNotExists();
+            ctx.Database.Delete();
             InitializeComponent();
             LoadItems();
         }
