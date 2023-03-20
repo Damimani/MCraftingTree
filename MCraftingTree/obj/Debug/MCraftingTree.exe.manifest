@@ -91,14 +91,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MCraftingTree.exe" size="1251296">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MCraftingTree.exe" size="1104864">
       <assemblyIdentity name="MCraftingTree" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>R/Mh1j009VjZCxQtEVFbbK7+ZTVK4HWbN/H4G8aDhRQ=</dsig:DigestValue>
+        <dsig:DigestValue>rtre4IvTAYthOHm9s9IbjeTZYlgRhdEXhKn3hDhx5b0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -240,7 +240,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>4Qm+1hM+RLiljo5JKUWH4Xm1ZTlhyjBEN/SccxWsVBs=</dsig:DigestValue>
+      <dsig:DigestValue>H4fk7v9JD+JqPQ9cKaeCRMw631AmkCBV/IzbrHuTcTc=</dsig:DigestValue>
     </hash>
   </file>
   <file name="MCraftingTree.Context_log.ldf" size="8388608" writeableType="applicationData">
@@ -249,7 +249,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>ykW93BhERzIZ0N0mqp4bXSAmLgrBf5mKkb0FHPm5QzY=</dsig:DigestValue>
+      <dsig:DigestValue>VHUgaD9qhZIcnLIvZv5HaIpEppizUyUArEQyrBEMG6Q=</dsig:DigestValue>
     </hash>
   </file>
   <file name="MCraftingTree.exe.config" size="1454">
@@ -258,7 +258,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>LyJzlxFxpejVrjbUMS4XoJzeK8Lmy6oAnmHl+HOTzR8=</dsig:DigestValue>
+      <dsig:DigestValue>C0254t+OILhKZsrMyimL9k9qSGoZF5IZIHxujXxyDZ8=</dsig:DigestValue>
     </hash>
   </file>
   <file name="oak_sapling.ico" size="318">

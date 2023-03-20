@@ -38,6 +38,11 @@ namespace MCraftingTree
     {
         public MainWindow()
         {
+            if (!ctx.Database.Exists())
+            {
+                ctx.Database.Create();
+                ctx.Database.Initialize(true);
+            }
             InitializeComponent();
             LoadItems();
         }
@@ -533,6 +538,7 @@ namespace MCraftingTree
                         catch (Exception)
                         {
                             MessageBox.Show("An error has occured during modification.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            throw;
                         }
                         break;
                     default:

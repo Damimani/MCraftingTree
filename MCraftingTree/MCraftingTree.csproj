@@ -175,11 +175,6 @@
       <DependentUpon>202303132039183_itiswhatitis.cs</DependentUpon>
     </Compile>
     <Compile Include="ToImplement.cs" />
-    <Compile Include="_MCraftingTree_ContextDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>_MCraftingTree_ContextDataSet.xsd</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -268,22 +263,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="MCraftingTree_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="_MCraftingTree_ContextDataSet.xsc">
-      <DependentUpon>_MCraftingTree_ContextDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="_MCraftingTree_ContextDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>_MCraftingTree_ContextDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="_MCraftingTree_ContextDataSet.xss">
-      <DependentUpon>_MCraftingTree_ContextDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -309,8 +292,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MCraftingTree.Context_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>MCraftingTree.Context.mdf</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
