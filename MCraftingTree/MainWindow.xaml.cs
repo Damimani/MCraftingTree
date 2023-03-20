@@ -316,6 +316,7 @@ namespace MCraftingTree
                 default:
                     break;
             }
+            LoadItems();
         }
 
         private void Delete_Recipe(object sender, RoutedEventArgs e)
@@ -380,6 +381,7 @@ namespace MCraftingTree
                 default:
                     break;
             }
+            LoadItems();
         }
 
         private void NumberOnly(object sender, TextChangedEventArgs e)
@@ -594,7 +596,7 @@ namespace MCraftingTree
             
         }
 
-        private void Search_Items_Click(object sender, RoutedEventArgs e)
+        public void Search_Items()
         {
             string search = SearchBar.Text;
             if (search != String.Empty)
@@ -604,6 +606,19 @@ namespace MCraftingTree
             else
             {
                 LoadItems();
+            }
+        }
+
+        private void Search_Items_Click(object sender, RoutedEventArgs e)
+        {
+            Search_Items();
+        }
+
+        private void SearchBar_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Search_Items();
             }
         }
 
