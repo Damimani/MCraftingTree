@@ -61,6 +61,10 @@ namespace MCraftingTree
 
         public async void LoadItems()
         {
+            Dispatcher.Invoke(() =>
+            {
+                ItemDG.ItemsSource = "";
+            });
             loadingText.Visibility = Visibility.Visible;
             var items = ctx.Items;
             await Task.Run(() => { 
@@ -83,7 +87,6 @@ namespace MCraftingTree
                     }
                     Dispatcher.Invoke(() =>
                     {
-                        ItemDG.ItemsSource = "";
                         ItemDG.ItemsSource = itms;
                         loadingText.Visibility = Visibility.Hidden;
                     });
@@ -556,15 +559,18 @@ namespace MCraftingTree
             var remove = (Items)ItemDG.SelectedItem;
             if (remove != null)
             {
-                var removeType = ctx.Types.Single(b => b.Item == remove);
+                var removeType = ctx.Types.Where(b => b.Item.ID == remove.ID).ToList();
                 bool hasMultipleImgs = false;
                 var itemImages = ctx.Items.Where(b => b.ImagePath.Contains(remove.ImagePath)).ToList();
                 if (itemImages.Count > 1) hasMultipleImgs = true;
-                if (!hasMultipleImgs)
+                if (!hasMultipleImgs && remove.ImagePath != null)
                 {
                     File.Delete(Directory.GetCurrentDirectory() + remove.ImagePath);
                 }
-                ctx.Types.Remove(removeType);
+                for (int i = 0; i < removeType.Count; i++)
+                {
+                    ctx.Types.Remove(removeType[i]);
+                }
                 ctx.Items.Remove(remove);
                 ctx.SaveChanges();
                 LoadItems();
