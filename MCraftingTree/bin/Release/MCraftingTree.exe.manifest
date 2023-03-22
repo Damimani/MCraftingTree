@@ -240,7 +240,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>H4fk7v9JD+JqPQ9cKaeCRMw631AmkCBV/IzbrHuTcTc=</dsig:DigestValue>
+      <dsig:DigestValue>NEeWWTGK31T2L6YmNRrY4Lx8sN/1/LmuY60DYbIH+5I=</dsig:DigestValue>
     </hash>
   </file>
   <file name="MCraftingTree.Context_log.ldf" size="8388608" writeableType="applicationData">
@@ -249,7 +249,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>VHUgaD9qhZIcnLIvZv5HaIpEppizUyUArEQyrBEMG6Q=</dsig:DigestValue>
+      <dsig:DigestValue>0u14d19Tp59ZalIGy7gPXEKoiY+XT0JKDwPqCme4+iw=</dsig:DigestValue>
     </hash>
   </file>
   <file name="MCraftingTree.exe.config" size="1454">
