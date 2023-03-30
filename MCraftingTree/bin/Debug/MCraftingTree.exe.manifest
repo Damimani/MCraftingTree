@@ -91,14 +91,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MCraftingTree.exe" size="1104864">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MCraftingTree.exe" size="1105376">
       <assemblyIdentity name="MCraftingTree" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>n/r3e7jpb2+iHF0i+eLqjHwgJiLsd4Sik75Q8K8xCrs=</dsig:DigestValue>
+        <dsig:DigestValue>SiFw+PoYDEv23bs9k54dvERHYeTeh3w0/VjCbLPy+4o=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

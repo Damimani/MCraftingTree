@@ -70,7 +70,7 @@ namespace MCraftingTree
             await Task.Run(() => { 
                 if (items != null)
                 {
-                    itms = items.ToList();
+                    List<Items> itms = items.ToList();
                     try
                     {
                         itms.Remove(ctx.Items.Single(b => b.ID == "-1"));
@@ -98,30 +98,25 @@ namespace MCraftingTree
         public void LoadItems(string search)
         {
             var items = ctx.Items;
+
             if (items != null)
             {
-                itms = new List<Items>();
                 List<Items> item = ctx.Items.Where(b => b.Name.Contains(search)).ToList();
+                item.Remove(ctx.Items.Single(b => b.ID == "-1"));
                 for (int i = 0; i < item.Count; i++)
                 {
-                    itms.Add(item[i]);
-                }
-                itms.Remove(ctx.Items.Single(b => b.ID == "-1"));
-                for (int i = 0; i < itms.Count; i++)
-                {
-                    if (itms[i].ImagePath != null)
+                    if (item[i].ImagePath != null)
                     {
-                        itms[i].BMImage = NewBitmapImage(itms[i].ImagePath);
+                        item[i].BMImage = NewBitmapImage(item[i].ImagePath);
                     }
                 }
                 ItemDG.ItemsSource = "";
-                ItemDG.ItemsSource = itms;
+                ItemDG.ItemsSource = item;
             }
         }
 
         public static Context ctx = new Context();
         public static Items nullItem = new Items() { ID = "-1", Name="Empty Item" };
-        public static List<Items> itms;
         public static string switchScreen = "Crafting"; 
         public static string ImagePath = string.Empty;
         public static string DialogHostKey = string.Empty;

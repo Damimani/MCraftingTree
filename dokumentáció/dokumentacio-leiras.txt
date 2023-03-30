@@ -56,7 +56,7 @@ Fejlesztõi dokumentációnak tartalmaznia kell:
 
 Felhasználói dokumentációnak tartalmaznia kell:
 - Alkalmazás rövid, általános ismertetését, hol és kik és mire használhatják.
-- Rendszerkövetelmények
+- Rendszerkövetelmények //Win 7
 - Alkalmazás telepítése, szükséges beállítások
 - Alkalmazás használata
 
