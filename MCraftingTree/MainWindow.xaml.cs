@@ -442,7 +442,7 @@ namespace MCraftingTree
                 if (ItemDG.SelectedItem != null)
                 {
                     var row = (Items)ItemDG.SelectedItem;
-                    var rowType = ctx.Types.Single(x => x.Item == row);
+                    var rowType = ctx.Types.Single(x => x.Item.ID == row.ID);
                     ItemID.Text = row.ID;
                     ItemName.Text = row.Name;
                     ItemType.Text = rowType.Type;

@@ -560,12 +560,19 @@
                                 <RowDefinition Height="1*" />
                                 <RowDefinition Height="1*" />
                                 <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
                             </Grid.RowDefinitions>
-                            <Button Width="20px" Height="20px" VerticalAlignment="Top" HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Content="X" FontSize="10px" Padding="0"/>
-                            <TextBox materialDesign:HintAssist.Hint="Item ID (modname:item_name)" x:Name="ItemID" Margin="0, 20px, 0,0"/>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="20px" />
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="1" Width="15px" Height="15px" VerticalAlignment="Top" HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Content="X" FontSize="10px" Padding="0"/>
+                                <TextBox Grid.Column="0" materialDesign:HintAssist.Hint="Item ID (modname:item_name)" x:Name="ItemID"/>
+                            </Grid>
                             <TextBox Grid.Row="1" materialDesign:HintAssist.Hint="Item name" x:Name="ItemName"/>
                             <TextBox Grid.Row="2" materialDesign:HintAssist.Hint="Item type (optional)" x:Name="ItemType"/>
-                            <Image HorizontalAlignment="Center" Width="32px" Height="32px" x:Name="PopupImage"/>
+                            <Image Grid.Row="6" HorizontalAlignment="Center" Width="32px" Height="32px" x:Name="PopupImage"/>
                             <Grid Grid.Row="3">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
