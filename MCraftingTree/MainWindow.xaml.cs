@@ -38,11 +38,7 @@ namespace MCraftingTree
     {
         public MainWindow()
         {
-            if (!ctx.Database.Exists())
-            {
-                ctx.Database.Create();
-                ctx.Database.Initialize(true);
-            }
+            ctx.Database.Initialize(false);
             InitializeComponent();
             LoadItems();
         }
@@ -116,7 +112,7 @@ namespace MCraftingTree
         }
 
         public static Context ctx = new Context();
-        public static Items nullItem = new Items() { ID = "-1", Name="Empty Item" };
+        public static Items nullItem = ctx.Items.Where(b => b.ID == "-1").ToList()[0];
         public static string switchScreen = "Crafting"; 
         public static string ImagePath = string.Empty;
         public static string DialogHostKey = string.Empty;
@@ -519,7 +515,7 @@ namespace MCraftingTree
                         try
                         {
                             var update = (Items)ItemDG.SelectedItem;
-                            var updateType = ctx.Types.Single(b => b.Item == update);
+                            var updateType = ctx.Types.Single(b => b.Item.ID == update.ID);
                             update.ID = ItemID.Text;
                             update.Name = ItemName.Text;
                             if (updateType != null)
@@ -536,7 +532,6 @@ namespace MCraftingTree
                         catch (Exception)
                         {
                             MessageBox.Show("An error has occured during modification.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            throw;
                         }
                         break;
                     default:

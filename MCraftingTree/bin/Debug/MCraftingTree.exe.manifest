@@ -98,7 +98,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>soSLglauIukqhdF0ihXAJ1I04+r/8Hx15VTFXF1f6yY=</dsig:DigestValue>
+        <dsig:DigestValue>Y/Dgo6UXc6Pzz7NmO0dphlU14ubDAj0K8yaV4rnv0F4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -252,13 +252,13 @@
       <dsig:DigestValue>0u14d19Tp59ZalIGy7gPXEKoiY+XT0JKDwPqCme4+iw=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="MCraftingTree.exe.config" size="1454">
+  <file name="MCraftingTree.exe.config" size="1157">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>C0254t+OILhKZsrMyimL9k9qSGoZF5IZIHxujXxyDZ8=</dsig:DigestValue>
+      <dsig:DigestValue>f0uUOEimJdlDFnQNvROlHFXF1AMw2an/C7NRH8d116M=</dsig:DigestValue>
     </hash>
   </file>
   <file name="oak_sapling.ico" size="318">
